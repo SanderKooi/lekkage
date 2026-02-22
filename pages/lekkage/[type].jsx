@@ -1,9 +1,6 @@
-
 import Head from 'next/head'
 import { useState } from 'react'
 import { lekkageTypes, getType, steden } from '../../data'
-import '../../styles/global.css'
-
 export async function getStaticPaths() {
   return {
     paths: lekkageTypes.map(t => ({ params: { type: t.slug } })),
