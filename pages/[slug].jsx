@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { diensten } from '../../data/diensten'
-import { steden } from '../../data/steden'
+import { diensten } from '../data/diensten'
+import { steden } from '../data/steden'
 
 export default function DienstStadPage({ dienst, stad, dienstData }) {
   if (!dienstData) return <div>Pagina niet gevonden</div>
