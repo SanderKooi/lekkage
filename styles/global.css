@@ -305,3 +305,45 @@ footer{background:var(--green-dark);padding:3.5rem clamp(1rem,5vw,3rem) 2rem}
   .ti-item{font-size:0.72rem}
   .section-inner{padding:0}
 }
+
+/* ── SEO GRID ── */
+.seo-grid{display:grid;grid-template-columns:2fr 1fr;gap:4rem;align-items:start}
+.seo-sticky{position:sticky;top:86px}
+.seo-block h3{font-size:1.1rem;font-weight:700;color:var(--text);margin:1.75rem 0 0.6rem}
+.seo-block h3:first-of-type{margin-top:0}
+.seo-block p{font-size:0.92rem;color:var(--muted);line-height:1.9;margin-bottom:0.75rem}
+.seo-block ul{padding-left:1.5rem;margin-bottom:0.75rem}
+.seo-block ul li{font-size:0.92rem;color:var(--muted);line-height:1.9;margin-bottom:0.25rem}
+
+/* ── OORZAKEN NUMMERS ── */
+.oorzaak-num{width:36px;height:36px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.95rem;margin:0 auto 0.75rem;flex-shrink:0}
+
+/* ── PRIJSTABEL ── */
+.price-table{margin:1.25rem 0 1.75rem;border-radius:12px;overflow:hidden;border:1.5px solid var(--border)}
+.price-table table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.price-table thead{background:var(--green-dark);color:white}
+.price-table thead th{padding:0.75rem 1rem;text-align:left;font-size:0.75rem;font-weight:700;letter-spacing:0.04em}
+.price-table tbody tr{border-bottom:1px solid var(--border);background:white;transition:background 0.15s}
+.price-table tbody tr:hover{background:var(--green3)}
+.price-table tbody tr:last-child{border-bottom:none}
+.price-table td{padding:0.75rem 1rem;color:var(--muted)}
+.price-table td:first-child{color:var(--text);font-weight:500}
+.price-table td:nth-child(2){color:var(--green);font-weight:700}
+.highlight-row td{background:var(--green3)!important}
+.highlight-row td:nth-child(2){color:var(--green)!important;font-weight:700}
+.table-note{font-size:0.72rem;color:var(--muted);margin-top:0.5rem;font-style:italic}
+
+/* ── BLOG ── */
+.blog-img-main{height:220px!important}
+.blog-excerpt{font-size:0.8rem;color:var(--muted);line-height:1.65}
+.blog-link{color:var(--green);font-size:0.8rem;font-weight:700;margin-top:auto}
+
+/* ── RESPONSIVE AANVULLINGEN ── */
+@media(max-width:900px){
+  .seo-grid{grid-template-columns:1fr}
+  .seo-sticky{display:none}
+}
+@media(max-width:600px){
+  .seo-grid{grid-template-columns:1fr}
+  .price-table{overflow-x:auto}
+}
