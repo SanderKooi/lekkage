@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useState, useRef, useEffect } from 'react'
-import Nav from '../components/Nav' 
+import Nav from '../components/Nav'
 
 const steden = [
   { naam: 'Amsterdam', slug: 'amsterdam', prov: 'Noord-Holland', tags: ['Daklekkage','Loodgieter','Riool'] },
@@ -38,6 +38,7 @@ export default function Homepage() {
   const [activeSlide, setActiveSlide] = useState(0)
   const [offset, setOffset] = useState(0)
   const trackRef = useRef(null)
+  const touchStartX = useRef(0)
   const VISIBLE = 3
   const GAP = 20
 
@@ -49,6 +50,15 @@ export default function Homepage() {
       setOffset(next * (cardWidth + GAP))
     }
     setActiveSlide(next)
+  }
+
+  function handleTouchStart(e) {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  function handleTouchEnd(e) {
+    const diff = touchStartX.current - e.changedTouches[0].clientX
+    if (Math.abs(diff) > 50) goTo(diff > 0 ? activeSlide + 1 : activeSlide - 1)
   }
 
   return (
@@ -139,7 +149,7 @@ export default function Homepage() {
               </button>
             </div>
           </div>
-          <div className="carousel-wrap">
+          <div className="carousel-wrap" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
             <div className="carousel-track" ref={trackRef} style={{transform:`translateX(-${offset}px)`}}>
               {diensten.map(s => (
                 <a key={s.slug} href={`/lekkage/${s.slug}`} className="svc carousel-card">
@@ -164,14 +174,15 @@ export default function Homepage() {
         <div className="section-inner">
           <div className="sec-head-center">
             <div className="eyebrow">Werkwijze</div>
-            <h2>Zo pakken we het aan</h2>
+            <h2>Van melding tot <em>oplossing</em></h2>
+            <p className="sec-sub">Helder en transparant — zo lossen we elk lekkageprobleem op.</p>
           </div>
           <div className="steps">
             {[
-              { n:'1', t:'Bel of stuur een aanvraag', p:'Direct contact, geen wachtrij. We nemen zo snel mogelijk contact op.' },
+              { n:'1', t:'Melding', p:'Bel of stuur een aanvraag. We bespreken het probleem en plannen een afspraak.' },
               { n:'2', t:'Vakman onderweg', p:'De dichtstbijzijnde monteur rijdt naar je toe. Gemiddeld binnen 30 minuten.' },
-              { n:'3', t:'Transparante offerte', p:'Inspectie en heldere prijsopgave. Geen verborgen kosten, geen verrassingen.' },
-              { n:'4', t:'Probleem opgelost', p:'Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten.' },
+              { n:'3', t:'Inspectie & offerte', p:'Grondige inspectie en transparante prijsopgave. Jij beslist voordat we beginnen.' },
+              { n:'4', t:'Opgelost', p:'Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten.' },
             ].map(s => (
               <div key={s.n} className="step"><div className="step-num">{s.n}</div><h3>{s.t}</h3><p>{s.p}</p></div>
             ))}
