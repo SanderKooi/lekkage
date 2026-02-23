@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Nav from '../components/Nav'
 
 const steden = [
@@ -36,7 +36,20 @@ export default function Homepage() {
   const [openFaq, setOpenFaq] = useState(null)
   const [submitted, setSubmitted] = useState(false)
   const [activeSlide, setActiveSlide] = useState(0)
+  const [offset, setOffset] = useState(0)
+  const trackRef = useRef(null)
   const VISIBLE = 3
+  const GAP = 20
+
+  function goTo(n) {
+    const max = diensten.length - VISIBLE
+    const next = Math.max(0, Math.min(max, n))
+    if (trackRef.current) {
+      const cardWidth = (trackRef.current.parentElement.offsetWidth - (VISIBLE - 1) * GAP) / VISIBLE
+      setOffset(next * (cardWidth + GAP))
+    }
+    setActiveSlide(next)
+  }
 
   return (
     <>
@@ -118,16 +131,16 @@ export default function Homepage() {
               <p className="sec-sub">Van noodgeval midden in de nacht tot geplande reparatie — voor elk probleem hebben we een oplossing.</p>
             </div>
             <div className="carousel-nav-top">
-              <button className="carousel-btn" id="carousel-prev" onClick={() => setActiveSlide(Math.max(0, activeSlide - 1))} disabled={activeSlide === 0} aria-label="Vorige">
+              <button className="carousel-btn" id="carousel-prev" onClick={() => goTo(activeSlide - 1)} disabled={activeSlide === 0} aria-label="Vorige">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
               </button>
-              <button className="carousel-btn" onClick={() => setActiveSlide(Math.min(diensten.length - VISIBLE, activeSlide + 1))} disabled={activeSlide === diensten.length - VISIBLE} aria-label="Volgende">
+              <button className="carousel-btn" onClick={() => goTo(activeSlide + 1)} disabled={activeSlide === diensten.length - VISIBLE} aria-label="Volgende">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
               </button>
             </div>
           </div>
           <div className="carousel-wrap">
-            <div className="carousel-track" style={{transform:`translateX(calc(-${activeSlide} * (100% / ${VISIBLE} + ${20/VISIBLE}px)))`}}>
+            <div className="carousel-track" ref={trackRef} style={{transform:`translateX(-${offset}px)`}}>
               {diensten.map(s => (
                 <a key={s.slug} href={`/lekkage/${s.slug}`} className="svc carousel-card">
                   <div className="svc-icon">{s.icon}</div>
@@ -140,7 +153,7 @@ export default function Homepage() {
           </div>
           <div className="carousel-footer">
             {Array.from({length: diensten.length - VISIBLE + 1}).map((_, i) => (
-              <button key={i} className={`carousel-dot${activeSlide === i ? ' active' : ''}`} onClick={() => setActiveSlide(i)} aria-label={`Dienst ${i + 1}`} />
+              <button key={i} className={`carousel-dot${activeSlide === i ? ' active' : ''}`} onClick={() => goTo(i)} aria-label={`Dienst ${i + 1}`} />
             ))}
           </div>
         </div>
