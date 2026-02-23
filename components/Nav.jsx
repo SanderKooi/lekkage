@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { lekkageTypes, steden } from '../data' 
+import { lekkageTypes, steden } from '../data'
 
 const topSteden = steden.slice(0, 8)
 
@@ -52,7 +52,7 @@ export default function Nav({ activePath = '' }) {
         .dd-all:hover{background:var(--green3)}
 
         /* MOBIEL */
-        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;flex-shrink:0}
         .hamburger span{display:block;width:22px;height:2px;background:white;border-radius:2px;transition:all 0.25s}
         .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
         .hamburger.open span:nth-child(2){opacity:0}
@@ -69,7 +69,7 @@ export default function Nav({ activePath = '' }) {
         .mobile-cta-btn{display:block;background:var(--orange);color:white;text-align:center;padding:1rem;border-radius:var(--radius);font-weight:700;font-size:1rem;text-decoration:none;margin-bottom:0.75rem}
 
         @media(max-width:900px){
-          .hamburger{display:flex}
+          .hamburger{display:flex!important}
           .nav-desktop{display:none!important}
         }
       `}</style>
