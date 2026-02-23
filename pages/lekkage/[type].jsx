@@ -176,12 +176,12 @@ export default function LekkageType({ type }) {
       </section>
 
       {/* WERKWIJZE */}
-      <section className="section section-white">
+      <section className="section section-alt">
         <div className="section-inner">
           <div className="sec-head-center">
             <div className="eyebrow">Werkwijze</div>
             <h2>Van melding tot <em>oplossing</em></h2>
-            <p className="sec-sub">Helder en transparant — zo pakken we een {type.naam.toLowerCase()} aan.</p>
+            <p className="sec-sub">Helder en transparant — zo lossen we elk lekkageprobleem op.</p>
           </div>
           <div className="steps">
             <div className="step"><div className="step-num">1</div><h3>Melding</h3><p>Bel of stuur een aanvraag. We bespreken het probleem en plannen een afspraak.</p></div>
