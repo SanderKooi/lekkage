@@ -126,7 +126,27 @@ h2 em{font-style:normal;color:var(--green)}
 .step h3{font-weight:700;font-size:0.95rem;margin-bottom:0.5rem;color:var(--text)}
 .step p{color:var(--muted);font-size:0.82rem;line-height:1.65}
 
-/* ── REVIEWS ── */
+/* ── CARROUSEL ── */
+.carousel-wrap{overflow:hidden;margin:2rem 0 1.25rem;touch-action:pan-y;cursor:grab;user-select:none}
+.carousel-wrap:active{cursor:grabbing}
+.carousel-track{display:flex;gap:1.25rem;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);will-change:transform}
+.carousel-card{flex:0 0 calc((100% - 2 * 1.25rem) / 3);min-width:0}
+.carousel-nav-top{display:flex;gap:0.5rem;flex-shrink:0;align-items:center}
+.carousel-controls{display:flex;align-items:center;justify-content:center;gap:1rem}
+.carousel-btn{width:46px;height:46px;border-radius:50%;border:2px solid var(--green4);background:var(--green3);color:var(--green-dark);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;box-shadow:0 2px 8px rgba(26,122,74,0.12);padding:0}
+.carousel-btn:hover:not(:disabled){background:var(--green4);border-color:var(--green);transform:scale(1.08)}
+.carousel-btn:disabled{opacity:0.25;cursor:default;box-shadow:none}
+.carousel-footer{display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:1.5rem}
+.carousel-dots{display:flex;gap:0.5rem}
+.carousel-dot{width:8px;height:8px;border-radius:50%;border:none;background:var(--border);cursor:pointer;padding:0;transition:all 0.25s}
+.carousel-dot.active{background:var(--green);width:24px;border-radius:4px}
+@media(max-width:900px){
+  .carousel-card{flex:0 0 calc((100% - 1.25rem) / 2)}
+  .carousel-nav-top{display:none}
+}
+@media(max-width:580px){
+  .carousel-card{flex:0 0 100%}
+}
 .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
 .review{background:white;border:1.5px solid var(--border);border-radius:14px;padding:1.75rem;transition:all 0.25s}
 .review:hover{border-color:var(--green);box-shadow:0 8px 32px rgba(26,122,74,0.12)}
@@ -171,12 +191,16 @@ h2 em{font-style:normal;color:var(--green)}
 
 /* ── DIENSTEN CARDS ── */
 .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1.25rem}
-.svc{background:white;border:1.5px solid var(--border);border-radius:14px;padding:1.75rem;transition:all 0.25s;cursor:pointer;text-decoration:none;color:var(--text);display:block}
-.svc:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 32px rgba(26,122,74,0.12)}
-.svc-icon{font-size:2.25rem;margin-bottom:1rem}
-.svc h3{font-size:1.05rem;font-weight:700;margin-bottom:0.5rem;color:var(--text)}
-.svc p{color:var(--muted);font-size:0.85rem;line-height:1.65;margin-bottom:1.25rem}
-.svc-cta{color:var(--green);font-size:0.82rem;font-weight:700}
+.svc{background:white;border:1.5px solid var(--border);border-radius:16px;padding:1.75rem;transition:all 0.25s;cursor:pointer;text-decoration:none;color:var(--text);display:flex;flex-direction:column;position:relative;overflow:hidden}
+.svc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--green2));transform:scaleX(0);transform-origin:left;transition:transform 0.25s}
+.svc:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:0 12px 40px rgba(26,122,74,0.13)}
+.svc:hover::before{transform:scaleX(1)}
+.svc-icon{font-size:2rem;margin-bottom:1rem;width:52px;height:52px;background:var(--green3);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.svc h3{font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:var(--text)}
+.svc p{color:var(--muted);font-size:0.83rem;line-height:1.7;margin-bottom:auto;padding-bottom:1.25rem}
+.svc-cta{color:var(--green);font-size:0.82rem;font-weight:700;display:flex;align-items:center;gap:0.35rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--border)}
+.svc-cta::after{content:'→';transition:transform 0.2s}
+.svc:hover .svc-cta::after{transform:translateX(4px)}
 
 /* ── USP CARDS ── */
 .usp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
