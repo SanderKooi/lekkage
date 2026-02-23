@@ -45,10 +45,9 @@ export default function Homepage() {
   function goTo(n) {
     const max = diensten.length - VISIBLE
     const next = Math.max(0, Math.min(max, n))
-    if (trackRef.current) {
-      const cardWidth = (trackRef.current.parentElement.offsetWidth - (VISIBLE - 1) * GAP) / VISIBLE
-      setOffset(next * (cardWidth + GAP))
-    }
+    const wrapWidth = trackRef.current?.parentElement?.offsetWidth || window.innerWidth - 32
+    const cardWidth = (wrapWidth - (VISIBLE - 1) * GAP) / VISIBLE
+    setOffset(next * (cardWidth + GAP))
     setActiveSlide(next)
   }
 
