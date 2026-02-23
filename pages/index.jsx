@@ -42,11 +42,19 @@ export default function Homepage() {
   const VISIBLE = 3
   const GAP = 20
 
+  function getVisible() {
+    if (typeof window === 'undefined') return 3
+    if (window.innerWidth <= 600) return 1
+    if (window.innerWidth <= 900) return 2
+    return 3
+  }
+
   function goTo(n) {
-    const max = diensten.length - VISIBLE
+    const vis = getVisible()
+    const max = diensten.length - vis
     const next = Math.max(0, Math.min(max, n))
     const wrapWidth = trackRef.current?.parentElement?.offsetWidth || window.innerWidth - 32
-    const cardWidth = (wrapWidth - (VISIBLE - 1) * GAP) / VISIBLE
+    const cardWidth = (wrapWidth - (vis - 1) * GAP) / vis
     setOffset(next * (cardWidth + GAP))
     setActiveSlide(next)
   }
@@ -140,10 +148,10 @@ export default function Homepage() {
               <p className="sec-sub">Van noodgeval midden in de nacht tot geplande reparatie — voor elk probleem hebben we een oplossing.</p>
             </div>
             <div className="carousel-nav-top">
-              <button className="carousel-btn" id="carousel-prev" onClick={() => goTo(activeSlide - 1)} disabled={activeSlide === 0} aria-label="Vorige">
+              <button className="carousel-btn" onClick={() => goTo(activeSlide - 1)} disabled={activeSlide === 0} aria-label="Vorige">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
               </button>
-              <button className="carousel-btn" onClick={() => goTo(activeSlide + 1)} disabled={activeSlide === diensten.length - VISIBLE} aria-label="Volgende">
+              <button className="carousel-btn" onClick={() => goTo(activeSlide + 1)} disabled={activeSlide === diensten.length - getVisible()} aria-label="Volgende">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
               </button>
             </div>
@@ -161,7 +169,7 @@ export default function Homepage() {
             </div>
           </div>
           <div className="carousel-footer">
-            {Array.from({length: diensten.length - VISIBLE + 1}).map((_, i) => (
+            {Array.from({length: diensten.length - getVisible() + 1}).map((_, i) => (
               <button key={i} className={`carousel-dot${activeSlide === i ? ' active' : ''}`} onClick={() => goTo(i)} aria-label={`Dienst ${i + 1}`} />
             ))}
           </div>
