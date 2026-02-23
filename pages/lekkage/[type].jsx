@@ -319,7 +319,7 @@ export default function LekkageType({ type }) {
           <div className="oorzaken-row">
             {type.oorzaken.map((o, i) => (
               <div key={i} className="oorzaak">
-                <div className="oorzaak-num">{i + 1}</div>
+                <div className="oorzaak-icon">{['🔧','💧','🌧️','🏚️','❄️','🔩','🍂','🧱'][i] || '⚠️'}</div>
                 <h3>{o}</h3>
               </div>
             ))}
