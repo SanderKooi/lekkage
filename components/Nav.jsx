@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { lekkageTypes, steden } from '../data'
+import { lekkageTypes, steden } from '../data' 
 
 const topSteden = steden.slice(0, 8)
 
