@@ -202,6 +202,15 @@ h2 em{font-style:normal;color:var(--green)}
 /* ── KNOPPEN ── */
 .btn-all{display:inline-flex;align-items:center;gap:0.6rem;background:var(--green);color:white;padding:0.8rem 1.75rem;border-radius:var(--radius);font-weight:700;font-size:0.9rem;text-decoration:none;transition:all 0.2s;box-shadow:0 4px 16px rgba(26,122,74,0.2)}
 .btn-all:hover{background:var(--green2);transform:translateY(-1px)}
+.cities-cta{display:flex;align-items:center;gap:2rem;background:var(--green3);border:1.5px solid var(--green4);border-radius:14px;padding:1.5rem 2rem;margin-top:1.5rem;flex-wrap:wrap}
+.cities-cta-left{flex:1;min-width:200px}
+.cities-cta-left h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.25rem}
+.cities-cta-left p{font-size:0.85rem;color:var(--muted)}
+.cities-counts{display:flex;gap:1.5rem;flex-wrap:wrap}
+.count-item{text-align:center}
+.count-num{font-size:1.6rem;font-weight:900;color:var(--green-dark);line-height:1}
+.count-num sup{font-size:0.75rem}
+.count-label{font-size:0.65rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.2rem}
 .btn-blog{display:inline-flex;align-items:center;gap:0.5rem;background:transparent;color:var(--green);padding:0.75rem 1.75rem;border-radius:var(--radius);font-weight:700;font-size:0.9rem;border:1.5px solid var(--green);text-decoration:none;transition:all 0.2s}
 .btn-blog:hover{background:var(--green);color:white}
 .btn-white-ghost{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.12);color:white;padding:0.9rem 1.8rem;border-radius:var(--radius);font-weight:600;font-size:1rem;border:1px solid rgba(255,255,255,0.3);text-decoration:none;transition:all 0.2s;font-family:var(--font)}
