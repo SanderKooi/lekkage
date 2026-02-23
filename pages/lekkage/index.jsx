@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Nav from '../../components/Nav'
 import { lekkageTypes, steden } from '../../data'
 
 const topSteden = steden.slice(0, 8)
@@ -13,16 +14,7 @@ export default function LekkageIndex() {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </Head>
-
-      <nav>
-        <a href="/" className="logo"><span className="logo-icon">💧</span>Lekkage<b>Fix</b></a>
-        <div className="nav-right">
-          <a href="/lekdetectie" className="nav-link">Lekdetectie</a>
-          <a href="/lekkage" className="nav-link">Lekkage</a>
-          <a href="/blog" className="nav-link">Blog</a>
-          <a href="tel:0800-1234" className="nav-phone">📞 0800-1234</a>
-        </div>
-      </nav>
+      <Nav activePath="/lekkage" />
 
       <div className="breadcrumb-bar">
         <div className="breadcrumb">
