@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useState } from 'react'
+import Nav from '../components/Nav'
 
 const steden = [
   { naam: 'Amsterdam', slug: 'amsterdam', prov: 'Noord-Holland', tags: ['Daklekkage','Loodgieter','Riool'] },
@@ -50,15 +51,7 @@ export default function Homepage() {
       </Head>
 
       {/* NAV */}
-      <nav>
-        <a href="/" className="logo"><span className="logo-icon">💧</span>Lekkage<b>Fix</b></a>
-        <div className="nav-right">
-          <a href="#diensten" className="nav-link">Diensten</a>
-          <a href="#steden" className="nav-link">Steden</a>
-          <a href="/blog" className="nav-link">Blog</a>
-          <a href="tel:0800-1234" className="nav-phone">📞 0800-1234</a>
-        </div>
-      </nav>
+      <Nav activePath="/" />
 
       {/* HERO */}
       <section className="hero">
@@ -334,4 +327,3 @@ export default function Homepage() {
     </>
   )
 }
-
