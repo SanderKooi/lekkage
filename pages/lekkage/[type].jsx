@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Nav from '../../components/Nav'
 import { useState } from 'react'
 import { lekkageTypes, getType, steden } from '../../data'
 export async function getStaticPaths() {
@@ -52,15 +53,7 @@ export default function LekkageType({ type }) {
       </Head>
 
       {/* NAV */}
-      <nav>
-        <a href="/" className="logo"><span className="logo-icon">💧</span>Lekkage<b>Fix</b></a>
-        <div className="nav-right">
-          <a href="/lekdetectie" className="nav-link">Lekdetectie</a>
-          <a href="/lekkage" className="nav-link">Lekkage</a>
-          <a href="/blog" className="nav-link">Blog</a>
-          <a href="tel:0800-1234" className="nav-phone">📞 0800-1234</a>
-        </div>
-      </nav>
+      <Nav activePath="/lekkage" />
 
       {/* BREADCRUMB */}
       <div className="breadcrumb-bar">
