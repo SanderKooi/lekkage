@@ -1,6 +1,0 @@
-export const PHONE = '0800-1234'
-export const PHONE_DISPLAY = '0800-1234'
-export const EMAIL = 'info@lekkagefix.nl'
-export const SITE_URL = 'https://lekkagefix.nl'
-export const COMPANY = 'LekkageFix'
-export const KVK = '89586557'
