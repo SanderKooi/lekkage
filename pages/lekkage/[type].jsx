@@ -58,9 +58,19 @@ const seoPerType = {
   dak: {
     h2: 'Daklekkage reparatie', sub: 'alles wat je moet weten',
     h3_1: 'Daklekkage herkennen: de vroege signalen',
-    p1: 'Natte plekken op het plafond zijn het meest duidelijk, maar let ook op verkleuringen op muren, schimmel in hoeken, bobbels in behang en een geur van vocht die na regen verergert. Belangrijk: de plek waar u het lek ziet is zelden de plek waar het water binnendringt.',
-    h3_2: 'Plat dak vs. schuin dak vs. dakkapel',
-    p2: 'Bij een plat dak is stilstaand water de grootste vijand — de dakbedekking (bitumen, EPDM, PVC of TPO) moet volledig intact zijn. Bij een schuin dak gaat het om dakpannen, leien en aansluitingen rondom schoorstenen en dakramen. Een dakkapel combineert beide: kitranden en de overgang naar het dakvlak zijn kwetsbare punten.',
+    p1: 'De meest voor de hand liggende aanwijzing is waterdruppels of natte plekken op het plafond, maar een lekkage kan zich ook op andere manieren manifesteren:',
+    bullets1: [
+      'Verkleuringen of vlekken op het plafond of hoge muren, ook als het plafond droog aanvoelt',
+      'Schimmelvorming in hoeken van kamers op de bovenste verdieping',
+      'Bobbels of loslaten van behang of verf op de bovenste verdieping',
+      'Geur van vocht die na regen verergert',
+      'Zichtbare beschadiging aan dakpannen, goten of dakbedekking van buitenaf',
+    ],
+    p1b: 'Belangrijk: de plek waar u het lek ziet is zelden de plek waar het water binnendringt. Water reist langs dakconstructies, balken en isolatiemateriaal voordat het zichtbaar wordt. Juist daarom is vakkundige inspectie essentieel.',
+    h3_2: 'Daklekkage plat dak vs. schuin dak',
+    p2: 'Bij een plat dak is stilstaand water de grootste vijand. De dakbedekking — bitumen, EPDM, PVC of TPO — moet volledig intact zijn. Elke scheur, blaas of losslaande naad is een potentieel lek. Onze specialisten inspecteren het volledige dakvlak en repareren gericht.',
+    p2b: 'Bij een schuin dak ligt de nadruk op dakpannen, leien en aansluitingen rondom schoorstenen, dakramen en nokken. Dakpannen kunnen verschuiven door storm of vorst, lood rondom schoorstenen kan loslaten en nokbedekking kan barsten.',
+    p2c: 'Een dakkapel combineert beide uitdagingen: kitranden rondom het kozijn en de overgang naar de dakbedekking zijn kwetsbare punten. Krimp en uitzetting door temperatuurwisselingen laten naden loslaten.',
     prijzen: [
       ['Losliggende dakpan vervangen','€ 75 – € 150','1–2 uur'],
       ['Kitnaad dakkapel herstellen','€ 100 – € 250','1–3 uur'],
@@ -70,8 +80,13 @@ const seoPerType = {
       ['Dakbedekking deels vervangen','€ 500 – € 1.500','1–2 dagen'],
       ['Volledige inspectie + offerte','Gratis','30–60 min'],
     ],
+    prijzenIntro: 'De kosten hangen af van de oorzaak, het type dak en de omvang van de schade. Onderstaand een indicatief overzicht. Bij LekkageFix ontvangt u altijd een transparante offerte vooraf — geen verrassingen achteraf.',
+    prijzenNote: '* Prijzen zijn indicatief en afhankelijk van locatie, toegankelijkheid en materiaalkosten. Definitieve prijs na inspectie.',
+    verzekering: 'Of uw verzekering de schade vergoedt hangt af van de oorzaak en uw polisvoorwaarden. Bij plotselinge schade door storm of extreme neerslag is de opstalverzekering vaak van toepassing. Bij slijtage of achterstallig onderhoud vergoeden verzekeraars doorgaans niet. LekkageFix is erkend door alle grote verzekeraars en helpt u met de benodigde documentatie voor uw claim.',
+    h3_3: 'Daklekkage voorkomen: preventief onderhoud',
+    p3: 'Voorkomen is beter dan genezen. Een jaarlijkse inspectie van uw dak — bij voorkeur in het najaar vóór de natte periode — kan dure reparaties voorkomen. Controleer zelf regelmatig of goten vrij zijn van bladeren, of er dakpannen zichtbaar verschoven zijn en of kitrandjes rondom dakkapellen en schoorstenen nog intact zijn.',
     checklist: ['Dakbedekking en naden','Dakdoorvoeren en aansluitingen','Goten en afvoeren','Dakkapel en kozijnen','Nok en randafwerkingen','Eerdere reparaties'],
-    slot: 'Met meer dan 8.000 daklekkages opgelost in heel Nederland heeft LekkageFix de expertise om elk type daklekkage snel en structureel te verhelpen. Onze monteurs zijn gecertificeerd en geven garantie op al het uitgevoerde werk.',
+    slot: 'Met meer dan 8.000 daklekkages opgelost in heel Nederland heeft LekkageFix de expertise om elk type daklekkage snel en structureel te verhelpen. Onze monteurs zijn gecertificeerd, werken met kwalitatief hoogwaardige materialen en geven garantie op al het uitgevoerde werk.',
   },
   waterleiding: {
     h2: 'Waterleiding lekkage reparatie', sub: 'alles wat je moet weten',
@@ -525,12 +540,16 @@ export default function LekkageType({ type }) {
 
               <h3>{seo.h3_1}</h3>
               <p>{seo.p1}</p>
+              {seo.bullets1 && <ul style={{margin:'0.75rem 0 1rem 1.25rem',display:'flex',flexDirection:'column',gap:'0.4rem'}}>{seo.bullets1.map((b,i) => <li key={i} style={{fontSize:'0.9rem',color:'var(--muted)',lineHeight:1.6}}>{b}</li>)}</ul>}
+              {seo.p1b && <p>{seo.p1b}</p>}
 
               <h3>{seo.h3_2}</h3>
               <p>{seo.p2}</p>
+              {seo.p2b && <p style={{marginTop:'0.75rem'}}>{seo.p2b}</p>}
+              {seo.p2c && <p style={{marginTop:'0.75rem'}}>{seo.p2c}</p>}
 
               <h3>Wat kost een {type.naam.toLowerCase()} reparatie?</h3>
-              <p>De kosten hangen af van de oorzaak en de omvang van de schade. Onderstaand een indicatief overzicht — u ontvangt altijd een transparante offerte vooraf.</p>
+              <p>{seo.prijzenIntro || 'De kosten hangen af van de oorzaak en de omvang van de schade. Onderstaand een indicatief overzicht — u ontvangt altijd een transparante offerte vooraf.'}</p>
 
               <div className="price-table">
                 <table>
@@ -544,11 +563,13 @@ export default function LekkageType({ type }) {
                     ))}
                   </tbody>
                 </table>
-                <p className="table-note">* Prijzen zijn indicatief en afhankelijk van locatie en omvang. Definitieve prijs na inspectie.</p>
+                <p className="table-note">{seo.prijzenNote || '* Prijzen zijn indicatief en afhankelijk van locatie en omvang. Definitieve prijs na inspectie.'}</p>
               </div>
 
               <h3>{type.naam} en verzekering</h3>
-              <p>Bij plotselinge schade door storm of extreme neerslag is de opstalverzekering vaak van toepassing. Bij slijtage of achterstallig onderhoud vergoeden verzekeraars doorgaans niet. LekkageFix is erkend door alle grote verzekeraars en helpt u met de documentatie voor uw claim.</p>
+              <p>{seo.verzekering || 'Bij plotselinge schade door storm of extreme neerslag is de opstalverzekering vaak van toepassing. Bij slijtage of achterstallig onderhoud vergoeden verzekeraars doorgaans niet. LekkageFix is erkend door alle grote verzekeraars en helpt u met de documentatie voor uw claim.'}</p>
+
+              {seo.h3_3 && <><h3>{seo.h3_3}</h3><p>{seo.p3}</p></>}
 
               <p style={{marginTop:'1rem'}}>{seo.slot}</p>
             </div>
