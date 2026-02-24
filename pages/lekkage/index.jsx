@@ -41,13 +41,69 @@ export default function LekkageIndex() {
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          "name": "LekkageFix",
-          "url": "https://lekkagefix.nl",
-          "telephone": PHONE,
-          "openingHours": "Mo-Su 00:00-24:00",
-          "areaServed": { "@type": "Country", "name": "Netherlands" },
-          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "2847" }
+          "@graph": [
+            {
+              "@type": "LocalBusiness",
+              "@id": "https://lekkagefix.nl/#business",
+              "name": "LekkageFix",
+              "url": "https://lekkagefix.nl",
+              "telephone": PHONE,
+              "email": EMAIL,
+              "openingHours": "Mo-Su 00:00-24:00",
+              "priceRange": "€€",
+              "areaServed": { "@type": "Country", "name": "Netherlands" },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "2847",
+                "bestRating": "5"
+              },
+              "review": [
+                {
+                  "@type": "Review",
+                  "author": { "@type": "Person", "name": "Martijn V." },
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                  "reviewBody": "Al maanden last van een druipend plafond na regen. LekkageFix vond het lek binnen 20 minuten — een losse dakpan én gescheurde nokbedekking. Dezelfde dag gerepareerd.",
+                  "datePublished": "2025-02-10"
+                },
+                {
+                  "@type": "Review",
+                  "author": { "@type": "Person", "name": "Sandra K." },
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                  "reviewBody": "Plat dak van onze uitbouw lekte al twee winters. Twee andere bedrijven hadden het niet gevonden. LekkageFix traceerde het naar een verkeerd afgedichte dakdoorvoer. Eindelijk droog!",
+                  "datePublished": "2025-01-24"
+                },
+                {
+                  "@type": "Review",
+                  "author": { "@type": "Person", "name": "Karin M." },
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                  "reviewBody": "Gesprongen leiding in de muur. LekkageFix vond de oorzaak snel zonder onnodig sloopwerk. Netjes afgedicht en opgeruimd. Aanrader!",
+                  "datePublished": "2025-02-17"
+                }
+              ]
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lekkagefix.nl" },
+                { "@type": "ListItem", "position": 2, "name": "Lekkage reparatie", "item": "https://lekkagefix.nl/lekkage" }
+              ]
+            },
+            {
+              "@type": "Service",
+              "name": "Lekkage reparatie Nederland",
+              "provider": { "@id": "https://lekkagefix.nl/#business" },
+              "areaServed": { "@type": "Country", "name": "Netherlands" },
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Lekkage reparatie diensten",
+                "itemListElement": lekkageTypes.map(t => ({
+                  "@type": "Offer",
+                  "itemOffered": { "@type": "Service", "name": t.naam, "description": t.omschrijving }
+                }))
+              }
+            }
+          ]
         }) }} />
       </Head>
       <Nav activePath="/lekkage" />
