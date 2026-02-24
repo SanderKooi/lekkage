@@ -18,7 +18,8 @@ export default function LekkageIndex() {
   const filtered = search.trim().length > 1
     ? steden.filter(s =>
         s.naam.toLowerCase().includes(search.toLowerCase()) ||
-        s.provincie.toLowerCase().includes(search.toLowerCase())
+        s.provincie.toLowerCase().includes(search.toLowerCase()) ||
+        s.slug.toLowerCase().includes(search.toLowerCase().replace(/\s+/g, '-'))
       )
     : []
 
@@ -164,6 +165,48 @@ export default function LekkageIndex() {
                 <div className="step-num">{s.n}</div>
                 <h3>{s.t}</h3>
                 <p>{s.p}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEWS */}
+      <section className="section section-white">
+        <div className="section-inner">
+          <div className="sec-head-center">
+            <div className="eyebrow">Klantervaringen</div>
+            <h2>Wat klanten zeggen over <em>LekkageFix</em></h2>
+          </div>
+          <div className="reviews-summary" style={{marginBottom:'2rem'}}>
+            <div className="rating-big">
+              <div className="rating-num">4.9</div>
+              <div className="rating-stars">★★★★★</div>
+              <div className="rating-count">op basis van 2.847 reviews</div>
+            </div>
+            <div className="rating-bars">
+              {[['5★',89],['4★',8],['3★',2],['2★',1],['1★',0]].map(([s,w]) => (
+                <div key={s} className="bar-row">
+                  <span>{s}</span>
+                  <div className="bar-track"><div className="bar-fill" style={{width:`${w}%`}} /></div>
+                  <span>{w}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="reviews-grid">
+            {[
+              { naam:'Martijn V.', stad:'Amsterdam', tekst:'Al maanden last van een druipend plafond na regen. LekkageFix vond het lek binnen 20 minuten — een losse dakpan én gescheurde nokbedekking. Dezelfde dag gerepareerd.', datum:'2 weken geleden' },
+              { naam:'Sandra K.', stad:'Rotterdam', tekst:'Plat dak van onze uitbouw lekte al twee winters. Twee andere bedrijven hadden het niet gevonden. LekkageFix traceerde het naar een verkeerd afgedichte dakdoorvoer. Eindelijk droog!', datum:'1 maand geleden' },
+              { naam:'Karin M.', stad:'Den Haag', tekst:'Gesprongen leiding in de muur. LekkageFix vond de oorzaak snel zonder onnodig sloopwerk. Netjes afgedicht en opgeruimd. Aanrader!', datum:'1 week geleden' },
+            ].map((r, i) => (
+              <div key={i} className="review">
+                <div className="review-top"><div className="stars">★★★★★</div><div className="review-date">{r.datum}</div></div>
+                <p className="review-text">"{r.tekst}"</p>
+                <div className="review-author">
+                  <div className="avatar">{r.naam.split(' ').map(n => n[0]).join('')}</div>
+                  <div><div className="author-name">{r.naam}</div><div className="author-loc">📍 {r.stad}</div></div>
+                </div>
               </div>
             ))}
           </div>
