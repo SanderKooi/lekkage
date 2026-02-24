@@ -13,7 +13,7 @@ const topSteden = steden.slice(0, 8)
 export default function LekkageIndex() {
   const [search, setSearch] = useState('')
   const [openProv, setOpenProv] = useState({})
-  const MAX_VISIBLE = 10
+  const MAX_VISIBLE = 11
 
   const filtered = search.trim().length > 1
     ? steden.filter(s =>
@@ -171,7 +171,7 @@ export default function LekkageIndex() {
       </section>
 
       {/* STEDEN PER PROVINCIE */}
-      <section className="section section-white" id="steden">
+      <section className="section" id="steden" style={{background:'var(--green3)'}}>
         <div className="section-inner">
           <div className="sec-head-center">
             <div className="eyebrow">Werkgebied</div>
@@ -183,6 +183,7 @@ export default function LekkageIndex() {
               const provSteden = steden.filter(s => s.provincie === prov)
               const isOpen = openProv[prov]
               const visible = isOpen ? provSteden : provSteden.slice(0, MAX_VISIBLE)
+              const hasMore = !isOpen && provSteden.length > MAX_VISIBLE
               return (
                 <div key={prov}>
                   <h3 style={{fontSize:'0.82rem',fontWeight:700,color:'var(--green-dark)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:'0.85rem',paddingBottom:'0.5rem',borderBottom:'2px solid var(--green4)'}}>📍 {prov}</h3>
@@ -192,17 +193,25 @@ export default function LekkageIndex() {
                         <span>{s.naam}</span><span className="stad-arrow">→</span>
                       </a>
                     ))}
+                    {hasMore && (
+                      <button
+                        onClick={() => toggleProv(prov)}
+                        className="stad-a"
+                        style={{background:'var(--green4)',border:'1.5px solid var(--green)',cursor:'pointer',fontFamily:'inherit',fontWeight:600,color:'var(--green-dark)',justifyContent:'center',gap:'0.4rem'}}
+                      >
+                        <span>+{provSteden.length - MAX_VISIBLE} meer</span><span className="stad-arrow">▼</span>
+                      </button>
+                    )}
+                    {isOpen && provSteden.length > MAX_VISIBLE && (
+                      <button
+                        onClick={() => toggleProv(prov)}
+                        className="stad-a"
+                        style={{background:'var(--green4)',border:'1.5px solid var(--green)',cursor:'pointer',fontFamily:'inherit',fontWeight:600,color:'var(--green-dark)',justifyContent:'center',gap:'0.4rem'}}
+                      >
+                        <span>Minder tonen</span><span className="stad-arrow">▲</span>
+                      </button>
+                    )}
                   </div>
-                  {provSteden.length > MAX_VISIBLE && (
-                    <button
-                      onClick={() => toggleProv(prov)}
-                      style={{marginTop:'0.75rem',background:'none',border:'1.5px solid var(--green4)',borderRadius:'50px',padding:'0.4rem 1rem',fontSize:'0.8rem',fontWeight:600,color:'var(--green-dark)',cursor:'pointer',fontFamily:'inherit',transition:'all 0.2s'}}
-                      onMouseEnter={e => { e.currentTarget.style.background='var(--green3)' }}
-                      onMouseLeave={e => { e.currentTarget.style.background='none' }}
-                    >
-                      {isOpen ? `▲ Minder steden` : `▼ Nog ${provSteden.length - MAX_VISIBLE} steden in ${prov}`}
-                    </button>
-                  )}
                 </div>
               )
             })}
