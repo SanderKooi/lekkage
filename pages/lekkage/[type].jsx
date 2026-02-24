@@ -1,5 +1,6 @@
-import { PHONE, PHONE_DISPLAY, EMAIL } from '../config'
-import Head from 'next/head'
+const PHONE = '0800-1234'
+const PHONE_DISPLAY = '0800-1234'
+const EMAIL = 'info@lekkagefix.nl'import Head from 'next/head'
 import Nav from '../../components/Nav'
 import { useState, useRef } from 'react'
 import { lekkageTypes, getType, steden } from '../../data'
