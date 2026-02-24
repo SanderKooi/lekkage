@@ -1,3 +1,4 @@
+
 const PHONE = '0800-1234'
 const PHONE_DISPLAY = '0800-1234'
 const EMAIL = 'info@lekkagefix.nl'
@@ -285,7 +286,7 @@ export default function LekkageType({ type }) {
             <div className="form-title">{type.naam} aanvragen</div>
             <div className="form-sub">Gratis & vrijblijvend · snelle reactie</div>
             <div className="fg"><label>Type probleem</label>
-              <select>{type.oorzaken.map(o => <option key={o}>{o}</option>)}<option>Weet ik niet zeker</option></select>
+              <select>{type.oorzaken.map(o => <option key={o.titel}>{o.titel}</option>)}<option>Weet ik niet zeker</option></select>
             </div>
             <div className="form-row">
               <div className="fg"><label>Naam</label><input type="text" placeholder="Jan de Vries" /></div>
