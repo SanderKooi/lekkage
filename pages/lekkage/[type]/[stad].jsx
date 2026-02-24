@@ -35,7 +35,7 @@ export default function LekkageTypeStad({ type, stad }) {
 
   const faqs = [
     { v: `Hoe snel komen jullie bij een ${type.naam.toLowerCase()} in ${stad.naam}?`, a: `We streven ernaar zo snel mogelijk bij je te zijn in ${stad.naam}. Gemiddeld zijn we binnen 30 minuten ter plaatse.` },
-    { v: `Wat zijn veelvoorkomende oorzaken van ${type.naam.toLowerCase()} in ${stad.naam}?`, a: `In ${stad.naam}, met name ${stad.woningtype}, zijn de meest voorkomende oorzaken: ${type.oorzaken.slice(0,3).join(', ')}.` },
+    { v: `Wat zijn veelvoorkomende oorzaken van ${type.naam.toLowerCase()} in ${stad.naam}?`, a: `In ${stad.naam}, met name ${stad.woningtype}, zijn de meest voorkomende oorzaken: ${type.oorzaken.slice(0,3).map(o => o.titel).join(', ')}.` },
     { v: 'Vergoedt mijn verzekering dit?', a: 'Plotselinge lekkages zijn bij de meeste opstalverzekeringen gedekt. Wij helpen met de documentatie voor je claim.' },
     { v: 'Wat kost een reparatie?', a: 'We werken met transparante tarieven en geven altijd een duidelijke prijsopgave voordat we beginnen.' },
     { v: 'Geven jullie garantie?', a: 'Ja — we staan achter ons werk en geven garantie op alle uitgevoerde reparaties.' },
@@ -142,7 +142,7 @@ export default function LekkageTypeStad({ type, stad }) {
                 {type.oorzaken.map((o, i) => (
                   <div key={i} style={{display:'flex',alignItems:'flex-start',gap:'0.85rem',background:'white',border:'1.5px solid var(--border)',borderRadius:'10px',padding:'1rem 1.1rem'}}>
                     <div style={{width:'28px',height:'28px',background:'var(--green3)',color:'var(--green-dark)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.72rem',fontWeight:800,flexShrink:0}}>{i+1}</div>
-                    <p style={{fontSize:'0.83rem',color:'var(--muted)',lineHeight:1.5}}>{o}</p>
+                    <p style={{fontSize:'0.83rem',color:'var(--muted)',lineHeight:1.5}}><strong>{o.icon} {o.titel}</strong> — {o.tekst}</p>
                   </div>
                 ))}
               </div>
