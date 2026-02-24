@@ -211,26 +211,76 @@ export default function LekkageIndex() {
       </section>
 
       {/* SEO BLOK */}
-      <section className="section">
+      <section className="section section-white">
         <div className="section-inner">
-          <div style={{maxWidth:'820px'}}>
-            <div className="eyebrow">Lekkage informatie</div>
-            <h2 style={{marginBottom:'1.5rem'}}>Lekkage reparatie: <em>alles wat je moet weten</em></h2>
+          <div className="seo-grid">
+            <div className="seo-block">
+              <div className="eyebrow">Lekkage informatie</div>
+              <h2 style={{marginBottom:'1.5rem'}}>Lekkage reparatie: <em>alles wat je moet weten</em></h2>
 
-            <h3>Wat is een lekkage en wanneer moet u handelen?</h3>
-            <p>Een lekkage is ongecontroleerde waterindringing in uw woning of gebouw. Van een klein druppeltje op het plafond tot een ondergelopen kelder — elke lekkage vraagt om snelle actie. Water richt in korte tijd aanzienlijke schade aan: houtrot, schimmelvorming, verzwakking van constructies en schade aan interieur. Hoe eerder u ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
+              <h3>Wat is een lekkage en wanneer moet u handelen?</h3>
+              <p>Een lekkage is ongecontroleerde waterindringing in uw woning of gebouw. Van een klein druppeltje op het plafond tot een ondergelopen kelder — elke lekkage vraagt om snelle actie. Water richt in korte tijd aanzienlijke schade aan: houtrot, schimmelvorming, verzwakking van constructies en schade aan interieur. Hoe eerder u ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
 
-            <h3>De 7 meest voorkomende typen lekkages in Nederland</h3>
-            <p>In Nederland komen zeven typen lekkages het meest voor, elk met een eigen oorzaak en aanpak. Daklekkages zijn de meest voorkomende klacht, met name bij platte daken en na stormschade. Waterleidinglekkages kunnen zowel zichtbaar als volledig verborgen in muren of vloeren optreden. Badkamerlekkages ontstaan door versleten kitwerk of beschadigde waterdichte lagen. Rioollekkages herken je aan terugstromend water of aanhoudende geur. Vochtproblemen zijn verraderlijk omdat ze sluipend optreden. Gevellekkages komen veel voor bij oudere woningen met verouderd voegwerk. Kelderwaterdichting is een specialisme op zich, waarbij grondwaterdruk de grote vijand is.</p>
+              <h3>De 7 meest voorkomende typen lekkages in Nederland</h3>
+              <p>In Nederland komen zeven typen lekkages het meest voor, elk met een eigen oorzaak en aanpak:</p>
+              <ul>
+                {lekkageTypes.map(t => <li key={t.slug}><strong>{t.naam}</strong> — {t.omschrijving}</li>)}
+              </ul>
 
-            <h3>Lekkage reparatie kosten: wat kunt u verwachten?</h3>
-            <p>De kosten van lekkage reparatie variëren sterk per type en omvang. Een eenvoudige kitrand vervangen kost tussen de € 80 en € 200. Een daklekkage reparatie begint vanaf € 75 voor een losse dakpan tot € 1.500 of meer voor gedeeltelijke dakbedekking. Rioollekken en kelderwaterdichting zijn de meest kostbare reparaties. Bij LekkageFix ontvangt u altijd een transparante offerte vooraf — volledig vrijblijvend en zonder verborgen kosten.</p>
+              <h3>Lekkage reparatie kosten: wat kunt u verwachten?</h3>
+              <p>De kosten van lekkage reparatie variëren sterk per type en omvang. Een eenvoudige kitrand vervangen kost tussen de € 80 en € 200. Een daklekkage reparatie begint vanaf € 75 voor een losse dakpan tot € 1.500 of meer voor gedeeltelijke dakbedekking. Rioollekken en kelderwaterdichting zijn de meest kostbare reparaties. Bij LekkageFix ontvangt u altijd een transparante offerte vooraf — volledig vrijblijvend en zonder verborgen kosten.</p>
 
-            <h3>Lekkage en uw verzekering</h3>
-            <p>Of uw verzekering de schade vergoedt hangt af van de oorzaak en uw polisvoorwaarden. Plotselinge schade door storm, extreme neerslag of gesprongen leidingen valt doorgaans onder de opstalverzekering. Slijtage, achterstallig onderhoud of geleidelijke lekkages worden vrijwel nooit vergoed. LekkageFix is erkend door alle grote Nederlandse verzekeraars en stelt gedetailleerde rapporten op die u direct kunt gebruiken voor uw schadeclaim.</p>
+              <div className="price-table">
+                <table>
+                  <thead><tr><th scope="col">Type lekkage</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                  <tbody>
+                    {[
+                      ['Daklekkage reparatie','€ 75 – € 1.500','30 min'],
+                      ['Waterleiding reparatie','€ 60 – € 1.200','30 min'],
+                      ['Badkamer dichting','€ 80 – € 2.500','30 min'],
+                      ['Riool inspectie & reparatie','€ 150 – € 4.000','30 min'],
+                      ['Vochtbehandeling','€ 100 – € 2.000','30 min'],
+                      ['Gevel reparatie','€ 100 – € 3.000','30 min'],
+                      ['Kelderwaterdichting','€ 200 – € 12.000','30 min'],
+                      ['Volledige inspectie + offerte','Gratis','30 min'],
+                    ].map(([r,p,t], i, arr) => (
+                      <tr key={i} className={i === arr.length-1 ? 'highlight-row' : ''}>
+                        <td>{i === arr.length-1 ? <strong>{r}</strong> : r}</td>
+                        <td>{p}</td><td>{t}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="table-note">* Prijzen zijn indicatief en afhankelijk van type, omvang en locatie. Definitieve prijs na inspectie.</p>
+              </div>
 
-            <h3>Waarom kiezen voor LekkageFix?</h3>
-            <p>Met meer dan 12.000 opgeloste lekkages en een gemiddelde beoordeling van 4.9 sterren is LekkageFix de meest gekozen lekkage specialist van Nederland. Onze monteurs zijn VCA-gecertificeerd, werken met de nieuwste detectieapparatuur en geven garantie op al het uitgevoerde werk. Dag en nacht bereikbaar, gemiddeld binnen 30 minuten ter plaatse.</p>
+              <h3>Lekkage en uw verzekering</h3>
+              <p>Of uw verzekering de schade vergoedt hangt af van de oorzaak en uw polisvoorwaarden. Plotselinge schade door storm, extreme neerslag of gesprongen leidingen valt doorgaans onder de opstalverzekering. Slijtage, achterstallig onderhoud of geleidelijke lekkages worden vrijwel nooit vergoed. LekkageFix is erkend door alle grote Nederlandse verzekeraars en stelt gedetailleerde rapporten op die u direct kunt gebruiken voor uw schadeclaim.</p>
+
+              <h3>Waarom kiezen voor LekkageFix?</h3>
+              <p>Met meer dan 12.000 opgeloste lekkages en een gemiddelde beoordeling van 4.9 sterren is LekkageFix de meest gekozen lekkage specialist van Nederland. Onze monteurs zijn VCA-gecertificeerd, werken met de nieuwste detectieapparatuur en geven garantie op al het uitgevoerde werk. Dag en nacht bereikbaar, gemiddeld binnen 30 minuten ter plaatse.</p>
+            </div>
+
+            <div className="seo-sticky">
+              <div style={{background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
+                <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Snel handelen?</div>
+                <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Bel direct voor spoedservice. Onze monteurs zijn gemiddeld binnen 30 minuten ter plaatse.</p>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 {PHONE_DISPLAY}</a>
+              </div>
+              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
+                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Onze specialisaties</div>
+                <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
+                  {lekkageTypes.map(t => (
+                    <a key={t.slug} href={`/lekkage/${t.slug}`} style={{display:'flex',alignItems:'center',gap:'0.5rem',color:'var(--muted)',textDecoration:'none',transition:'color 0.2s'}}
+                      onMouseEnter={e => e.currentTarget.style.color='var(--green)'}
+                      onMouseLeave={e => e.currentTarget.style.color='var(--muted)'}
+                    >
+                      <span>{t.icon}</span><span>{t.naam}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
