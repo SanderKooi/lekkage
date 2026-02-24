@@ -5,13 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "export": "next build && next export"
   },
   "dependencies": {
     "next": "^14.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "next-sitemap": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^8.0.0",
