@@ -1,210 +1,384 @@
-export const steden = [
-  // Noord-Holland
-  { naam: 'Amsterdam', slug: 'amsterdam', provincie: 'Noord-Holland', woningtype: 'grachtenpanden en jaren-30 woningen', inwoners: '921.000', fact: 'Door de hoge grondwaterstand en oude bebouwing komen lekkages in Amsterdam vaker voor dan gemiddeld.' },
-  { naam: 'Haarlem', slug: 'haarlem', provincie: 'Noord-Holland', woningtype: 'historische binnenstad en jaren-20 rijtjeswoningen', inwoners: '163.000', fact: 'Veel woningen in Haarlem hebben oude loden leidingen die gevoelig zijn voor lekkage.' },
-  { naam: 'Alkmaar', slug: 'alkmaar', provincie: 'Noord-Holland', woningtype: 'historische panden en naoorlogse woningen', inwoners: '108.000', fact: 'De kleibodem rondom Alkmaar zorgt voor extra druk op funderingen en kelders.' },
-  { naam: 'Zaandam', slug: 'zaandam', provincie: 'Noord-Holland', woningtype: 'traditionele houten bebouwing en nieuwbouw', inwoners: '76.000', fact: 'Houten constructies in Zaandam zijn extra gevoelig voor vochtproblemen.' },
-  { naam: 'Purmerend', slug: 'purmerend', provincie: 'Noord-Holland', woningtype: 'jaren-70 en jaren-80 uitbreidingswijken', inwoners: '81.000', fact: 'Platte daken uit de jaren-70 in Purmerend naderen het einde van hun levensduur.' },
-  { naam: 'Hoofddorp', slug: 'hoofddorp', provincie: 'Noord-Holland', woningtype: 'moderne nieuwbouw en kantoorpanden', inwoners: '79.000', fact: 'Nieuwbouw in Hoofddorp heeft soms last van settingslekkages in de eerste jaren.' },
-  { naam: 'Hilversum', slug: 'hilversum', provincie: 'Noord-Holland', woningtype: 'villa\'s en jaren-30 architectuur', inwoners: '93.000', fact: 'De grote daken van Hilversumse villa\'s vragen om regelmatig onderhoud.' },
-  { naam: 'Amstelveen', slug: 'amstelveen', provincie: 'Noord-Holland', woningtype: 'jaren-60 flatwijken en moderne woningen', inwoners: '92.000', fact: 'Amstelveen heeft veel flatgebouwen uit de jaren-60 met verouderde dakbedekking.' },
-  { naam: 'Hoorn', slug: 'hoorn', provincie: 'Noord-Holland', woningtype: 'historische VOC-stad met grachtenpanden', inwoners: '73.000', fact: 'De historische grachtenhuizen in Hoorn hebben vaak kwetsbare dakvoeten en goten.' },
-  { naam: 'Heerhugowaard', slug: 'heerhugowaard', provincie: 'Noord-Holland', woningtype: 'polderwoningen en nieuwbouwwijken', inwoners: '57.000', fact: 'Heerhugowaard ligt in een polder en heeft hoge grondwaterstanden.' },
-  { naam: 'Enkhuizen', slug: 'enkhuizen', provincie: 'Noord-Holland', woningtype: 'historische vissershuizen en grachtenpanden', inwoners: '18.000', fact: 'De zeewind in Enkhuizen zorgt voor versnelde slijtage van dakbedekking en kitranden.' },
-  { naam: 'Velsen', slug: 'velsen', provincie: 'Noord-Holland', woningtype: 'arbeiderswoningen en naoorlogse bouw', inwoners: '68.000', fact: 'De industrieomgeving rond Velsen zorgt voor extra vuil in dakgoten en afvoeren.' },
-  { naam: 'Beverwijk', slug: 'beverwijk', provincie: 'Noord-Holland', woningtype: 'naoorlogse arbeiderswoningen en rijtjeshuizen', inwoners: '41.000', fact: 'Beverwijk heeft veel identieke naoorlogse woningen waarvan de daken tegelijk verouderen.' },
-  { naam: 'Castricum', slug: 'castricum', provincie: 'Noord-Holland', woningtype: 'duinvillaatjes en grondgebonden gezinswoningen', inwoners: '35.000', fact: 'De zilte zeelucht nabij Castricum tast dakbedekking en metalen dakgoten sneller aan.' },
-  // Zuid-Holland
-  { naam: 'Rotterdam', slug: 'rotterdam', provincie: 'Zuid-Holland', woningtype: 'naoorlogse wederopbouw en moderne architectuur', inwoners: '655.000', fact: 'Rotterdam heeft veel platte daken door de wederopbouwarchitectuur — een bekende lekkageoorzaak.' },
-  { naam: 'Den Haag', slug: 'den-haag', provincie: 'Zuid-Holland', woningtype: 'hofjeswoningen en belle-époque panden', inwoners: '548.000', fact: 'Den Haag heeft veel oudere herenhuizen met complexe dakconstructies.' },
-  { naam: 'Leiden', slug: 'leiden', provincie: 'Zuid-Holland', woningtype: 'historische grachtenpanden en studentenwoningen', inwoners: '124.000', fact: 'De hoge grondwaterstand in Leiden zorgt voor veel vochtproblemen in kelders.' },
-  { naam: 'Delft', slug: 'delft', provincie: 'Zuid-Holland', woningtype: 'historische binnenstad en TU-campuswoningen', inwoners: '103.000', fact: 'Delftse grachtenwoningen hebben vaak oude voegwerk dat water doorlaat.' },
-  { naam: 'Dordrecht', slug: 'dordrecht', provincie: 'Zuid-Holland', woningtype: 'historische havenwoningen en rijtjeshuizen', inwoners: '118.000', fact: 'Als eilandstad heeft Dordrecht extra te maken met waterdrukvariaties.' },
-  { naam: 'Zoetermeer', slug: 'zoetermeer', provincie: 'Zuid-Holland', woningtype: 'jaren-70 en jaren-80 groeikernwoningen', inwoners: '124.000', fact: 'Zoetermeer is gebouwd als groeikern — veel daken uit dezelfde periode die samen verouderen.' },
-  { naam: 'Gouda', slug: 'gouda', provincie: 'Zuid-Holland', woningtype: 'historische panden en grondgebonden woningen', inwoners: '73.000', fact: 'De veenbodem onder Gouda zorgt voor verzakking en daarmee lekkagerisico.' },
-  { naam: 'Schiedam', slug: 'schiedam', provincie: 'Zuid-Holland', woningtype: 'havenwoningen en naoorlogse flats', inwoners: '77.000', fact: 'Schiedamse jeneverhuizen hebben complexe historische dakconstructies.' },
-  // Utrecht
-  { naam: 'Utrecht', slug: 'utrecht', provincie: 'Utrecht', woningtype: 'historische grachtenpanden en studentenwoningen', inwoners: '361.000', fact: 'De unieke werfkelders in Utrecht zijn extra kwetsbaar voor grondwaterlekkage.' },
-  { naam: 'Amersfoort', slug: 'amersfoort', provincie: 'Utrecht', woningtype: 'historische binnenstad en Vathorst nieuwbouw', inwoners: '161.000', fact: 'Amersfoort combineert oude historische panden met moderne nieuwbouwwijken.' },
-  { naam: 'Veenendaal', slug: 'veenendaal', provincie: 'Utrecht', woningtype: 'naoorlogse uitbreidingswijken en nieuwbouw', inwoners: '66.000', fact: 'Veenendaal heeft veel woningen uit de jaren-60 en -70 met verouderde dakbedekking.' },
-  { naam: 'Nieuwegein', slug: 'nieuwegein', provincie: 'Utrecht', woningtype: 'jaren-70 groeikernwoningen', inwoners: '62.000', fact: 'Nieuwegein is volledig gebouwd in de jaren-70 — dakproblemen komen gesynchroniseerd voor.' },
-  { naam: 'Zeist', slug: 'zeist', provincie: 'Utrecht', woningtype: 'villa\'s en bosrijke eengezinswoningen', inwoners: '65.000', fact: 'Bladeren van omliggende bomen verstoppen dakgoten in Zeist bovengemiddeld vaak.' },
-  { naam: 'Woerden', slug: 'woerden', provincie: 'Utrecht', woningtype: 'historische vestingstad en uitleglocaties', inwoners: '53.000', fact: 'De veenbodem in de omgeving van Woerden zorgt voor verzakking en lekkagerisico.' },
-  { naam: 'IJsselstein', slug: 'ijsselstein', provincie: 'Utrecht', woningtype: 'historische vestingstad en grondgebonden woningen', inwoners: '34.000', fact: 'IJsselstein heeft veel historische panden met ouder voegwerk langs de vestingwallen.' },
-  { naam: 'Houten', slug: 'houten', provincie: 'Utrecht', woningtype: 'jaren-80 groeikernwoningen en nieuwbouw', inwoners: '49.000', fact: 'Houten is volledig gebouwd vanaf de jaren-80 — daken naderen nu het einde van hun levensduur.' },
-  { naam: 'Soest', slug: 'soest', provincie: 'Utrecht', woningtype: 'villabebouwing en grondgebonden woningen', inwoners: '45.000', fact: 'De zandgrond onder Soest geeft relatief droge kelders maar kwetsbare funderingen.' },
-  { naam: 'De Bilt', slug: 'de-bilt', provincie: 'Utrecht', woningtype: 'villawijk en ruime eengezinswoningen', inwoners: '43.000', fact: 'De Bilt heeft veel grote daken door de villaarchitectuur — dakonderhoud is essentieel.' },
-  { naam: 'Stichtse Vecht', slug: 'stichtse-vecht', provincie: 'Utrecht', woningtype: 'watervilla\'s en buitenplaatsen', inwoners: '65.000', fact: 'De ligging langs de Vecht zorgt voor hoge grondwaterstanden en kelderlekkages.' },
-  // Noord-Brabant
-  { naam: 'Eindhoven', slug: 'eindhoven', provincie: 'Noord-Brabant', woningtype: 'Philips-woningbouw en moderne architectuur', inwoners: '234.000', fact: 'De Eindhovense Philipswoningen uit de jaren-20 hebben karakteristieke dakproblemen.' },
-  { naam: 'Tilburg', slug: 'tilburg', provincie: 'Noord-Brabant', woningtype: 'textielfabriekswoningen en nieuwbouw', inwoners: '224.000', fact: 'Tilburg heeft veel voormalige fabrieksgebouwen omgebouwd tot woningen met platte daken.' },
-  { naam: 'Breda', slug: 'breda', provincie: 'Noord-Brabant', woningtype: 'vestingstad met historische panden', inwoners: '184.000', fact: 'De vesting Breda heeft veel monumentale panden met specifieke lekkage-uitdagingen.' },
-  { naam: 'Den Bosch', slug: 'den-bosch', provincie: 'Noord-Brabant', woningtype: 'middeleeuwse binnenstad en moderne wijken', inwoners: '154.000', fact: 'Den Bosch heeft de beroemde gotische Sint-Jan — maar ook veel historische woningen met oude dakpannen.' },
-  { naam: 'Helmond', slug: 'helmond', provincie: 'Noord-Brabant', woningtype: 'industriestad met naoorlogse woningbouw', inwoners: '93.000', fact: 'Naoorlogse flatgebouwen in Helmond kampen vaker met gevellekkages.' },
-  { naam: 'Oss', slug: 'oss', provincie: 'Noord-Brabant', woningtype: 'grondgebonden rijtjeshuizen en vrijstaande woningen', inwoners: '93.000', fact: 'Oss heeft veel jaren-60 en -70 woningen met bitumen platte daken.' },
-  { naam: 'Bergen op Zoom', slug: 'bergen-op-zoom', provincie: 'Noord-Brabant', woningtype: 'historische vestingstad met diverse woningtypes', inwoners: '67.000', fact: 'Bergen op Zoom heeft veel historische panden langs de vestingwallen met kwetsbaar voegwerk.' },
-  { naam: 'Roosendaal', slug: 'roosendaal', provincie: 'Noord-Brabant', woningtype: 'grondgebonden woningen en bedrijfspanden', inwoners: '77.000', fact: 'Roosendaal heeft veel jaren-70 woningen met verouderde dakgoten en afvoeren.' },
-  { naam: 'Waalwijk', slug: 'waalwijk', provincie: 'Noord-Brabant', woningtype: 'schoenmakerswerkwoningen en moderne bebouwing', inwoners: '47.000', fact: 'De lage ligging van Waalwijk nabij de Maas verhoogt het risico op grondwaterlekkages.' },
-  { naam: 'Veghel', slug: 'veghel', provincie: 'Noord-Brabant', woningtype: 'grondgebonden gezinswoningen en nieuwbouw', inwoners: '38.000', fact: 'Veghel heeft veel nieuwbouwwijken waar settingslekkages in de eerste jaren voorkomen.' },
-  { naam: 'Uden', slug: 'uden', provincie: 'Noord-Brabant', woningtype: 'grondgebonden woningen en militaire bebouwing', inwoners: '42.000', fact: 'Uden heeft veel woningen gebouwd voor militaire gezinnen met verouderde sanitaire installaties.' },
-  { naam: 'Vught', slug: 'vught', provincie: 'Noord-Brabant', woningtype: 'villabebouwing en bosrijke eengezinswoningen', inwoners: '26.000', fact: 'De grote daken van Vughtse villa\'s vragen om regelmatig preventief onderhoud.' },
-  // Gelderland
-  { naam: 'Nijmegen', slug: 'nijmegen', provincie: 'Gelderland', woningtype: 'heuvelachtige stadsbebouwing en studentenwoningen', inwoners: '178.000', fact: 'De helling waarop Nijmegen is gebouwd zorgt voor extra waterafvoerproblemen.' },
-  { naam: 'Arnhem', slug: 'arnhem', provincie: 'Gelderland', woningtype: 'villawijk Sonsbeek en naoorlogse wederopbouw', inwoners: '163.000', fact: 'Arnhem heeft veel wederopbouwwoningen met platte daken uit de jaren-50.' },
-  { naam: 'Apeldoorn', slug: 'apeldoorn', provincie: 'Gelderland', woningtype: 'bosrijke villabebouwing en grondgebonden woningen', inwoners: '163.000', fact: 'Apeldoorn heeft veel vrijstaande woningen met complexe dakkappen.' },
-  { naam: 'Ede', slug: 'ede', provincie: 'Gelderland', woningtype: 'grondgebonden gezinswoningen en militaire bebouwing', inwoners: '116.000', fact: 'Ede heeft veel jaren-50 woningen gebouwd voor militaire gezinnen — verouderde sanitaire leidingen.' },
-  { naam: 'Harderwijk', slug: 'harderwijk', provincie: 'Gelderland', woningtype: 'historische havenstad en nieuwbouwwijken', inwoners: '48.000', fact: 'De ligging aan het Veluwemeer geeft Harderwijk een hoge luchtvochtigheid.' },
-  { naam: 'Doetinchem', slug: 'doetinchem', provincie: 'Gelderland', woningtype: 'grondgebonden woningen en naoorlogse bebouwing', inwoners: '57.000', fact: 'Doetinchem heeft veel naoorlogse rijtjeswoningen met vergelijkbare dakproblemen.' },
-  { naam: 'Tiel', slug: 'tiel', provincie: 'Gelderland', woningtype: 'rivierstad met diverse woningtypes', inwoners: '42.000', fact: 'De ligging aan de Waal maakt Tiel kwetsbaar voor hoge grondwaterstanden bij hoogwater.' },
-  { naam: 'Wageningen', slug: 'wageningen', provincie: 'Gelderland', woningtype: 'universitaire campus en jaren-60 studentenwoningen', inwoners: '38.000', fact: 'Wageningen heeft veel oudere universitaire gebouwen met platte daken die regelmatig lekken.' },
-  { naam: 'Zevenaar', slug: 'zevenaar', provincie: 'Gelderland', woningtype: 'grondgebonden woningen en nieuwbouw', inwoners: '32.000', fact: 'Zevenaar grenst aan Duitsland en heeft veel naoorlogse bouw met verouderde leidingen.' },
-  { naam: 'Zutphen', slug: 'zutphen', provincie: 'Gelderland', woningtype: 'historische Hanzestad met grachtenpanden', inwoners: '48.000', fact: 'De historische grachtenhuizen in Zutphen hebben kwetsbare kelders door hoge grondwaterstand.' },
-  // Overijssel
-  { naam: 'Enschede', slug: 'enschede', provincie: 'Overijssel', woningtype: 'textielfabriekswoningen en studentenbebouwing', inwoners: '158.000', fact: 'Voormalige fabriekswoningen in Enschede hebben complexe dakconstructies.' },
-  { naam: 'Zwolle', slug: 'zwolle', provincie: 'Overijssel', woningtype: 'historische Hanzestad met diverse woningtypes', inwoners: '129.000', fact: 'Zwolle ligt laag en heeft historisch veel met wateroverlast te maken gehad.' },
-  { naam: 'Deventer', slug: 'deventer', provincie: 'Overijssel', woningtype: 'historische Hanzestad en IJsseloevers', inwoners: '100.000', fact: 'De IJsseloevers in Deventer zorgen voor hoge grondwaterstanden bij hoog water.' },
-  { naam: 'Hengelo', slug: 'hengelo', provincie: 'Overijssel', woningtype: 'industriestad met arbeiderswoningen', inwoners: '80.000', fact: 'Hengelose arbeiderswoningen uit de jaren-30 hebben smallere dakgoten die snel verstopt raken.' },
-  { naam: 'Almelo', slug: 'almelo', provincie: 'Overijssel', woningtype: 'textielfabrieksstad met rijtjeshuizen', inwoners: '72.000', fact: 'Almelo heeft veel identieke rijtjeswoningen — lekkageproblemen komen er systematisch voor.' },
-  // Groningen
-  { naam: 'Groningen', slug: 'groningen', provincie: 'Groningen', woningtype: 'historische binnenstad en studentenwoningen', inwoners: '232.000', fact: 'Groningen heeft veel oude studentenwoningen met verwaarloosde dakbedekking.' },
-  // Friesland
-  { naam: 'Leeuwarden', slug: 'leeuwarden', provincie: 'Friesland', woningtype: 'historische Friese panden en naoorlogse woningen', inwoners: '123.000', fact: 'De windrijke ligging van Leeuwarden zorgt voor extra slijtage aan dakbedekking.' },
-  // Limburg
-  { naam: 'Maastricht', slug: 'maastricht', provincie: 'Limburg', woningtype: 'historische mergelstenen panden', inwoners: '119.000', fact: 'Mergelstenen woningen in Maastricht hebben specifieke vochtproblemen door de poreuze steen.' },
-  { naam: 'Venlo', slug: 'venlo', provincie: 'Limburg', woningtype: 'historische binnenstad en moderne bedrijvenparken', inwoners: '101.000', fact: 'Venlo ligt aan de Maas en heeft te maken met periodiek hoge grondwaterstanden.' },
-  // Drenthe
-  { naam: 'Assen', slug: 'assen', provincie: 'Drenthe', woningtype: 'grondgebonden gezinswoningen en nieuwbouw', inwoners: '68.000', fact: 'Assen heeft veel naoorlogse woningbouw met verouderde leidingen.' },
-  // Flevoland
-  { naam: 'Almere', slug: 'almere', provincie: 'Flevoland', woningtype: 'jaren-80 en -90 nieuwbouwwoningen', inwoners: '215.000', fact: 'Almere is gebouwd op ingepolderd land — de hoge grondwaterstand geeft specifieke lekrisico\'s.' },
-  { naam: 'Lelystad', slug: 'lelystad', provincie: 'Flevoland', woningtype: 'jaren-70 en -80 polderbebouwing', inwoners: '78.000', fact: 'Lelystad heeft veel woningen met platte daken uit de pioniersjaren van de polder.' },
-  // Zeeland
-  { naam: 'Middelburg', slug: 'middelburg', provincie: 'Zeeland', woningtype: 'historische panden en naoorlogse wederopbouw', inwoners: '48.000', fact: 'Middelburg is na de oorlog herbouwd — veel woningen hebben identieke dakconstructies.' },
-  // Zuid-Holland extra
-  { naam: 'Rijswijk', slug: 'rijswijk', provincie: 'Zuid-Holland', woningtype: 'naoorlogse flats en grondgebonden woningen', inwoners: '47.000', fact: 'Rijswijk grenst aan Den Haag en heeft veel identieke naoorlogse flatgebouwen.' },
-  { naam: 'Vlaardingen', slug: 'vlaardingen', provincie: 'Zuid-Holland', woningtype: 'havenwoningen en naoorlogse rijtjeshuizen', inwoners: '72.000', fact: 'De hoge luchtvochtigheid door de Maas zorgt in Vlaardingen voor snellere dakdegradatie.' },
-  { naam: 'Spijkenisse', slug: 'spijkenisse', provincie: 'Zuid-Holland', woningtype: 'jaren-70 groeikernwoningen en flats', inwoners: '73.000', fact: 'Spijkenisse is gebouwd op voormalig veenland — hoge grondwaterstand is een aandachtspunt.' },
-  { naam: 'Alphen aan den Rijn', slug: 'alphen-aan-den-rijn', provincie: 'Zuid-Holland', woningtype: 'rivieroeverbebouwing en nieuwbouwwijken', inwoners: '113.000', fact: 'De ligging aan de Rijn zorgt voor periodiek hoge grondwaterstanden in Alphen.' },
-  { naam: 'Westland', slug: 'westland', provincie: 'Zuid-Holland', woningtype: 'tuinderwoningen en nieuwbouw', inwoners: '111.000', fact: 'Westland heeft veel kassengebied — vocht en condensatie zijn bekende problemen.' },
-  { naam: 'Katwijk', slug: 'katwijk', provincie: 'Zuid-Holland', woningtype: 'kustwoningen en naoorlogse bebouwing', inwoners: '65.000', fact: 'De zilte zeelucht in Katwijk tast dakbedekking en gevelvoegen sneller aan.' },
-]
+import Head from 'next/head'
+import Nav from '../../components/Nav'
+import { useState } from 'react'
+import { lekkageTypes, steden } from '../../data'
 
-export const lekkageTypes = [
-  {
-    naam: 'Daklekkage',
-    slug: 'dak',
-    icon: '🏠',
-    omschrijving: 'Waterindringing via plat dak, schuin dak, pannendak of dakkapel.',
-    intro: 'Een daklekkage is een van de meest voorkomende en kostbare problemen voor huiseigenaren in Nederland. Regen, wind en temperatuurwisselingen tasten dakbedekking aan — soms jarenlang ongemerkt totdat er waterschade zichtbaar wordt.',
-    oorzaken: [
-      { icon:'🌧️', titel:'Verouderd dakbedekking', tekst:'Bitumen, EPDM of PVC die na jaren scheurt of loslaat. Platte daken zijn hiervoor extra gevoelig.' },
-      { icon:'🏚️', titel:'Losliggende dakpannen', tekst:'Storm of vorst verschuift of breekt dakpannen. Water vindt direct een weg naar binnen.' },
-      { icon:'🔩', titel:'Defecte dakdoorvoeren', tekst:'Rondom schoorsteen, dakraam of ventilatiepijp slijt de afdichting. Een bekende maar onderschatte oorzaak.' },
-      { icon:'🍂', titel:'Verstopte goten', tekst:'Bladeren blokkeren de afvoer. Water blijft staan en zoekt via naden en randen naar binnen.' },
-      { icon:'❄️', titel:'Vorstschade', tekst:'Bevroren water in scheuren zet uit en vergroot de beschadiging. Na de winter meest voorkomend.' },
-      { icon:'🧱', titel:'Problemen bij dakkapel', tekst:'De overgang tussen dakkapel en dakvlak is kwetsbaar. Kitranden laten los na beweging of temperatuurwisselingen.' },
-      { icon:'💨', titel:'Stormschade', tekst:'Harde wind tilt dakplaten of pannen op en beschadigt de onderconstructie of dakbedekking.' },
-      { icon:'🔧', titel:'Slechte uitvoering', tekst:'Een eerder uitgevoerde reparatie die niet vakkundig is gedaan. Wij lossen het definitief op.' },
-    ],
-    urgentie: 'hoog',
-    keywords: ['daklekkage', 'lekkage dak', 'dak lekt', 'lekkend dak repareren'],
-  },
-  {
-    naam: 'Waterleiding',
-    slug: 'waterleiding',
-    icon: '🔧',
-    omschrijving: 'Lekkende of gesprongen waterleiding, kraan of cv-installatie.',
-    intro: 'Een lekkende waterleiding kan in korte tijd aanzienlijke schade veroorzaken. Van een druppelende kraan tot een gesprongen leiding — waterlekkages vragen om snelle actie om verdere waterschade te voorkomen.',
-    oorzaken: [
-      { icon:'🪨', titel:'Verouderde leidingen', tekst:'Gecorrodeerde koperen of loden leidingen worden na jaren poreus en beginnen te lekken.' },
-      { icon:'❄️', titel:'Bevroren leidingen', tekst:'Water in leidingen bevriest bij vorst, zet uit en doet de leiding springen.' },
-      { icon:'🔗', titel:'Slechte verbindingen', tekst:'Koppelstukken en verbindingen die loslaten door druk of slijtage.' },
-      { icon:'💦', titel:'Hoge waterdruk', tekst:'Te hoge waterdruk belast leidingen en verbindingen structureel, wat lekkage versnelt.' },
-      { icon:'🔨', titel:'Mechanische beschadiging', tekst:'Verbouwing of grondwerk dat onbedoeld een leiding raakt.' },
-    ],
-    urgentie: 'hoog',
-    keywords: ['waterleiding lekkage', 'gesprongen leiding', 'lekkende waterleiding', 'loodgieter lekkage'],
-  },
-  {
-    naam: 'Badkamerlekkage',
-    slug: 'badkamer',
-    icon: '🚿',
-    omschrijving: 'Lekkage vanuit de badkamer naar de verdieping eronder.',
-    intro: 'Badkamerlekkages worden vaak te laat ontdekt — het water sijpelt door vloeren en wanden voordat het zichtbaar wordt op het plafond eronder. Schimmelvorming en houtrot zijn het gevolg als je te lang wacht.',
-    oorzaken: [
-      { icon:'🛁', titel:'Verouderd kitwerk', tekst:'Kit rondom douche of bad scheurt na jaren. Water sijpelt langs de rand de vloer in.' },
-      { icon:'🚰', titel:'Lekkende afvoer', tekst:'Een defecte sifon of afvoer lekt onder de vloer, onzichtbaar totdat er schade ontstaat.' },
-      { icon:'🪟', titel:'Beschadigde waterdichte laag', tekst:'De waterdichte laag onder tegels raakt beschadigd, waarna water door de vloerconstructie trekt.' },
-      { icon:'🚿', titel:'Lekkende kranen', tekst:'Slecht afgedichte kraanaansluitingen of doucheverbindingen die langzaam lekken.' },
-      { icon:'💨', titel:'Condensatieproblemen', tekst:'Slechte ventilatie zorgt voor condensatie die zich opstapelt in de constructie.' },
-    ],
-    urgentie: 'middel',
-    keywords: ['badkamer lekkage', 'lekkage badkamer', 'douche lekt', 'bad lekt door plafond'],
-  },
-  {
-    naam: 'Rioollekkage',
-    slug: 'riool',
-    icon: '🚰',
-    omschrijving: 'Verstopt of lekkend riool, afvoer of riolering.',
-    intro: 'Een lekkend of verstopt riool is niet alleen vervelend — het kan ook gevaarlijk zijn voor de volksgezondheid. Rioolgas, terugstromend afvalwater en verzakkende leidingen vragen om professionele aanpak.',
-    oorzaken: [
-      { icon:'💥', titel:'Verzakte rioolbuizen', tekst:'Grondverzakking of ouderdom doet buizen breken of verzakken, waarna lekkage ontstaat.' },
-      { icon:'🌿', titel:'Boomwortels', tekst:'Wortels dringen via naden rioolbuizen binnen en blokkeren of beschadigen de leiding.' },
-      { icon:'🧈', titel:'Vetafzetting', tekst:'Vet en zeep stapelen zich op in de leiding en veroorzaken hardnekkige verstoppingen.' },
-      { icon:'🏺', titel:'Terracotta leidingen', tekst:'Oude terracottabuizen worden na decennia bros en gaan scheuren onder druk.' },
-      { icon:'🌍', titel:'Grondverzakking', tekst:'Verzakking van de grond rondom de woning trekt aan leidingen en veroorzaakt breuken.' },
-    ],
-    urgentie: 'hoog',
-    keywords: ['riool lekkage', 'verstopt riool', 'rioollekkage', 'riolering lekkage'],
-  },
-  {
-    naam: 'Vochtproblemen',
-    slug: 'vocht',
-    icon: '💧',
-    omschrijving: 'Schimmel, condensatie, optrekkend vocht of vochtige muren.',
-    intro: 'Vochtproblemen zijn verraderlijk — ze zijn niet altijd direct zichtbaar maar kunnen jarenlang schade aanrichten aan de constructie van je woning. Schimmel is bovendien schadelijk voor de gezondheid van bewoners.',
-    oorzaken: [
-      { icon:'🌊', titel:'Optrekkend grondvocht', tekst:'Vocht trekt via de fundering omhoog in muren als de waterkering ontbreekt of versleten is.' },
-      { icon:'💨', titel:'Condensatie', tekst:'Onvoldoende ventilatie zorgt voor vochtige lucht die condenseert op koude oppervlakken.' },
-      { icon:'🧱', titel:'Doorslag via gevel', tekst:'Regenwater trekt door de gevel of spouwmuur naar binnen, met natte muren als gevolg.' },
-      { icon:'🍂', titel:'Lekkende dakgoot', tekst:'Een verstopte of lekkende dakgoot laat water langs de gevel lopen, wat vocht veroorzaakt.' },
-      { icon:'🏠', titel:'Onvoldoende isolatie', tekst:'Koudebruggen in de constructie veroorzaken condensatie op de binnenkant van muren.' },
-    ],
-    urgentie: 'middel',
-    keywords: ['vochtproblemen', 'schimmel muur', 'optrekkend vocht', 'vochtige muren'],
-  },
-  {
-    naam: 'Gevellekkage',
-    slug: 'gevel',
-    icon: '🧱',
-    omschrijving: 'Waterindringing via gevels, spouwmuur of kozijnen.',
-    intro: 'Gevellekkages worden door veel eigenaren niet herkend als zodanig — vochtige muren worden toegeschreven aan condensatie terwijl het water van buiten naar binnen trekt. Zeker bij oudere woningen met slechte voegen.',
-    oorzaken: [
-      { icon:'🧱', titel:'Verouderd voegwerk', tekst:'Voegwerk slijt na jaren en wordt poreus. Regenwater trekt via de voegen de muur in.' },
-      { icon:'🪟', titel:'Loslatende kit', tekst:'Kit rondom kozijnen en deuren krimpt en scheurt, waarna water langs het kozijn naar binnen loopt.' },
-      { icon:'🏚️', titel:'Spouwmuurproblemen', tekst:'Spouwmuurisolatie die vocht vasthoudt of spinbinders die als brug fungeren.' },
-      { icon:'⚡', titel:'Scheurvorming', tekst:'Scheuren in de gevel door verzakking of thermische beweging laten water direct door.' },
-      { icon:'💧', titel:'Ontbrekende waterkering', tekst:'Boven kozijnen of bij aansluitingen ontbreekt een lekdorpel of waterkerende laag.' },
-    ],
-    urgentie: 'middel',
-    keywords: ['gevellekkage', 'lekkage gevel', 'spouwmuur lekkage', 'vocht door muur'],
-  },
-  {
-    naam: 'Kelderwaterdichting',
-    slug: 'kelder',
-    icon: '🏚️',
-    omschrijving: 'Grondwater of regenwater dat de kelder binnendringt.',
-    intro: 'Een lekkende kelder is een van de meest complexe lekkageproblemen. Grondwaterdruk, capillaire werking en directe waterindringing vragen elk om een andere aanpak. Tijdig ingrijpen voorkomt structurele schade.',
-    oorzaken: [
-      { icon:'🌊', titel:'Hoge grondwaterstand', tekst:'Na veel neerslag stijgt het grondwater en drukt via de vloer of wanden de kelder in.' },
-      { icon:'🏚️', titel:'Verouderde waterdichting', tekst:'De oorspronkelijke waterdichting is na decennia versleten of nooit aangebracht.' },
-      { icon:'⚡', titel:'Scheuren in kelderwand', tekst:'Betonscheuren door zetting of thermische beweging zijn directe toegangswegen voor water.' },
-      { icon:'🚰', titel:'Verstopte drainage', tekst:'Een verstopt drainagesysteem kan het grondwater niet meer afvoeren, waardoor het opstuwt.' },
-      { icon:'🧱', titel:'Capillaire werking', tekst:'Vocht trekt via microscopisch kleine poriën in beton of metselwerk langzaam naar binnen.' },
-    ],
-    urgentie: 'middel',
-    keywords: ['kelder lekkage', 'lekkende kelder', 'water in kelder', 'kelder waterdicht maken'],
-  },
-]
+const PHONE = '0800-1234'
+const PHONE_DISPLAY = '0800-1234'
+const EMAIL = 'info@lekkagefix.nl'
 
-export const getSted = (slug) => steden.find(s => s.slug === slug)
-export const getType = (slug) => lekkageTypes.find(t => t.slug === slug)
+const provincies = [...new Set(steden.map(s => s.provincie))].sort()
+const topSteden = steden.slice(0, 8)
+
+export default function LekkageIndex() {
+  const [search, setSearch] = useState('')
+  const [openProv, setOpenProv] = useState({})
+  const MAX_VISIBLE = 11
+
+  const filtered = search.trim().length > 1
+    ? steden.filter(s =>
+        s.naam.toLowerCase().includes(search.toLowerCase()) ||
+        s.provincie.toLowerCase().includes(search.toLowerCase()) ||
+        s.slug.toLowerCase().includes(search.toLowerCase().replace(/\s+/g, '-'))
+      )
+    : []
+
+  function toggleProv(prov) {
+    setOpenProv(p => ({ ...p, [prov]: !p[prov] }))
+  }
+
+  return (
+    <>
+      <Head>
+        <title>Lekkage Reparatie Nederland – Alle Diensten & Steden | LekkageFix</title>
+        <meta name="description" content="Lekkage reparatie in heel Nederland. Daklekkage, waterleiding, badkamer, riool, vocht, gevel of kelder — gecertificeerde vakmensen, gemiddeld 30 min ter plaatse. Gratis offerte." />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://lekkagefix.nl/lekkage" />
+        <meta property="og:title" content="Lekkage Reparatie Nederland – Alle Diensten | LekkageFix" />
+        <meta property="og:description" content="Lekkage reparatie in heel Nederland. 7 specialisaties, 130 steden, 24/7 bereikbaar." />
+        <meta property="og:url" content="https://lekkagefix.nl/lekkage" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": "LekkageFix",
+          "url": "https://lekkagefix.nl",
+          "telephone": PHONE,
+          "openingHours": "Mo-Su 00:00-24:00",
+          "areaServed": { "@type": "Country", "name": "Netherlands" },
+          "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "2847" }
+        }) }} />
+      </Head>
+      <Nav activePath="/lekkage" />
+
+      {/* BREADCRUMB */}
+      <div className="breadcrumb-bar">
+        <div className="breadcrumb">
+          <a href="/">Home</a><span className="breadcrumb-sep">›</span>
+          <span>Lekkage reparatie</span>
+        </div>
+      </div>
+
+      {/* HERO */}
+      <section className="hero">
+        <div className="hero-dots" />
+        <div className="hero-inner" style={{gridTemplateColumns:'1fr',maxWidth:'820px',margin:'0 auto',textAlign:'center'}}>
+          <div>
+            <div className="hero-badge"><span className="pulse" /> 24/7 bereikbaar · heel Nederland</div>
+            <h1>Lekkage reparatie — <em>snel, vakkundig & gegarandeerd</em></h1>
+            <p className="hero-sub" style={{margin:'0 auto 2rem',maxWidth:'620px'}}>Van daklekkage tot rioolprobleem — onze gecertificeerde vakmensen lossen elk type lekkage op. Gemiddeld binnen 30 minuten ter plaatse, dag en nacht.</p>
+
+            {/* ZOEKBALK */}
+            <div style={{position:'relative',maxWidth:'480px',margin:'0 auto 2rem'}}>
+              <input
+                type="text"
+                placeholder="Zoek op stad of postcode..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                style={{width:'100%',padding:'1rem 1.25rem 1rem 3rem',borderRadius:'50px',border:'2px solid var(--green4)',fontSize:'1rem',fontFamily:'inherit',outline:'none',boxSizing:'border-box',background:'white',boxShadow:'0 4px 16px rgba(0,0,0,0.08)'}}
+              />
+              <span style={{position:'absolute',left:'1.1rem',top:'50%',transform:'translateY(-50%)',fontSize:'1.1rem'}}>🔍</span>
+              {filtered.length > 0 && (
+                <div style={{position:'absolute',top:'calc(100% + 8px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',boxShadow:'0 8px 24px rgba(0,0,0,0.12)',zIndex:100,overflow:'hidden'}}>
+                  {filtered.slice(0,6).map(s => (
+                    <a key={s.slug} href={`/lekkage/dak/${s.slug}`} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.75rem 1.25rem',textDecoration:'none',color:'var(--text)',borderBottom:'1px solid var(--border)',fontSize:'0.9rem',transition:'background 0.15s'}}
+                      onMouseEnter={e => e.currentTarget.style.background='var(--green3)'}
+                      onMouseLeave={e => e.currentTarget.style.background='white'}
+                    >
+                      <span>📍 {s.naam}</span>
+                      <span style={{fontSize:'0.78rem',color:'var(--muted)'}}>{s.provincie}</span>
+                    </a>
+                  ))}
+                  {filtered.length > 6 && <div style={{padding:'0.6rem 1.25rem',fontSize:'0.8rem',color:'var(--muted)',textAlign:'center'}}>{filtered.length - 6} meer resultaten</div>}
+                </div>
+              )}
+              {search.trim().length > 1 && filtered.length === 0 && (
+                <div style={{position:'absolute',top:'calc(100% + 8px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1rem 1.25rem',fontSize:'0.9rem',color:'var(--muted)',boxShadow:'0 8px 24px rgba(0,0,0,0.12)',zIndex:100}}>
+                  Geen resultaten gevonden. Bel ons op {PHONE_DISPLAY}.
+                </div>
+              )}
+            </div>
+
+            <div className="hero-stats">
+              <div className="stat-item"><div className="stat-val">30<sup>min</sup></div><div className="stat-key">Gem. reactie</div></div>
+              <div className="stat-item"><div className="stat-val">4.9<sup>★</sup></div><div className="stat-key">Beoordeling</div></div>
+              <div className="stat-item"><div className="stat-val">7</div><div className="stat-key">Specialisaties</div></div>
+              <div className="stat-item"><div className="stat-val">24<sup>/7</sup></div><div className="stat-key">Bereikbaar</div></div>
+            </div>
+            <div className="hero-actions" style={{justifyContent:'center'}}>
+              <a href={`tel:${PHONE}`} className="btn-call">📞 Bel direct: {PHONE_DISPLAY}</a>
+              <a href="#diensten" className="btn-ghost">Kies jouw type →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TRUST BAR */}
+      <div className="trust-bar">
+        <div className="trust-inner">
+          <div className="ti-item"><span className="ti-check">✓</span><span>Gemiddeld <strong>30 min</strong> ter plaatse</span></div>
+          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Garantie</strong> op al het werk</span></div>
+          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Erkend</strong> door verzekeraars</span></div>
+          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Transparante</strong> prijzen</span></div>
+          <div className="ti-item"><span className="ti-check">✓</span><span><strong>24/7</strong> bereikbaar</span></div>
+        </div>
+      </div>
+
+      {/* DIENSTEN */}
+      <section className="section" id="diensten">
+        <div className="section-inner">
+          <div className="sec-head-center">
+            <div className="eyebrow">Specialisaties</div>
+            <h2>Elk type lekkage <em>opgelost</em></h2>
+            <p className="sec-sub">Kies uw type lekkage voor gedetailleerde informatie, prijzen en een overzicht van steden waar wij actief zijn.</p>
+          </div>
+          <div className="svc-grid">
+            {lekkageTypes.map(t => (
+              <a key={t.slug} href={`/lekkage/${t.slug}`} className="svc">
+                <div className="svc-icon">{t.icon}</div>
+                <h3>{t.naam}</h3>
+                <p>{t.omschrijving}</p>
+                <div className="svc-cta">Meer over {t.naam.toLowerCase()} →</div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WERKWIJZE */}
+      <section className="section section-alt">
+        <div className="section-inner">
+          <div className="sec-head-center">
+            <div className="eyebrow">Werkwijze</div>
+            <h2>Van melding tot <em>oplossing</em></h2>
+            <p className="sec-sub">Helder en transparant — zo lossen we elk lekkageprobleem op.</p>
+          </div>
+          <div className="steps">
+            {[
+              {n:'1',t:'Melding',p:'Bel of stuur een aanvraag. We bespreken het probleem en plannen direct een afspraak in.'},
+              {n:'2',t:'Vakman onderweg',p:'De dichtstbijzijnde gecertificeerde monteur rijdt naar je toe. Gemiddeld binnen 30 minuten.'},
+              {n:'3',t:'Inspectie & offerte',p:'Grondige inspectie met moderne detectieapparatuur. Transparante prijsopgave vooraf — geen verrassingen.'},
+              {n:'4',t:'Opgelost & gegarandeerd',p:'Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten.'},
+            ].map(s => (
+              <div key={s.n} className="step">
+                <div className="step-num">{s.n}</div>
+                <h3>{s.t}</h3>
+                <p>{s.p}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEWS */}
+      <section className="section section-white">
+        <div className="section-inner">
+          <div className="sec-head-center">
+            <div className="eyebrow">Klantervaringen</div>
+            <h2>Wat klanten zeggen over <em>LekkageFix</em></h2>
+          </div>
+          <div className="reviews-summary" style={{marginBottom:'2rem'}}>
+            <div className="rating-big">
+              <div className="rating-num">4.9</div>
+              <div className="rating-stars">★★★★★</div>
+              <div className="rating-count">op basis van 2.847 reviews</div>
+            </div>
+            <div className="rating-bars">
+              {[['5★',89],['4★',8],['3★',2],['2★',1],['1★',0]].map(([s,w]) => (
+                <div key={s} className="bar-row">
+                  <span>{s}</span>
+                  <div className="bar-track"><div className="bar-fill" style={{width:`${w}%`}} /></div>
+                  <span>{w}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="reviews-grid">
+            {[
+              { naam:'Martijn V.', stad:'Amsterdam', tekst:'Al maanden last van een druipend plafond na regen. LekkageFix vond het lek binnen 20 minuten — een losse dakpan én gescheurde nokbedekking. Dezelfde dag gerepareerd.', datum:'2 weken geleden' },
+              { naam:'Sandra K.', stad:'Rotterdam', tekst:'Plat dak van onze uitbouw lekte al twee winters. Twee andere bedrijven hadden het niet gevonden. LekkageFix traceerde het naar een verkeerd afgedichte dakdoorvoer. Eindelijk droog!', datum:'1 maand geleden' },
+              { naam:'Karin M.', stad:'Den Haag', tekst:'Gesprongen leiding in de muur. LekkageFix vond de oorzaak snel zonder onnodig sloopwerk. Netjes afgedicht en opgeruimd. Aanrader!', datum:'1 week geleden' },
+            ].map((r, i) => (
+              <div key={i} className="review">
+                <div className="review-top"><div className="stars">★★★★★</div><div className="review-date">{r.datum}</div></div>
+                <p className="review-text">"{r.tekst}"</p>
+                <div className="review-author">
+                  <div className="avatar">{r.naam.split(' ').map(n => n[0]).join('')}</div>
+                  <div><div className="author-name">{r.naam}</div><div className="author-loc">📍 {r.stad}</div></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* STEDEN PER PROVINCIE */}
+      <section className="section" id="steden" style={{background:'var(--green3)'}}>
+        <div className="section-inner">
+          <div className="sec-head-center">
+            <div className="eyebrow">Werkgebied</div>
+            <h2>Lekkage reparatie in <em>jouw stad</em></h2>
+            <p className="sec-sub">Wij zijn actief in 130+ steden door heel Nederland. Selecteer uw stad voor lokale informatie en direct een vakman aanvragen.</p>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:'2rem'}}>
+            {provincies.map(prov => {
+              const provSteden = steden.filter(s => s.provincie === prov)
+              const isOpen = openProv[prov]
+              const visible = isOpen ? provSteden : provSteden.slice(0, MAX_VISIBLE)
+              const hasMore = !isOpen && provSteden.length > MAX_VISIBLE
+              return (
+                <div key={prov}>
+                  <h3 style={{fontSize:'0.82rem',fontWeight:700,color:'var(--green-dark)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:'0.85rem',paddingBottom:'0.5rem',borderBottom:'2px solid var(--green4)'}}>📍 {prov}</h3>
+                  <div className="steden-grid">
+                    {visible.map(s => (
+                      <a key={s.slug} href={`/lekkage/dak/${s.slug}`} className="stad-a">
+                        <span>{s.naam}</span><span className="stad-arrow">→</span>
+                      </a>
+                    ))}
+                    {hasMore && (
+                      <button
+                        onClick={() => toggleProv(prov)}
+                        className="stad-a"
+                        style={{background:'var(--green4)',border:'1.5px solid var(--green)',cursor:'pointer',fontFamily:'inherit',fontWeight:600,color:'var(--green-dark)',justifyContent:'center',gap:'0.4rem'}}
+                      >
+                        <span>+{provSteden.length - MAX_VISIBLE} meer</span><span className="stad-arrow">▼</span>
+                      </button>
+                    )}
+                    {isOpen && provSteden.length > MAX_VISIBLE && (
+                      <button
+                        onClick={() => toggleProv(prov)}
+                        className="stad-a"
+                        style={{background:'var(--green4)',border:'1.5px solid var(--green)',cursor:'pointer',fontFamily:'inherit',fontWeight:600,color:'var(--green-dark)',justifyContent:'center',gap:'0.4rem'}}
+                      >
+                        <span>Minder tonen</span><span className="stad-arrow">▲</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO BLOK */}
+      <section className="section section-white">
+        <div className="section-inner">
+          <div className="seo-grid">
+            <div className="seo-block">
+              <div className="eyebrow">Lekkage informatie</div>
+              <h2 style={{marginBottom:'1.5rem'}}>Lekkage reparatie: <em>alles wat je moet weten</em></h2>
+
+              <h3>Wat is een lekkage en wanneer moet u handelen?</h3>
+              <p>Een lekkage is ongecontroleerde waterindringing in uw woning of gebouw. Van een klein druppeltje op het plafond tot een ondergelopen kelder — elke lekkage vraagt om snelle actie. Water richt in korte tijd aanzienlijke schade aan: houtrot, schimmelvorming, verzwakking van constructies en schade aan interieur. Hoe eerder u ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
+
+              <h3>De 7 meest voorkomende typen lekkages in Nederland</h3>
+              <p>In Nederland komen zeven typen lekkages het meest voor, elk met een eigen oorzaak en aanpak:</p>
+              <ul>
+                {lekkageTypes.map(t => <li key={t.slug}><strong>{t.naam}</strong> — {t.omschrijving}</li>)}
+              </ul>
+
+              <h3>Lekkage reparatie kosten: wat kunt u verwachten?</h3>
+              <p>De kosten van lekkage reparatie variëren sterk per type en omvang. Een eenvoudige kitrand vervangen kost tussen de € 80 en € 200. Een daklekkage reparatie begint vanaf € 75 voor een losse dakpan tot € 1.500 of meer voor gedeeltelijke dakbedekking. Rioollekken en kelderwaterdichting zijn de meest kostbare reparaties. Bij LekkageFix ontvangt u altijd een transparante offerte vooraf — volledig vrijblijvend en zonder verborgen kosten.</p>
+
+              <div className="price-table">
+                <table>
+                  <thead><tr><th scope="col">Type lekkage</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                  <tbody>
+                    {[
+                      ['Daklekkage reparatie','€ 75 – € 1.500','30 min'],
+                      ['Waterleiding reparatie','€ 60 – € 1.200','30 min'],
+                      ['Badkamer dichting','€ 80 – € 2.500','30 min'],
+                      ['Riool inspectie & reparatie','€ 150 – € 4.000','30 min'],
+                      ['Vochtbehandeling','€ 100 – € 2.000','30 min'],
+                      ['Gevel reparatie','€ 100 – € 3.000','30 min'],
+                      ['Kelderwaterdichting','€ 200 – € 12.000','30 min'],
+                      ['Volledige inspectie + offerte','Gratis','30 min'],
+                    ].map(([r,p,t], i, arr) => (
+                      <tr key={i} className={i === arr.length-1 ? 'highlight-row' : ''}>
+                        <td>{i === arr.length-1 ? <strong>{r}</strong> : r}</td>
+                        <td>{p}</td><td>{t}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="table-note">* Prijzen zijn indicatief en afhankelijk van type, omvang en locatie. Definitieve prijs na inspectie.</p>
+              </div>
+
+              <h3>Lekkage en uw verzekering</h3>
+              <p>Of uw verzekering de schade vergoedt hangt af van de oorzaak en uw polisvoorwaarden. Plotselinge schade door storm, extreme neerslag of gesprongen leidingen valt doorgaans onder de opstalverzekering. Slijtage, achterstallig onderhoud of geleidelijke lekkages worden vrijwel nooit vergoed. LekkageFix is erkend door alle grote Nederlandse verzekeraars en stelt gedetailleerde rapporten op die u direct kunt gebruiken voor uw schadeclaim.</p>
+
+              <h3>Waarom kiezen voor LekkageFix?</h3>
+              <p>Met meer dan 12.000 opgeloste lekkages en een gemiddelde beoordeling van 4.9 sterren is LekkageFix de meest gekozen lekkage specialist van Nederland. Onze monteurs zijn VCA-gecertificeerd, werken met de nieuwste detectieapparatuur en geven garantie op al het uitgevoerde werk. Dag en nacht bereikbaar, gemiddeld binnen 30 minuten ter plaatse.</p>
+            </div>
+
+            <div className="seo-sticky">
+              <div style={{background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
+                <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Snel handelen?</div>
+                <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Bel direct voor spoedservice. Onze monteurs zijn gemiddeld binnen 30 minuten ter plaatse.</p>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 {PHONE_DISPLAY}</a>
+              </div>
+              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
+                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Onze specialisaties</div>
+                <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
+                  {lekkageTypes.map(t => (
+                    <a key={t.slug} href={`/lekkage/${t.slug}`} style={{display:'flex',alignItems:'center',gap:'0.5rem',color:'var(--muted)',textDecoration:'none',transition:'color 0.2s'}}
+                      onMouseEnter={e => e.currentTarget.style.color='var(--green)'}
+                      onMouseLeave={e => e.currentTarget.style.color='var(--muted)'}
+                    >
+                      <span>{t.icon}</span><span>{t.naam}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BOTTOM CTA */}
+      <div className="bottom-cta">
+        <div className="eyebrow" style={{color:'#a8e6c0'}}>Direct geholpen</div>
+        <h2 style={{color:'white'}}>Lekkage? Wacht niet te lang.</h2>
+        <p>Hoe eerder je belt, hoe kleiner de schade. Onze vakmensen staan dag en nacht voor je klaar.</p>
+        <div className="cta-btns">
+          <a href={`tel:${PHONE}`} className="btn-call">📞 Bel nu: {PHONE_DISPLAY}</a>
+          <a href="#diensten" className="btn-white-ghost">Gratis offerte aanvragen</a>
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <footer>
+        <div className="footer-top">
+          <div>
+            <div className="footer-logo">Lekkage<b>Fix</b></div>
+            <p className="footer-desc">Vakkundige lekkage reparaties door heel Nederland. Gecertificeerde vakmensen, transparante prijzen, garantie op werk.</p>
+          </div>
+          <div className="footer-col">
+            <h4>Diensten</h4>
+            {lekkageTypes.map(t => <a key={t.slug} href={`/lekkage/${t.slug}`}>{t.naam}</a>)}
+          </div>
+          <div className="footer-col">
+            <h4>Steden</h4>
+            {topSteden.slice(0,5).map(s => <a key={s.slug} href={`/lekkage/dak/${s.slug}`}>{s.naam}</a>)}
+            <a href="#steden">Alle steden →</a>
+          </div>
+          <div className="footer-col">
+            <h4>Contact</h4>
+            <a href={`tel:${PHONE}`}>{PHONE_DISPLAY} (24/7)</a>
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            <a href="/">Gratis offerte</a>
+            <a href="/blog">Blog & tips</a>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <p>© 2025 LekkageFix · KvK 89586557 · <a href="#">Privacy</a> · <a href="#">Voorwaarden</a></p>
+          <div className="cert-badges"><span className="cert">VCA ✓</span><span className="cert">ISO 9001</span><span className="cert">Erkend verzekeraar</span></div>
+        </div>
+      </footer>
+
+      <a href={`tel:${PHONE}`} className="mobile-cta">📞 Bel nu: {PHONE_DISPLAY} (24/7 bereikbaar)</a>
+    </>
+  )
+}
