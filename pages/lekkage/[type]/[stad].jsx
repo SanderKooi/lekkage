@@ -336,8 +336,7 @@ export default function LekkageTypeStad({ type, stad }) {
                 height="100%"
                 style={{border:0,display:'block'}}
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3KOU&q=${encodeURIComponent(stad.naam + ', Nederland')}&zoom=12`}
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${stad.lon-0.08}%2C${stad.lat-0.05}%2C${stad.lon+0.08}%2C${stad.lat+0.05}&layer=mapnik&marker=${stad.lat}%2C${stad.lon}`}
               />
             </div>
           </div>
