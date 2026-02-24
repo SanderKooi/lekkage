@@ -1,6 +1,8 @@
 const PHONE = '0800-1234'
 const PHONE_DISPLAY = '0800-1234'
-const EMAIL = 'info@lekkagefix.nl'import Head from 'next/head'
+const EMAIL = 'info@lekkagefix.nl'
+
+import Head from 'next/head'
 import Nav from '../../components/Nav'
 import { useState, useRef } from 'react'
 import { lekkageTypes, getType, steden } from '../../data'
