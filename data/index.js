@@ -7,6 +7,13 @@ export const steden = [
   { naam: 'Purmerend', slug: 'purmerend', provincie: 'Noord-Holland', woningtype: 'jaren-70 en jaren-80 uitbreidingswijken', inwoners: '81.000', fact: 'Platte daken uit de jaren-70 in Purmerend naderen het einde van hun levensduur.' },
   { naam: 'Hoofddorp', slug: 'hoofddorp', provincie: 'Noord-Holland', woningtype: 'moderne nieuwbouw en kantoorpanden', inwoners: '79.000', fact: 'Nieuwbouw in Hoofddorp heeft soms last van settingslekkages in de eerste jaren.' },
   { naam: 'Hilversum', slug: 'hilversum', provincie: 'Noord-Holland', woningtype: 'villa\'s en jaren-30 architectuur', inwoners: '93.000', fact: 'De grote daken van Hilversumse villa\'s vragen om regelmatig onderhoud.' },
+  { naam: 'Amstelveen', slug: 'amstelveen', provincie: 'Noord-Holland', woningtype: 'jaren-60 flatwijken en moderne woningen', inwoners: '92.000', fact: 'Amstelveen heeft veel flatgebouwen uit de jaren-60 met verouderde dakbedekking.' },
+  { naam: 'Hoorn', slug: 'hoorn', provincie: 'Noord-Holland', woningtype: 'historische VOC-stad met grachtenpanden', inwoners: '73.000', fact: 'De historische grachtenhuizen in Hoorn hebben vaak kwetsbare dakvoeten en goten.' },
+  { naam: 'Heerhugowaard', slug: 'heerhugowaard', provincie: 'Noord-Holland', woningtype: 'polderwoningen en nieuwbouwwijken', inwoners: '57.000', fact: 'Heerhugowaard ligt in een polder en heeft hoge grondwaterstanden.' },
+  { naam: 'Enkhuizen', slug: 'enkhuizen', provincie: 'Noord-Holland', woningtype: 'historische vissershuizen en grachtenpanden', inwoners: '18.000', fact: 'De zeewind in Enkhuizen zorgt voor versnelde slijtage van dakbedekking en kitranden.' },
+  { naam: 'Velsen', slug: 'velsen', provincie: 'Noord-Holland', woningtype: 'arbeiderswoningen en naoorlogse bouw', inwoners: '68.000', fact: 'De industrieomgeving rond Velsen zorgt voor extra vuil in dakgoten en afvoeren.' },
+  { naam: 'Beverwijk', slug: 'beverwijk', provincie: 'Noord-Holland', woningtype: 'naoorlogse arbeiderswoningen en rijtjeshuizen', inwoners: '41.000', fact: 'Beverwijk heeft veel identieke naoorlogse woningen waarvan de daken tegelijk verouderen.' },
+  { naam: 'Castricum', slug: 'castricum', provincie: 'Noord-Holland', woningtype: 'duinvillaatjes en grondgebonden gezinswoningen', inwoners: '35.000', fact: 'De zilte zeelucht nabij Castricum tast dakbedekking en metalen dakgoten sneller aan.' },
   // Zuid-Holland
   { naam: 'Rotterdam', slug: 'rotterdam', provincie: 'Zuid-Holland', woningtype: 'naoorlogse wederopbouw en moderne architectuur', inwoners: '655.000', fact: 'Rotterdam heeft veel platte daken door de wederopbouwarchitectuur — een bekende lekkageoorzaak.' },
   { naam: 'Den Haag', slug: 'den-haag', provincie: 'Zuid-Holland', woningtype: 'hofjeswoningen en belle-époque panden', inwoners: '548.000', fact: 'Den Haag heeft veel oudere herenhuizen met complexe dakconstructies.' },
@@ -22,6 +29,12 @@ export const steden = [
   { naam: 'Veenendaal', slug: 'veenendaal', provincie: 'Utrecht', woningtype: 'naoorlogse uitbreidingswijken en nieuwbouw', inwoners: '66.000', fact: 'Veenendaal heeft veel woningen uit de jaren-60 en -70 met verouderde dakbedekking.' },
   { naam: 'Nieuwegein', slug: 'nieuwegein', provincie: 'Utrecht', woningtype: 'jaren-70 groeikernwoningen', inwoners: '62.000', fact: 'Nieuwegein is volledig gebouwd in de jaren-70 — dakproblemen komen gesynchroniseerd voor.' },
   { naam: 'Zeist', slug: 'zeist', provincie: 'Utrecht', woningtype: 'villa\'s en bosrijke eengezinswoningen', inwoners: '65.000', fact: 'Bladeren van omliggende bomen verstoppen dakgoten in Zeist bovengemiddeld vaak.' },
+  { naam: 'Woerden', slug: 'woerden', provincie: 'Utrecht', woningtype: 'historische vestingstad en uitleglocaties', inwoners: '53.000', fact: 'De veenbodem in de omgeving van Woerden zorgt voor verzakking en lekkagerisico.' },
+  { naam: 'IJsselstein', slug: 'ijsselstein', provincie: 'Utrecht', woningtype: 'historische vestingstad en grondgebonden woningen', inwoners: '34.000', fact: 'IJsselstein heeft veel historische panden met ouder voegwerk langs de vestingwallen.' },
+  { naam: 'Houten', slug: 'houten', provincie: 'Utrecht', woningtype: 'jaren-80 groeikernwoningen en nieuwbouw', inwoners: '49.000', fact: 'Houten is volledig gebouwd vanaf de jaren-80 — daken naderen nu het einde van hun levensduur.' },
+  { naam: 'Soest', slug: 'soest', provincie: 'Utrecht', woningtype: 'villabebouwing en grondgebonden woningen', inwoners: '45.000', fact: 'De zandgrond onder Soest geeft relatief droge kelders maar kwetsbare funderingen.' },
+  { naam: 'De Bilt', slug: 'de-bilt', provincie: 'Utrecht', woningtype: 'villawijk en ruime eengezinswoningen', inwoners: '43.000', fact: 'De Bilt heeft veel grote daken door de villaarchitectuur — dakonderhoud is essentieel.' },
+  { naam: 'Stichtse Vecht', slug: 'stichtse-vecht', provincie: 'Utrecht', woningtype: 'watervilla\'s en buitenplaatsen', inwoners: '65.000', fact: 'De ligging langs de Vecht zorgt voor hoge grondwaterstanden en kelderlekkages.' },
   // Noord-Brabant
   { naam: 'Eindhoven', slug: 'eindhoven', provincie: 'Noord-Brabant', woningtype: 'Philips-woningbouw en moderne architectuur', inwoners: '234.000', fact: 'De Eindhovense Philipswoningen uit de jaren-20 hebben karakteristieke dakproblemen.' },
   { naam: 'Tilburg', slug: 'tilburg', provincie: 'Noord-Brabant', woningtype: 'textielfabriekswoningen en nieuwbouw', inwoners: '224.000', fact: 'Tilburg heeft veel voormalige fabrieksgebouwen omgebouwd tot woningen met platte daken.' },
@@ -29,12 +42,23 @@ export const steden = [
   { naam: 'Den Bosch', slug: 'den-bosch', provincie: 'Noord-Brabant', woningtype: 'middeleeuwse binnenstad en moderne wijken', inwoners: '154.000', fact: 'Den Bosch heeft de beroemde gotische Sint-Jan — maar ook veel historische woningen met oude dakpannen.' },
   { naam: 'Helmond', slug: 'helmond', provincie: 'Noord-Brabant', woningtype: 'industriestad met naoorlogse woningbouw', inwoners: '93.000', fact: 'Naoorlogse flatgebouwen in Helmond kampen vaker met gevellekkages.' },
   { naam: 'Oss', slug: 'oss', provincie: 'Noord-Brabant', woningtype: 'grondgebonden rijtjeshuizen en vrijstaande woningen', inwoners: '93.000', fact: 'Oss heeft veel jaren-60 en -70 woningen met bitumen platte daken.' },
+  { naam: 'Bergen op Zoom', slug: 'bergen-op-zoom', provincie: 'Noord-Brabant', woningtype: 'historische vestingstad met diverse woningtypes', inwoners: '67.000', fact: 'Bergen op Zoom heeft veel historische panden langs de vestingwallen met kwetsbaar voegwerk.' },
+  { naam: 'Roosendaal', slug: 'roosendaal', provincie: 'Noord-Brabant', woningtype: 'grondgebonden woningen en bedrijfspanden', inwoners: '77.000', fact: 'Roosendaal heeft veel jaren-70 woningen met verouderde dakgoten en afvoeren.' },
+  { naam: 'Waalwijk', slug: 'waalwijk', provincie: 'Noord-Brabant', woningtype: 'schoenmakerswerkwoningen en moderne bebouwing', inwoners: '47.000', fact: 'De lage ligging van Waalwijk nabij de Maas verhoogt het risico op grondwaterlekkages.' },
+  { naam: 'Veghel', slug: 'veghel', provincie: 'Noord-Brabant', woningtype: 'grondgebonden gezinswoningen en nieuwbouw', inwoners: '38.000', fact: 'Veghel heeft veel nieuwbouwwijken waar settingslekkages in de eerste jaren voorkomen.' },
+  { naam: 'Uden', slug: 'uden', provincie: 'Noord-Brabant', woningtype: 'grondgebonden woningen en militaire bebouwing', inwoners: '42.000', fact: 'Uden heeft veel woningen gebouwd voor militaire gezinnen met verouderde sanitaire installaties.' },
+  { naam: 'Vught', slug: 'vught', provincie: 'Noord-Brabant', woningtype: 'villabebouwing en bosrijke eengezinswoningen', inwoners: '26.000', fact: 'De grote daken van Vughtse villa\'s vragen om regelmatig preventief onderhoud.' },
   // Gelderland
   { naam: 'Nijmegen', slug: 'nijmegen', provincie: 'Gelderland', woningtype: 'heuvelachtige stadsbebouwing en studentenwoningen', inwoners: '178.000', fact: 'De helling waarop Nijmegen is gebouwd zorgt voor extra waterafvoerproblemen.' },
   { naam: 'Arnhem', slug: 'arnhem', provincie: 'Gelderland', woningtype: 'villawijk Sonsbeek en naoorlogse wederopbouw', inwoners: '163.000', fact: 'Arnhem heeft veel wederopbouwwoningen met platte daken uit de jaren-50.' },
   { naam: 'Apeldoorn', slug: 'apeldoorn', provincie: 'Gelderland', woningtype: 'bosrijke villabebouwing en grondgebonden woningen', inwoners: '163.000', fact: 'Apeldoorn heeft veel vrijstaande woningen met complexe dakkappen.' },
   { naam: 'Ede', slug: 'ede', provincie: 'Gelderland', woningtype: 'grondgebonden gezinswoningen en militaire bebouwing', inwoners: '116.000', fact: 'Ede heeft veel jaren-50 woningen gebouwd voor militaire gezinnen — verouderde sanitaire leidingen.' },
   { naam: 'Harderwijk', slug: 'harderwijk', provincie: 'Gelderland', woningtype: 'historische havenstad en nieuwbouwwijken', inwoners: '48.000', fact: 'De ligging aan het Veluwemeer geeft Harderwijk een hoge luchtvochtigheid.' },
+  { naam: 'Doetinchem', slug: 'doetinchem', provincie: 'Gelderland', woningtype: 'grondgebonden woningen en naoorlogse bebouwing', inwoners: '57.000', fact: 'Doetinchem heeft veel naoorlogse rijtjeswoningen met vergelijkbare dakproblemen.' },
+  { naam: 'Tiel', slug: 'tiel', provincie: 'Gelderland', woningtype: 'rivierstad met diverse woningtypes', inwoners: '42.000', fact: 'De ligging aan de Waal maakt Tiel kwetsbaar voor hoge grondwaterstanden bij hoogwater.' },
+  { naam: 'Wageningen', slug: 'wageningen', provincie: 'Gelderland', woningtype: 'universitaire campus en jaren-60 studentenwoningen', inwoners: '38.000', fact: 'Wageningen heeft veel oudere universitaire gebouwen met platte daken die regelmatig lekken.' },
+  { naam: 'Zevenaar', slug: 'zevenaar', provincie: 'Gelderland', woningtype: 'grondgebonden woningen en nieuwbouw', inwoners: '32.000', fact: 'Zevenaar grenst aan Duitsland en heeft veel naoorlogse bouw met verouderde leidingen.' },
+  { naam: 'Zutphen', slug: 'zutphen', provincie: 'Gelderland', woningtype: 'historische Hanzestad met grachtenpanden', inwoners: '48.000', fact: 'De historische grachtenhuizen in Zutphen hebben kwetsbare kelders door hoge grondwaterstand.' },
   // Overijssel
   { naam: 'Enschede', slug: 'enschede', provincie: 'Overijssel', woningtype: 'textielfabriekswoningen en studentenbebouwing', inwoners: '158.000', fact: 'Voormalige fabriekswoningen in Enschede hebben complexe dakconstructies.' },
   { naam: 'Zwolle', slug: 'zwolle', provincie: 'Overijssel', woningtype: 'historische Hanzestad met diverse woningtypes', inwoners: '129.000', fact: 'Zwolle ligt laag en heeft historisch veel met wateroverlast te maken gehad.' },
@@ -58,6 +82,10 @@ export const steden = [
   // Zuid-Holland extra
   { naam: 'Rijswijk', slug: 'rijswijk', provincie: 'Zuid-Holland', woningtype: 'naoorlogse flats en grondgebonden woningen', inwoners: '47.000', fact: 'Rijswijk grenst aan Den Haag en heeft veel identieke naoorlogse flatgebouwen.' },
   { naam: 'Vlaardingen', slug: 'vlaardingen', provincie: 'Zuid-Holland', woningtype: 'havenwoningen en naoorlogse rijtjeshuizen', inwoners: '72.000', fact: 'De hoge luchtvochtigheid door de Maas zorgt in Vlaardingen voor snellere dakdegradatie.' },
+  { naam: 'Spijkenisse', slug: 'spijkenisse', provincie: 'Zuid-Holland', woningtype: 'jaren-70 groeikernwoningen en flats', inwoners: '73.000', fact: 'Spijkenisse is gebouwd op voormalig veenland — hoge grondwaterstand is een aandachtspunt.' },
+  { naam: 'Alphen aan den Rijn', slug: 'alphen-aan-den-rijn', provincie: 'Zuid-Holland', woningtype: 'rivieroeverbebouwing en nieuwbouwwijken', inwoners: '113.000', fact: 'De ligging aan de Rijn zorgt voor periodiek hoge grondwaterstanden in Alphen.' },
+  { naam: 'Westland', slug: 'westland', provincie: 'Zuid-Holland', woningtype: 'tuinderwoningen en nieuwbouw', inwoners: '111.000', fact: 'Westland heeft veel kassengebied — vocht en condensatie zijn bekende problemen.' },
+  { naam: 'Katwijk', slug: 'katwijk', provincie: 'Zuid-Holland', woningtype: 'kustwoningen en naoorlogse bebouwing', inwoners: '65.000', fact: 'De zilte zeelucht in Katwijk tast dakbedekking en gevelvoegen sneller aan.' },
 ]
 
 export const lekkageTypes = [
