@@ -1,3 +1,4 @@
+import { PHONE, PHONE_DISPLAY, EMAIL } from '../config'
 import Head from 'next/head'
 import Nav from '../../components/Nav'
 import { useState, useRef } from 'react'
@@ -211,8 +212,8 @@ export default function LekkageType({ type }) {
   }
 
   const faqs = [
-    { v:`Wat zijn de meest voorkomende oorzaken van ${type.naam.toLowerCase()}?`, a:`De meest voorkomende oorzaken zijn: ${type.oorzaken.join(', ')}.` },
-    { v:'Hoe snel kunnen jullie komen?', a:'Gemiddeld binnen 30 minuten ter plaatse. Bel 0800-1234 voor een actuele inschatting.' },
+    { v:`Wat zijn de meest voorkomende oorzaken van ${type.naam.toLowerCase()}?`, a:`De meest voorkomende oorzaken zijn: ${type.oorzaken.map(o => o.titel).join(', ')}.` },
+    { v:'Hoe snel kunnen jullie komen?', a:'Gemiddeld binnen 30 minuten ter plaatse. Bel {PHONE_DISPLAY} voor een actuele inschatting.' },
     { v:'Wat kost een reparatie?', a:'Kosten variëren per situatie. U ontvangt altijd een transparante offerte vooraf.' },
     { v:'Vergoedt mijn verzekering dit?', a:'Bij plotselinge schade is de opstalverzekering vaak van toepassing. Wij helpen met de documentatie.' },
     { v:'Geven jullie garantie?', a:'Ja — we geven garantie op alle uitgevoerde reparaties.' },
@@ -222,7 +223,7 @@ export default function LekkageType({ type }) {
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type":"LocalBusiness", "@id":"https://lekkagefix.nl/#business", "name":"LekkageFix", "url":"https://lekkagefix.nl", "telephone":"0800-1234", "openingHours":"Mo-Su 00:00-24:00", "priceRange":"€€", "aggregateRating":{ "@type":"AggregateRating", "ratingValue":"4.9", "reviewCount":"2847", "bestRating":"5" } },
+      { "@type":"LocalBusiness", "@id":"https://lekkagefix.nl/#business", "name":"LekkageFix", "url":"https://lekkagefix.nl", "telephone":PHONE, "openingHours":"Mo-Su 00:00-24:00", "priceRange":"€€", "aggregateRating":{ "@type":"AggregateRating", "ratingValue":"4.9", "reviewCount":"2847", "bestRating":"5" } },
       { "@type":"BreadcrumbList", "itemListElement":[ {"@type":"ListItem","position":1,"name":"Home","item":"https://lekkagefix.nl"}, {"@type":"ListItem","position":2,"name":"Lekkage","item":"https://lekkagefix.nl/lekkage"}, {"@type":"ListItem","position":3,"name":type.naam,"item":`https://lekkagefix.nl/lekkage/${type.slug}`} ] },
       { "@type":"FAQPage", "mainEntity":faqs.map(f => ({ "@type":"Question", "name":f.v, "acceptedAnswer":{"@type":"Answer","text":f.a} })) },
       { "@type":"Service", "name":`${type.naam} reparatie`, "provider":{"@id":"https://lekkagefix.nl/#business"}, "areaServed":{"@type":"Country","name":"Netherlands"}, "description":type.intro, "offers":{"@type":"AggregateOffer","lowPrice":seo.prijzen[0][1].replace(/[^0-9]/g,'').slice(0,3),"highPrice":"5000","priceCurrency":"EUR"} }
@@ -273,7 +274,7 @@ export default function LekkageType({ type }) {
               <div className="stat-item"><div className="stat-val">24<sup>/7</sup></div><div className="stat-key">Bereikbaar</div></div>
             </div>
             <div className="hero-actions">
-              <a href="tel:0800-1234" className="btn-call">📞 Bel: 0800-1234</a>
+              <a href={`tel:${PHONE}`} className="btn-call">📞 Bel: {PHONE_DISPLAY}</a>
               <a href="#offerte" className="btn-ghost">Gratis offerte →</a>
             </div>
           </div>
@@ -319,8 +320,9 @@ export default function LekkageType({ type }) {
           <div className="oorzaken-row">
             {type.oorzaken.map((o, i) => (
               <div key={i} className="oorzaak">
-                <div className="oorzaak-icon">{['🔧','💧','🌧️','🏚️','❄️','🔩','🍂','🧱'][i] || '⚠️'}</div>
-                <h3>{o}</h3>
+                <div className="oorzaak-icon">{o.icon}</div>
+                <h3>{o.titel}</h3>
+                <p>{o.tekst}</p>
               </div>
             ))}
           </div>
@@ -551,7 +553,7 @@ export default function LekkageType({ type }) {
               <div style={{background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
                 <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Snel handelen?</div>
                 <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Bel direct voor spoedservice. Onze monteurs zijn gemiddeld binnen 30 minuten ter plaatse.</p>
-                <a href="tel:0800-1234" className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 0800-1234</a>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 {PHONE_DISPLAY}</a>
               </div>
               <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
                 <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Wat wij controleren</div>
@@ -570,7 +572,7 @@ export default function LekkageType({ type }) {
         <h2 style={{color:'white'}}>{type.naam}? Wacht niet te lang.</h2>
         <p>Hoe eerder je belt, hoe kleiner de schade. Onze vakspecialisten staan dag en nacht voor je klaar.</p>
         <div className="cta-btns">
-          <a href="tel:0800-1234" className="btn-call">📞 Bel nu: 0800-1234</a>
+          <a href={`tel:${PHONE}`} className="btn-call">📞 Bel nu: {PHONE_DISPLAY}</a>
           <a href="#offerte" className="btn-white-ghost">Gratis offerte aanvragen</a>
         </div>
       </div>
@@ -593,8 +595,8 @@ export default function LekkageType({ type }) {
           </div>
           <div className="footer-col">
             <h4>Contact</h4>
-            <a href="tel:0800-1234">0800-1234 (24/7)</a>
-            <a href="mailto:info@lekkagefix.nl">info@lekkagefix.nl</a>
+            <a href={`tel:${PHONE}`}>{PHONE_DISPLAY} (24/7)</a>
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
             <a href="#offerte">Gratis offerte</a>
             <a href="/blog">Blog & tips</a>
           </div>
@@ -605,7 +607,7 @@ export default function LekkageType({ type }) {
         </div>
       </footer>
 
-      <a href="tel:0800-1234" className="mobile-cta">📞 Bel nu: 0800-1234 (24/7 bereikbaar)</a>
+      <a href={`tel:${PHONE}`} className="mobile-cta">📞 Bel nu: {PHONE_DISPLAY} (24/7 bereikbaar)</a>
     </>
   )
 }
