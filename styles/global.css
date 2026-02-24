@@ -130,7 +130,10 @@ h2 em{font-style:normal;color:var(--green)}
 .carousel-wrap{overflow:hidden;margin:2rem 0 1.25rem;touch-action:pan-y;cursor:grab;user-select:none}
 .carousel-wrap:active{cursor:grabbing}
 .carousel-track{display:flex;gap:1.25rem;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);will-change:transform}
-.carousel-card{flex:0 0 calc((100% - 2 * 1.25rem) / 3);min-width:0}
+.carousel-card{flex:0 0 calc((100% - 2 * 1.25rem) / 3);min-width:0;text-decoration:none;color:inherit;display:flex;flex-direction:column;background:white;border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;transition:all 0.2s}
+.carousel-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,122,74,0.1)}
+.carousel-card h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
+.carousel-card p{font-size:0.85rem;color:var(--muted);line-height:1.6;flex:1}
 .carousel-nav-top{display:flex;gap:0.5rem;flex-shrink:0;align-items:center}
 .carousel-controls{display:flex;align-items:center;justify-content:center;gap:1rem}
 .carousel-btn{width:46px;height:46px;border-radius:50%;border:2px solid var(--green4);background:var(--green3);color:var(--green-dark);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;box-shadow:0 2px 8px rgba(26,122,74,0.12);padding:0}
@@ -199,8 +202,7 @@ h2 em{font-style:normal;color:var(--green)}
 .svc h3{font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:var(--text)}
 .svc p{color:var(--muted);font-size:0.83rem;line-height:1.7;margin-bottom:auto;padding-bottom:1.25rem}
 .svc-cta{color:var(--green);font-size:0.82rem;font-weight:700;display:flex;align-items:center;gap:0.35rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--border)}
-.svc-cta::after{content:'→';transition:transform 0.2s}
-.svc:hover .svc-cta::after{transform:translateX(4px)}
+.carousel-card:hover .svc-cta{color:var(--green-dark)}
 
 /* ── USP CARDS ── */
 .usp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
