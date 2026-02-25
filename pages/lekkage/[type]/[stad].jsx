@@ -518,8 +518,8 @@ export default function LekkageTypeStad({ type, stad }) {
                 <p style={{fontSize:'0.82rem',opacity:0.9,lineHeight:1.7,marginBottom:'1.25rem',fontStyle:'italic'}}>"{monteur.quote}"</p>
                 <div style={{display:'flex',alignItems:'center',gap:'0.4rem',marginBottom:'0.5rem',opacity:0.75}}>
                   <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
-                    <path d="M2 5 C7 1, 18 1, 24 10" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" strokeDasharray="3 2"/>
-                    <path d="M21 7 L25 11 L20 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    <path d="M2 4 C6 1, 16 1, 22 10 C24 13, 25 15, 24 17" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" strokeDasharray="3 2"/>
+                    <path d="M20 15 L24 18 L26 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
                   <span style={{fontSize:'0.7rem'}}>direct verbonden met {monteur.naam.split(' ')[0]}</span>
                 </div>
