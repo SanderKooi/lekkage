@@ -1,271 +1,222 @@
 import Head from 'next/head'
-import Nav from '../../components/Nav'
-import { useState, useRef } from 'react'
-import { lekkageTypes, getType, steden } from '../../data'
+import Nav from '../../../components/Nav'
+import { useState, useEffect } from 'react'
+import { steden, lekkageTypes, getSted, getType } from '../../../data'
 
 const PHONE = '0800-1234'
 const PHONE_DISPLAY = '0800-1234'
 const EMAIL = 'info@lekkagefix.nl'
 
-export async function getStaticPaths() {
-  return { paths: lekkageTypes.map(t => ({ params: { type: t.slug } })), fallback: false }
+const monteurs = {
+  'Noord-Holland':  { naam: 'Henk van der Berg',  foto: 'HB', functie: 'Lekkage specialist', ervaring: '14 jaar', quote: 'In Noord-Holland ken ik elk woningtype van binnen en buiten.' },
+  'Zuid-Holland':   { naam: 'Marco de Wit',        foto: 'MW', functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Van grachtenpand tot jaren-70 flat — ik los het op.' },
+  'Utrecht':        { naam: 'Jeroen Smit',          foto: 'JS', functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Utrecht kent zijn werfkelders, ik ken de lekkages.' },
+  'Noord-Brabant':  { naam: 'Kevin Janssen',        foto: 'KJ', functie: 'Lekkage specialist', ervaring: '12 jaar', quote: 'Van Eindhoven tot Bergen op Zoom, ik ben er snel bij.' },
+  'Gelderland':     { naam: 'Arjan Meijer',         foto: 'AM', functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'De Gelderse woningbouw heeft geen geheimen voor mij.' },
+  'Overijssel':     { naam: 'Thomas Bos',           foto: 'TB', functie: 'Lekkage specialist', ervaring: '8 jaar',  quote: 'Twente en Zwolle, ik ben altijd in de buurt.' },
+  'Groningen':      { naam: 'Sander Dijkstra',      foto: 'SD', functie: 'Lekkage specialist', ervaring: '7 jaar',  quote: 'Groningse studentenwoningen? Mijn specialiteit.' },
+  'Friesland':      { naam: 'Pieter Visser',        foto: 'PV', functie: 'Lekkage specialist', ervaring: '13 jaar', quote: 'De Friese wind tast daken aan — ik herstel ze.' },
+  'Drenthe':        { naam: 'Rob Hofstra',          foto: 'RH', functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Drentse woningen verdienen vakkundig onderhoud.' },
+  'Flevoland':      { naam: 'Danny Kramer',         foto: 'DK', functie: 'Lekkage specialist', ervaring: '6 jaar',  quote: 'Polderbouw heeft specifieke risico\'s — ik ken ze.' },
+  'Overijssel':     { naam: 'Thomas Bos',           foto: 'TB', functie: 'Lekkage specialist', ervaring: '8 jaar',  quote: 'Twente en Zwolle, ik ben altijd in de buurt.' },
+  'Limburg':        { naam: 'Luc Hermans',          foto: 'LH', functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Mergelstenen huizen zijn mijn specialiteit.' },
+  'Zeeland':        { naam: 'Kees de Vos',          foto: 'KV', functie: 'Lekkage specialist', ervaring: '15 jaar', quote: 'Zeeuwse panden kennen hun eigen vochtproblemen.' },
 }
+
+function getMonteur(provincie) {
+  return monteurs[provincie] || { naam: 'Jan Peters', foto: 'JP', functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'Vakkundig en snel door heel Nederland.' }
+}
+
+export async function getStaticPaths() {
+  const paths = []
+  lekkageTypes.forEach(type => {
+    steden.forEach(stad => {
+      paths.push({ params: { type: type.slug, stad: stad.slug } })
+    })
+  })
+  return { paths, fallback: false }
+}
+
 export async function getStaticProps({ params }) {
   const type = getType(params.type)
-  if (!type) return { notFound: true }
-  return { props: { type } }
+  const stad = getSted(params.stad)
+  if (!type || !stad) return { notFound: true }
+  return { props: { type, stad } }
 }
 
-const reviewsPerType = {
-  dak: [
-    { naam:'Martijn V.', stad:'Amsterdam', tekst:'Al maanden last van een druipend plafond na regen. LekkageFix vond het lek binnen 20 minuten — een losse dakpan én gescheurde nokbedekking. Dezelfde dag gerepareerd.', datum:'2 weken geleden' },
-    { naam:'Sandra K.', stad:'Rotterdam', tekst:'Plat dak van onze uitbouw lekte al twee winters. Twee andere bedrijven hadden het niet gevonden. LekkageFix traceerde het naar een verkeerd afgedichte dakdoorvoer. Eindelijk droog!', datum:'1 maand geleden' },
-    { naam:'Peter D.', stad:'Utrecht', tekst:'Na een storm waterschade via de dakkapel. Binnen een uur was de monteur er. Nette offerte vooraf, kitrand hersteld. Uitstekende service.', datum:'3 weken geleden' },
-  ],
-  waterleiding: [
-    { naam:'Karin M.', stad:'Den Haag', tekst:'Gesprongen leiding in de muur. LekkageFix vond de oorzaak snel zonder onnodig sloopwerk. Netjes afgedicht en opgeruimd.', datum:'1 week geleden' },
-    { naam:'Thomas B.', stad:'Eindhoven', tekst:'Lage waterdruk al weken. Bleek een verborgen lekkage in de kruipruimte. Snel en vakkundig verholpen.', datum:'2 weken geleden' },
-    { naam:'Linda W.', stad:'Groningen', tekst:'Lekkende cv-leiding midden in de nacht. Binnen 40 minuten aan de deur. Geweldig dat ze 24/7 bereikbaar zijn.', datum:'3 weken geleden' },
-  ],
-  badkamer: [
-    { naam:'Joost H.', stad:'Utrecht', tekst:'Plafond eronder werd nat na douchen. Bleek verouderd kitwerk rond de douchebak. Snel vervangen, geen schade meer.', datum:'1 week geleden' },
-    { naam:'Anita S.', stad:'Tilburg', tekst:'Al maanden vlekken op het plafond. LekkageFix vond de oorzaak: beschadigde waterdichte laag onder de tegels.', datum:'2 weken geleden' },
-    { naam:'Rob V.', stad:'Amsterdam', tekst:'Lekkende afvoer onder de badkamervloer. Geen sloopwerk nodig dankzij camera-inspectie. Heel tevreden.', datum:'1 maand geleden' },
-  ],
-  riool: [
-    { naam:'Frank D.', stad:'Rotterdam', tekst:'Terugstromend rioolwater in de kelder. Camera-inspectie vond een verzakte leiding. Vakkundig hersteld zonder graafwerk.', datum:'1 week geleden' },
-    { naam:'Miriam K.', stad:'Nijmegen', tekst:'Andere bedrijven wilden direct slopen. LekkageFix loste het op met hogedruk reiniging. Scheelde een hoop geld.', datum:'2 weken geleden' },
-    { naam:'Erik T.', stad:'Zwolle', tekst:'Boomwortels in de riolering. Volledige inspectie met rapport voor de verzekering. Professioneel en transparant.', datum:'3 weken geleden' },
-  ],
-  vocht: [
-    { naam:'Petra L.', stad:'Haarlem', tekst:'Schimmel in de slaapkamer al jaren. Anderen behandelden alleen de schimmel. LekkageFix vond de echte oorzaak: doorslag via de spouwmuur.', datum:'2 weken geleden' },
-    { naam:'Henk J.', stad:'Leiden', tekst:'Optrekkend vocht in de kelder. Duidelijke uitleg, transparante offerte. De waterdichting werkt uitstekend.', datum:'1 maand geleden' },
-    { naam:'Sanne V.', stad:'Delft', tekst:'Vochtplekken op meerdere muren. Volledige vochtmeting en duurzame oplossing voorgesteld. Aanrader.', datum:'3 weken geleden' },
-  ],
-  gevel: [
-    { naam:'Bas K.', stad:'Den Haag', tekst:'Vochtige binnenmuur na elke regenbui. Bleek verouderd voegwerk. LekkageFix heeft alles opnieuw gevoegd. Droog en netjes.', datum:'1 week geleden' },
-    { naam:'Inge M.', stad:'Amsterdam', tekst:'Lekkage rondom het kozijn al jaren. Kit volledig versleten. Snel vervangen en waterdicht gemaakt.', datum:'2 weken geleden' },
-    { naam:'Willem H.', stad:'Utrecht', tekst:'Scheuren in de gevel na vorstschade. Vakkundig gerepareerd met de juiste materialen. Goede communicatie.', datum:'1 maand geleden' },
-  ],
-  kelder: [
-    { naam:'Arjen B.', stad:'Leiden', tekst:'Water in de kelder na zware regenval. Kelderwand waterdicht gemaakt van binnenuit. Vorig jaar nog droog gebleven.', datum:'2 weken geleden' },
-    { naam:'Corine V.', stad:'Utrecht', tekst:'Grondwater via de keldervloer. Duidelijke inspectie, eerlijke offerte. De drainage werkt uitstekend.', datum:'1 maand geleden' },
-    { naam:'Daan W.', stad:'Amsterdam', tekst:'Kelder stond blank na extreme neerslag. Structurele oplossing aangebracht. Eindelijk kunnen we de kelder gebruiken.', datum:'3 weken geleden' },
-  ],
+function getSeizoenTip(typeSlug, stadNaam) {
+  const m = new Date().getMonth()
+  const seizoen = m >= 2 && m <= 4 ? 'lente' : m >= 5 && m <= 7 ? 'zomer' : m >= 8 && m <= 10 ? 'herfst' : 'winter'
+  const tips = {
+    dak: {
+      lente: `🌱 Lentetip voor ${stadNaam}: Inspecteer uw dak na de winter op losgewaaide dakpannen en beschadigd voegwerk.`,
+      zomer: `☀️ Zomertip voor ${stadNaam}: Controleer dakdoorvoeringen en kit — warmte en UV-straling versnellen slijtage.`,
+      herfst: `🍂 Herfsttip voor ${stadNaam}: Reinig dakgoten vóór de natte periode — verstopte goten zijn de #1 oorzaak van daklekkages.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Let op ijsvorming bij dakranden en dakkapellen — bevroren water kan dakbedekking scheuren.`,
+    },
+    waterleiding: {
+      lente: `🌱 Lentetip voor ${stadNaam}: Controleer buitenkranen na de winter op vorstschade aan leidingen.`,
+      zomer: `☀️ Zomertip voor ${stadNaam}: Hogere waterdruk in de zomer kan zwakke verbindingen aan het licht brengen.`,
+      herfst: `🍂 Herfsttip voor ${stadNaam}: Isoleer buitenleidingen vóór de eerste vorst om leidingbreuk te voorkomen.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Bij vorst kunnen leidingen bevriezen en barsten — houd de cv op minimaal 15°C.`,
+    },
+    badkamer: {
+      lente: `🌱 Lentetip voor ${stadNaam}: Inspecteer kitnaden in douche en bad na de winter op scheuren.`,
+      zomer: `☀️ Zomertip voor ${stadNaam}: Extra ventilatie in de badkamer voorkomt schimmelvorming door hogere temperaturen.`,
+      herfst: `🍂 Herfsttip voor ${stadNaam}: Controleer voegen en tegels vóór het stookseizoen begint.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Temperatuurwisselingen in de badkamer kunnen voegwerk en tegels doen scheuren.`,
+    },
+    riool: {
+      lente: `🌱 Lentetip voor ${stadNaam}: Laat uw riool inspecteren na de winter — wortels groeien het hardst in het voorjaar.`,
+      zomer: `☀️ Zomertip voor ${stadNaam}: Droge periodes kunnen rioolbuizen doen krimpen en scheuren.`,
+      herfst: `🍂 Herfsttip voor ${stadNaam}: Bladeren verstoppen rioolaansluitingen — laat ze tijdig reinigen.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Bevroren rioolaansluiting? Bel direct — dit kan snel leiden tot terugstromend water.`,
+    },
+    vocht: {
+      lente: `🌱 Lentetip voor ${stadNaam}: Na de winter worden vochtplekken in muren zichtbaar — laat ze tijdig behandelen.`,
+      zomer: `☀️ Zomertip voor ${stadNaam}: Goed ventileren voorkomt condensatie en schimmelvorming.`,
+      herfst: `🍂 Herfsttip voor ${stadNaam}: Stijgende grondwaterstand in het najaar vergroot het risico op kelderlekkages.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Koudebruggen in de gevel zorgen voor condensatie en vochtproblemen in de winter.`,
+    },
+    gevel: {
+      lente: `🌱 Lentetip voor ${stadNaam}: Inspecteer voegwerk na de winter op vorstschade en barsten.`,
+      zomer: `☀️ Zomertip voor ${stadNaam}: Droge zomers laten scheuren in de gevel groter worden — laat ze tijdig bijwerken.`,
+      herfst: `🍂 Herfsttip voor ${stadNaam}: Herstel gevelvoegen vóór de regen- en stormperiode begint.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Waterinfiltratie in gevels bevriest en vergroot scheuren — tijdig repareren bespaart kosten.`,
+    },
+    kelder: {
+      lente: `🌱 Lentetip voor ${stadNaam}: Hogere grondwaterstanden in het voorjaar verhogen de druk op keldermuuren.`,
+      zomer: `☀️ Zomertip voor ${stadNaam}: Inspecteer de kelderafdichting na een droge zomer — uitdroging kan scheuren veroorzaken.`,
+      herfst: `🍂 Herfsttip voor ${stadNaam}: Bereid uw kelder voor op de natte periode — controleer afdichting en afvoer.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Bevroren grond kan extra druk uitoefenen op keldermuuren — let op nieuwe scheuren.`,
+    },
+  }
+  return tips[typeSlug]?.[seizoen] || tips.dak[seizoen]
 }
 
-const seoPerType = {
-  dak: {
-    h2: 'Daklekkage reparatie', sub: 'alles wat je moet weten',
-    h3_1: 'Daklekkage herkennen: de vroege signalen',
-    p1: 'De meest voor de hand liggende aanwijzing is waterdruppels of natte plekken op het plafond, maar een lekkage kan zich ook op andere manieren manifesteren:',
-    bullets1: [
-      'Verkleuringen of vlekken op het plafond of hoge muren, ook als het plafond droog aanvoelt',
-      'Schimmelvorming in hoeken van kamers op de bovenste verdieping',
-      'Bobbels of loslaten van behang of verf op de bovenste verdieping',
-      'Geur van vocht die na regen verergert',
-      'Zichtbare beschadiging aan dakpannen, goten of dakbedekking van buitenaf',
-    ],
-    p1b: 'Belangrijk: de plek waar u het lek ziet is zelden de plek waar het water binnendringt. Water reist langs dakconstructies, balken en isolatiemateriaal voordat het zichtbaar wordt. Juist daarom is vakkundige inspectie essentieel.',
-    h3_2: 'Daklekkage plat dak vs. schuin dak',
-    p2: 'Bij een plat dak is stilstaand water de grootste vijand. De dakbedekking — bitumen, EPDM, PVC of TPO — moet volledig intact zijn. Elke scheur, blaas of losslaande naad is een potentieel lek. Onze specialisten inspecteren het volledige dakvlak en repareren gericht.',
-    p2b: 'Bij een schuin dak ligt de nadruk op dakpannen, leien en aansluitingen rondom schoorstenen, dakramen en nokken. Dakpannen kunnen verschuiven door storm of vorst, lood rondom schoorstenen kan loslaten en nokbedekking kan barsten.',
-    p2c: 'Een dakkapel combineert beide uitdagingen: kitranden rondom het kozijn en de overgang naar de dakbedekking zijn kwetsbare punten. Krimp en uitzetting door temperatuurwisselingen laten naden loslaten.',
-    prijzen: [
-      ['Losliggende dakpan vervangen','€ 75 – € 150','1–2 uur'],
-      ['Kitnaad dakkapel herstellen','€ 100 – € 250','1–3 uur'],
-      ['Dakdoorvoer afdichten','€ 150 – € 300','2–4 uur'],
-      ['Plat dak lokaal repareren','€ 200 – € 500','halve dag'],
-      ['Lood rondom schoorsteen','€ 250 – € 600','halve dag'],
-      ['Dakbedekking deels vervangen','€ 500 – € 1.500','1–2 dagen'],
-      ['Volledige inspectie + offerte','Gratis','30–60 min'],
-    ],
-    prijzenIntro: 'De kosten hangen af van de oorzaak, het type dak en de omvang van de schade. Onderstaand een indicatief overzicht. Bij LekkageFix ontvangt u altijd een transparante offerte vooraf — geen verrassingen achteraf.',
-    prijzenNote: '* Prijzen zijn indicatief en afhankelijk van locatie, toegankelijkheid en materiaalkosten. Definitieve prijs na inspectie.',
-    verzekering: 'Of uw verzekering de schade vergoedt hangt af van de oorzaak en uw polisvoorwaarden. Bij plotselinge schade door storm of extreme neerslag is de opstalverzekering vaak van toepassing. Bij slijtage of achterstallig onderhoud vergoeden verzekeraars doorgaans niet. LekkageFix is erkend door alle grote verzekeraars en helpt u met de benodigde documentatie voor uw claim.',
-    h3_3: 'Daklekkage voorkomen: preventief onderhoud',
-    p3: 'Voorkomen is beter dan genezen. Een jaarlijkse inspectie van uw dak — bij voorkeur in het najaar vóór de natte periode — kan dure reparaties voorkomen. Controleer zelf regelmatig of goten vrij zijn van bladeren, of er dakpannen zichtbaar verschoven zijn en of kitrandjes rondom dakkapellen en schoorstenen nog intact zijn.',
-    checklist: ['Dakbedekking en naden','Dakdoorvoeren en aansluitingen','Goten en afvoeren','Dakkapel en kozijnen','Nok en randafwerkingen','Eerdere reparaties'],
-    slot: 'Met meer dan 8.000 daklekkages opgelost in heel Nederland heeft LekkageFix de expertise om elk type daklekkage snel en structureel te verhelpen. Onze monteurs zijn gecertificeerd, werken met kwalitatief hoogwaardige materialen en geven garantie op al het uitgevoerde werk.',
-  },
-  waterleiding: {
-    h2: 'Waterleiding lekkage reparatie', sub: 'alles wat je moet weten',
-    h3_1: 'Waterleiding lekkage herkennen',
-    p1: 'Let op natte plekken op muren of plafonds, een onverklaarbaar hoge waterrekening, verminderde waterdruk of het geluid van stromend water terwijl alle kranen dicht zijn. Een verborgen lekkage kan maandenlang schade aanrichten voordat die zichtbaar wordt.',
-    h3_2: 'Soorten waterleidinglekkages',
-    p2: 'Van druppelende kranen en lekkende verbindingen tot gesprongen leidingen in de muur of vloer. Bevroren leidingen in de winter zijn een veelvoorkomende oorzaak van plotselinge schade. Ook verouderde koperen of loden leidingen zijn risicofactoren die regelmatig inspecteren verdienen.',
-    prijzen: [
-      ['Druppelende kraan repareren','€ 60 – € 120','1 uur'],
-      ['Lekkende verbinding afdichten','€ 80 – € 180','1–2 uur'],
-      ['Leiding in muur lokaliseren','€ 120 – € 250','1–3 uur'],
-      ['Gesprongen leiding repareren','€ 200 – € 500','halve dag'],
-      ['Leidingwerk deels vervangen','€ 400 – € 1.200','1–2 dagen'],
-      ['Volledige inspectie + offerte','Gratis','30–60 min'],
-    ],
-    checklist: ['Zichtbare leidingen en verbindingen','Kranen en afsluiters','Cv-installatie en boiler','Leidingen in muur/vloer','Waterdruk en doorstroming','Staat van het leidingwerk'],
-    slot: 'LekkageFix beschikt over moderne lekdetectie-apparatuur waarmee we verborgen leidinglekkages lokaliseren zonder onnodig sloopwerk. Snel, vakkundig en met garantie.',
-  },
-  badkamer: {
-    h2: 'Badkamerlekkage reparatie', sub: 'alles wat je moet weten',
-    h3_1: 'Badkamerlekkage herkennen',
-    p1: 'Typische signalen zijn natte plekken of verkleuringen op het plafond onder de badkamer, schimmel rondom de douche of het bad, loszittende tegels of zwellende vloerdelen, en lekkage bij de afvoer zichtbaar vanuit de kruipruimte.',
-    h3_2: 'Meest voorkomende oorzaken',
-    p2: 'Verouderd kitwerk rondom douche, bad of wastafel is de meest voorkomende oorzaak. Maar ook een beschadigde waterdichte laag onder de tegels, een lekkende sifon of afvoer, en condensatieproblemen door onvoldoende ventilatie kunnen de boosdoener zijn.',
-    prijzen: [
-      ['Kit rondom douche vervangen','€ 80 – € 180','2–3 uur'],
-      ['Sifon of afvoer repareren','€ 80 – € 200','1–2 uur'],
-      ['Waterdichte laag herstellen','€ 200 – € 600','halve–hele dag'],
-      ['Tegelwerk lokaal repareren','€ 250 – € 700','1–2 dagen'],
-      ['Volledige badkamer waterdichting','€ 800 – € 2.500','2–4 dagen'],
-      ['Volledige inspectie + offerte','Gratis','30–60 min'],
-    ],
-    checklist: ['Kitwerk rondom douche en bad','Afvoer en sifon','Voegwerk en tegels','Waterdichte laag','Ventilatie en condensatie','Leidingen en aansluitingen'],
-    slot: 'LekkageFix heeft gespecialiseerde kennis van badkamerdichting en werkt met professionele materialen die voldoen aan de hoogste normen voor waterdichting.',
-  },
-  riool: {
-    h2: 'Rioollekkage reparatie', sub: 'alles wat je moet weten',
-    h3_1: 'Rioollekkage herkennen',
-    p1: 'Let op slechte geur vanuit afvoeren, terugstromend water in de douche of wc bij gebruik van andere afvoerpunten, langzaam leeglopende afvoeren door het hele huis, of natte plekken in de tuin boven de riolering. Camera-inspectie geeft zekerheid.',
-    h3_2: 'Soorten rioolproblemen',
-    p2: 'Van vetafzettingen en verstoppingen tot verzakte leidingen, boomwortels die leidingen binnendringen en gebarsten terracottabuizen. Elke situatie vraagt om een andere aanpak — van hogedruk reiniging tot relining of gerichte graafwerkzaamheden.',
-    prijzen: [
-      ['Riool reinigen (hogedruk)','€ 150 – € 350','1–3 uur'],
-      ['Camera-inspectie met rapport','€ 200 – € 450','2–4 uur'],
-      ['Lokale rioolreparatie','€ 300 – € 800','halve–hele dag'],
-      ['Rioolrelining (no-dig)','€ 600 – € 2.000','1–2 dagen'],
-      ['Riool gedeeltelijk vervangen','€ 1.000 – € 4.000','2–5 dagen'],
-      ['Volledige inspectie + offerte','Gratis','30–60 min'],
-    ],
-    checklist: ['Camera-inspectie leidingen','Staat van rioleringsbuizen','Boomwortelindringing','Vetafzetting en verstoppingen','Aansluiting gemeenteriool','Drainage en grondwater'],
-    slot: 'Met camera-inspecties en no-dig technieken lost LekkageFix rioolproblemen op met minimale overlast. Geen onnodig sloopwerk, wel duurzame reparaties met garantie.',
-  },
-  vocht: {
-    h2: 'Vochtproblemen oplossen', sub: 'alles wat je moet weten',
-    h3_1: 'Vochtproblemen herkennen',
-    p1: 'Signalen zijn schimmelvorming op muren of plafonds, een muffe geur, natte of koude muren, witte zoutuitbloeiingen op muren, loszittend behang of verf, en vochtplekken die na regen toenemen.',
-    h3_2: 'Oorzaken van vochtproblemen',
-    p2: 'Optrekkend grondvocht via de fundering, doorslag via gevel of spouwmuur, condensatie door onvoldoende ventilatie, en lekkende dakgoten of regenpijpen. De oorzaak bepaalt de oplossing — symptomen behandelen zonder diagnose werkt niet duurzaam.',
-    prijzen: [
-      ['Vochtmeting en diagnose','€ 100 – € 250','1–2 uur'],
-      ['Schimmelbehandeling','€ 150 – € 400','2–4 uur'],
-      ['Optrekkend vocht behandelen','€ 400 – € 1.200','1–2 dagen'],
-      ['Spouwmuur isolatie/dichting','€ 500 – € 1.500','1–2 dagen'],
-      ['Kruipruimte sanering','€ 600 – € 2.000','1–3 dagen'],
-      ['Volledige inspectie + offerte','Gratis','30–60 min'],
-    ],
-    checklist: ['Vochtmeting muren en vloeren','Fundering en kruipruimte','Spouwmuur en gevel','Ventilatie en luchtcirculatie','Dakgoten en afvoeren','Isolatie en koudebruggen'],
-    slot: 'LekkageFix werkt met professionele vochtmeters en diagnoseapparatuur om de exacte oorzaak te vinden. Geen symptoombestrijding maar een duurzame oplossing.',
-  },
-  gevel: {
-    h2: 'Gevellekkage reparatie', sub: 'alles wat je moet weten',
-    h3_1: 'Gevellekkage herkennen',
-    p1: 'Vochtige binnenmuren die natter worden bij regen, zoutuitbloeiingen op gevels, donkere verkleuringen in het metselwerk, loslatend voegwerk of kit rondom kozijnen, en schimmelvorming aan de binnenkant van buitenmuren.',
-    h3_2: 'Oorzaken van gevellekkage',
-    p2: 'Verouderd voegwerk is de meest voorkomende oorzaak. Maar ook beschadigde kit rondom kozijnen, scheuren in de gevel door verzakking, spouwmuurisolatie die vocht vasthoudt en ontbrekende waterkeringen boven kozijnen spelen een rol.',
-    prijzen: [
-      ['Kit rondom kozijnen vervangen','€ 100 – € 300','2–4 uur'],
-      ['Voegwerk gedeeltelijk herstellen','€ 200 – € 600','halve dag'],
-      ['Scheur in gevel repareren','€ 200 – € 500','2–4 uur'],
-      ['Gevel hydrofoberen','€ 300 – € 800','halve–hele dag'],
-      ['Groot voegwerk herstel','€ 800 – € 3.000','2–5 dagen'],
-      ['Volledige inspectie + offerte','Gratis','30–60 min'],
-    ],
-    checklist: ['Voegwerk en metselwerk','Kit rondom kozijnen','Waterkering en lekdorpels','Spouwmuur en isolatie','Scheuren en verzakking','Dakrand en geveltop'],
-    slot: 'LekkageFix heeft specialisten in gevelonderhoud en waterdichting die de juiste materialen kiezen voor elk type gevel — baksteen, beton of gevelplaten.',
-  },
-  kelder: {
-    h2: 'Kelderwaterdichting', sub: 'alles wat je moet weten',
-    h3_1: 'Kelderwaterdichting herkennen',
-    p1: 'Water op de keldervloer of langs de wanden na neerslag, witte uitbloeiingen op betonnen wanden, schimmelvorming, vochtplekken op de kelderwand en een muffe geur zijn duidelijke signalen. Ook constante wateraanvoer via capillaire werking is een probleem.',
-    h3_2: 'Methoden voor kelderwaterdichting',
-    p2: 'Waterdichting van binnenuit is minder invasief en geschikt voor de meeste situaties. Bij hoge grondwaterdruk is waterdichting van buitenaf of een drainagesysteem beter. Injectie van scheuren en minerale afdichtingslagen zijn beproefde technieken.',
-    prijzen: [
-      ['Scheuren injecteren','€ 200 – € 600','2–4 uur'],
-      ['Kelderwand waterdicht coaten','€ 400 – € 1.200','1–2 dagen'],
-      ['Drainage aanleggen','€ 800 – € 2.500','2–4 dagen'],
-      ['Waterdichting van buitenaf','€ 2.000 – € 8.000','3–7 dagen'],
-      ['Complete keldersanering','€ 3.000 – € 12.000','1–3 weken'],
-      ['Volledige inspectie + offerte','Gratis','30–60 min'],
-    ],
-    checklist: ['Staat kelderwanden en vloer','Grondwaterstand','Scheuren en naden','Bestaande drainage','Fundering en waterkering','Capillaire werking'],
-    slot: 'LekkageFix heeft gespecialiseerde kennis van kelderwaterdichting en werkt met beproefde systemen die ook bij hoge grondwaterdruk betrouwbaar presteren.',
-  },
+function getLocalReviews(stad, type) {
+  return [
+    {
+      naam: `Thomas B.`,
+      stad: stad.naam,
+      buurt: stad.naam,
+      tekst: `Na weken zoeken naar de oorzaak van vocht in mijn woning in ${stad.naam} heeft LekkageFix het probleem binnen een uur gevonden en opgelost. De monteur kende de ${stad.woningtype} goed en wist precies waar te zoeken.`,
+      datum: '1 week geleden',
+      rating: 5,
+    },
+    {
+      naam: `Marieke V.`,
+      stad: stad.naam,
+      buurt: stad.naam,
+      tekst: `Wij wonen al jaren in ${stad.naam} en hebben al eerder last gehad van ${type.naam.toLowerCase()}. LekkageFix was snel ter plaatse, transparante offerte vooraf en het werk is netjes uitgevoerd. Eindelijk droog!`,
+      datum: '2 weken geleden',
+      rating: 5,
+    },
+    {
+      naam: `Rob H.`,
+      stad: stad.naam,
+      buurt: stad.naam,
+      tekst: `Als ${stad.naam}-er was ik blij dat de monteur lokale kennis had over ${stad.woningtype}. Direct de juiste diagnose gesteld. Aanrader voor iedereen in de regio ${stad.provincie}.`,
+      datum: '1 maand geleden',
+      rating: 5,
+    },
+  ]
 }
 
-const blogItems = [
-  { href:'/blog/lekkage-herkennen', img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80&auto=format&fit=crop', cat:'Tips', datum:'12 feb 2025', tijd:'5 min', title:'Lekkage herkennen: de vroege signalen die je niet mag negeren', excerpt:'Een lekkage begint klein maar kan snel groot worden. Zo herken je het op tijd.' },
-  { href:'/blog/verzekering-lekkage', img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80&auto=format&fit=crop', cat:'Verzekering', datum:'5 feb 2025', tijd:'4 min', title:'Vergoedt je verzekering een lekkage? Zo zit het' },
-  { href:'/blog/preventie-tips', img:'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=80&auto=format&fit=crop', cat:'Preventie', datum:'28 jan 2025', tijd:'3 min', title:'7 tips om lekkage te voorkomen' },
-]
-
-export default function LekkageType({ type }) {
-  const [openFaq, setOpenFaq] = useState(null)
+export default function LekkageTypeStad({ type, stad }) {
   const [submitted, setSubmitted] = useState(false)
-  const [activeSlide, setActiveSlide] = useState(0)
-  const [offset, setOffset] = useState(0)
-  const trackRef = useRef(null)
-  const touchStartX = useRef(0)
+  const [openFaq, setOpenFaq] = useState(null)
+  const [seizoenTip, setSeizoenTip] = useState('')
+  const monteur = getMonteur(stad.provincie)
 
+  useEffect(() => {
+    setSeizoenTip(getSeizoenTip(type.slug, stad.naam))
+  }, [type.slug, stad.naam])
+
+  const title = `${type.naam} ${stad.naam} – Snel & Vakkundig | LekkageFix`
+  const description = `${type.naam} in ${stad.naam}? Gecertificeerde specialist ter plaatse in 30 min. ${stad.fact} Gratis offerte, erkend door verzekeraars.`
+
+  const andereSteden = steden.filter(s => s.slug !== stad.slug && s.provincie === stad.provincie).slice(0, 9)
   const andereTypes = lekkageTypes.filter(t => t.slug !== type.slug)
-  const reviews = reviewsPerType[type.slug] || reviewsPerType.dak
-  const seo = seoPerType[type.slug] || seoPerType.dak
-  const topSteden = steden.slice(0, 8)
-  const GAP = 20
-
-  function getVisible() {
-    if (typeof window === 'undefined') return 3
-    if (window.innerWidth <= 600) return 1
-    if (window.innerWidth <= 900) return 2
-    return 3
-  }
-
-  function goTo(n) {
-    const vis = getVisible()
-    const max = andereTypes.length - vis
-    const next = Math.max(0, Math.min(max, n))
-    const wrapWidth = trackRef.current?.parentElement?.offsetWidth || (typeof window !== 'undefined' ? window.innerWidth - 32 : 800)
-    const cardWidth = (wrapWidth - (vis - 1) * GAP) / vis
-    setOffset(next * (cardWidth + GAP))
-    setActiveSlide(next)
-  }
+  const localReviews = getLocalReviews(stad, type)
 
   const faqs = [
-    { v:`Wat zijn de meest voorkomende oorzaken van ${type.naam.toLowerCase()}?`, a:`De meest voorkomende oorzaken zijn: ${type.oorzaken.map(o => o.titel).join(', ')}.` },
-    { v:'Hoe snel kunnen jullie komen?', a:'Gemiddeld binnen 30 minuten ter plaatse. Bel {PHONE_DISPLAY} voor een actuele inschatting.' },
-    { v:'Wat kost een reparatie?', a:'Kosten variëren per situatie. U ontvangt altijd een transparante offerte vooraf.' },
-    { v:'Vergoedt mijn verzekering dit?', a:'Bij plotselinge schade is de opstalverzekering vaak van toepassing. Wij helpen met de documentatie.' },
-    { v:'Geven jullie garantie?', a:'Ja — we geven garantie op alle uitgevoerde reparaties.' },
-    { v:"Werken jullie ook 's nachts en in het weekend?", a:'Ja, 24/7 bereikbaar, ook op feestdagen.' },
+    { v: `Hoe snel zijn jullie bij een ${type.naam.toLowerCase()} in ${stad.naam}?`, a: `In ${stad.naam} en omgeving streven we naar een reactietijd van gemiddeld 30 minuten. We zijn 24/7 bereikbaar, ook in het weekend en op feestdagen.` },
+    { v: `Wat zijn typische oorzaken van ${type.naam.toLowerCase()} in ${stad.naam}?`, a: `In ${stad.naam}, met name bij ${stad.woningtype}, zijn veelvoorkomende oorzaken: ${type.oorzaken.slice(0,3).map(o => o.titel || o).join(', ')}. ${stad.fact}` },
+    { v: `Wat kost ${type.naam.toLowerCase()} reparatie in ${stad.naam}?`, a: `De kosten hangen af van de omvang en oorzaak. We geven altijd een transparante offerte vooraf. Bel ons voor een vrijblijvende indicatie.` },
+    { v: `Vergoedt mijn verzekering ${type.naam.toLowerCase()} in ${stad.naam}?`, a: `Plotselinge lekkages vallen doorgaans onder de opstalverzekering. Wij zijn erkend door alle grote verzekeraars en stellen een gedetailleerd rapport op voor uw claim.` },
+    { v: 'Geven jullie garantie op het werk?', a: 'Ja — we geven garantie op alle uitgevoerde reparaties. Mocht er iets niet goed zijn, dan lossen we het kosteloos op.' },
+    { v: `Werken jullie ook 's nachts in ${stad.naam}?`, a: `Ja, we zijn dag en nacht bereikbaar in ${stad.naam} en omgeving. Ook in het weekend en op feestdagen.` },
+    { v: `Hebben jullie ervaring met ${stad.woningtype}?`, a: `Absoluut. Onze monteurs in ${stad.provincie} hebben ruime ervaring met ${stad.woningtype} en kennen de specifieke uitdagingen hiervan.` },
   ]
 
-  const schema = {
+  const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type":"LocalBusiness", "@id":"https://lekkagefix.nl/#business", "name":"LekkageFix", "url":"https://lekkagefix.nl", "telephone":PHONE, "openingHours":"Mo-Su 00:00-24:00", "priceRange":"€€", "aggregateRating":{ "@type":"AggregateRating", "ratingValue":"4.9", "reviewCount":"2847", "bestRating":"5" } },
-      { "@type":"BreadcrumbList", "itemListElement":[ {"@type":"ListItem","position":1,"name":"Home","item":"https://lekkagefix.nl"}, {"@type":"ListItem","position":2,"name":"Lekkage","item":"https://lekkagefix.nl/lekkage"}, {"@type":"ListItem","position":3,"name":type.naam,"item":`https://lekkagefix.nl/lekkage/${type.slug}`} ] },
-      { "@type":"FAQPage", "mainEntity":faqs.map(f => ({ "@type":"Question", "name":f.v, "acceptedAnswer":{"@type":"Answer","text":f.a} })) },
-      { "@type":"Service", "name":`${type.naam} reparatie`, "provider":{"@id":"https://lekkagefix.nl/#business"}, "areaServed":{"@type":"Country","name":"Netherlands"}, "description":type.intro, "offers":{"@type":"AggregateOffer","lowPrice":seo.prijzen[0][1].replace(/[^0-9]/g,'').slice(0,3),"highPrice":"5000","priceCurrency":"EUR"} }
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://lekkagefix.nl/#business",
+        "name": "LekkageFix",
+        "url": "https://lekkagefix.nl",
+        "telephone": PHONE,
+        "openingHours": "Mo-Su 00:00-24:00",
+        "priceRange": "€€",
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "2847", "bestRating": "5" },
+        "review": localReviews.map(r => ({
+          "@type": "Review",
+          "author": { "@type": "Person", "name": r.naam },
+          "reviewRating": { "@type": "Rating", "ratingValue": String(r.rating), "bestRating": "5" },
+          "reviewBody": r.tekst,
+        }))
+      },
+      {
+        "@type": "Service",
+        "name": `${type.naam} ${stad.naam}`,
+        "provider": { "@id": "https://lekkagefix.nl/#business" },
+        "areaServed": { "@type": "City", "name": stad.naam, "containedInPlace": { "@type": "AdministrativeArea", "name": stad.provincie } },
+        "description": description,
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(f => ({
+          "@type": "Question",
+          "name": f.v,
+          "acceptedAnswer": { "@type": "Answer", "text": f.a }
+        }))
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lekkagefix.nl" },
+          { "@type": "ListItem", "position": 2, "name": "Lekkage", "item": "https://lekkagefix.nl/lekkage" },
+          { "@type": "ListItem", "position": 3, "name": type.naam, "item": `https://lekkagefix.nl/lekkage/${type.slug}` },
+          { "@type": "ListItem", "position": 4, "name": stad.naam, "item": `https://lekkagefix.nl/lekkage/${type.slug}/${stad.slug}` },
+        ]
+      },
+      {
+        "@type": "Person",
+        "name": monteur.naam,
+        "jobTitle": monteur.functie,
+        "worksFor": { "@id": "https://lekkagefix.nl/#business" },
+        "areaServed": { "@type": "AdministrativeArea", "name": stad.provincie }
+      }
     ]
   }
 
   return (
     <>
       <Head>
-        <title>{type.naam} Reparatie – Snel & Vakkundig | LekkageFix</title>
-        <meta name="description" content={`${type.naam}? ${type.omschrijving} LekkageFix helpt 24/7 door heel Nederland. Gemiddeld 30 min ter plaatse. Gratis offerte.`} />
+        <title>{title}</title>
+        <meta name="description" content={description} />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`https://lekkagefix.nl/lekkage/${type.slug}`} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={`${type.naam} Reparatie – Snel & Vakkundig | LekkageFix`} />
-        <meta property="og:description" content={`${type.naam}? LekkageFix helpt 24/7 door heel Nederland. Gemiddeld 30 min ter plaatse.`} />
-        <meta property="og:url" content={`https://lekkagefix.nl/lekkage/${type.slug}`} />
-        <meta property="og:locale" content="nl_NL" />
-        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href={`https://lekkagefix.nl/lekkage/${type.slug}/${stad.slug}`} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={`https://lekkagefix.nl/lekkage/${type.slug}/${stad.slug}`} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }} />
       </Head>
-
       <Nav activePath="/lekkage" />
 
       {/* BREADCRUMB */}
@@ -273,41 +224,67 @@ export default function LekkageType({ type }) {
         <div className="breadcrumb">
           <a href="/">Home</a><span className="breadcrumb-sep">›</span>
           <a href="/lekkage">Lekkage</a><span className="breadcrumb-sep">›</span>
-          <span>{type.naam}</span>
+          <a href={`/lekkage/${type.slug}`}>{type.naam}</a><span className="breadcrumb-sep">›</span>
+          <span>{stad.naam}</span>
         </div>
       </div>
+
+      {/* SEIZOEN TIP BANNER */}
+      {seizoenTip && (
+        <div style={{background:'var(--green3)',borderBottom:'1px solid var(--green4)',padding:'0.65rem clamp(1rem,5vw,3rem)',fontSize:'0.82rem',color:'var(--green-dark)',fontWeight:500}}>
+          <div style={{maxWidth:'1200px',margin:'0 auto'}}>{seizoenTip}</div>
+        </div>
+      )}
 
       {/* HERO */}
       <section className="hero">
         <div className="hero-dots" />
         <div className="hero-inner">
           <div>
-            <div className="hero-badge"><span className="pulse" /> {type.urgentie === 'hoog' ? 'Spoedreparatie beschikbaar · 24/7' : '24/7 bereikbaar · heel Nederland'}</div>
-            <h1>{type.naam}<br/>reparatie — <em>snel,<br/>vakkundig &<br/>gegarandeerd.</em></h1>
-            <p className="hero-sub">{type.intro}</p>
+            <div className="hero-badge-urgency">⚠️ {type.urgentie === 'hoog' ? 'Spoed aanbevolen' : 'Tijdig handelen'}</div>
+            <span className="hero-icon">{type.icon}</span>
+            <h1><em>{type.naam}</em> in {stad.naam}</h1>
+            <p className="hero-sub">{stad.naam} heeft voornamelijk {stad.woningtype}. {stad.fact}</p>
             <div className="hero-stats">
-              <div className="stat-item"><div className="stat-val">30<sup>min</sup></div><div className="stat-key">Reactietijd</div></div>
+              <div className="stat-item"><div className="stat-val">30<sup>min</sup></div><div className="stat-key">Gem. reactie</div></div>
               <div className="stat-item"><div className="stat-val">4.9<sup>★</sup></div><div className="stat-key">Beoordeling</div></div>
-              <div className="stat-item"><div className="stat-val">12k<sup>+</sup></div><div className="stat-key">Klanten</div></div>
               <div className="stat-item"><div className="stat-val">24<sup>/7</sup></div><div className="stat-key">Bereikbaar</div></div>
+              <div className="stat-item"><div className="stat-val">100<sup>%</sup></div><div className="stat-key">Garantie</div></div>
             </div>
             <div className="hero-actions">
-              <a href={`tel:${PHONE}`} className="btn-call">📞 Bel: {PHONE_DISPLAY}</a>
-              <a href="#offerte" className="btn-ghost">Gratis offerte →</a>
+              <a href={`tel:${PHONE}`} className="btn-call">📞 Bel direct: {PHONE_DISPLAY}</a>
+              <a href="#offerte" className="btn-ghost">Offerte aanvragen →</a>
             </div>
           </div>
+
+          {/* OFFERTE FORMULIER */}
           <div className="form-card" id="offerte">
-            <div className="form-title">{type.naam} aanvragen</div>
-            <div className="form-sub">Gratis & vrijblijvend · snelle reactie</div>
-            <div className="fg"><label>Type probleem</label>
-              <select>{type.oorzaken.map(o => <option key={o.titel}>{o.titel}</option>)}<option>Weet ik niet zeker</option></select>
+            {/* MONTEUR INTRO */}
+            <div style={{display:'flex',alignItems:'center',gap:'0.85rem',padding:'0.85rem 1rem',background:'var(--green3)',borderRadius:'10px',marginBottom:'1.25rem',border:'1px solid var(--green4)'}}>
+              <div style={{width:'46px',height:'46px',borderRadius:'50%',background:'var(--green)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.9rem',fontWeight:800,flexShrink:0,border:'2.5px solid white',boxShadow:'0 2px 8px rgba(26,122,74,0.25)'}}>
+                {monteur.foto}
+              </div>
+              <div>
+                <div style={{fontSize:'0.78rem',fontWeight:700,color:'var(--green-dark)'}}>{monteur.naam} · {monteur.functie}</div>
+                <div style={{fontSize:'0.72rem',color:'var(--muted)',lineHeight:1.4}}>Actief in {stad.provincie} · {monteur.ervaring} ervaring</div>
+                <div style={{fontSize:'0.72rem',color:'var(--muted)',fontStyle:'italic',marginTop:'0.15rem'}}>"{monteur.quote}"</div>
+              </div>
             </div>
+            <div className="form-title">{type.naam} in {stad.naam}</div>
+            <div className="form-sub">Gratis & vrijblijvend · we nemen snel contact op</div>
+            <div className="fg"><label>Adres in {stad.naam}</label><input type="text" placeholder="Straat + huisnummer" /></div>
             <div className="form-row">
               <div className="fg"><label>Naam</label><input type="text" placeholder="Jan de Vries" /></div>
               <div className="fg"><label>Telefoon</label><input type="tel" placeholder="06-12345678" /></div>
             </div>
-            <div className="fg"><label>Postcode + stad</label><input type="text" placeholder="1011 AB Amsterdam" /></div>
-            <div className="fg"><label>Beschrijving (optioneel)</label><textarea placeholder={`Beschrijf de ${type.naam.toLowerCase()} kort...`} /></div>
+            <div className="fg">
+              <label>Type probleem</label>
+              <select style={{width:'100%',padding:'0.65rem 0.85rem',border:'1.5px solid var(--border)',borderRadius:'var(--radius)',fontFamily:'inherit',fontSize:'0.88rem',color:'var(--text)',background:'white'}}>
+                <option value={type.slug}>{type.naam} (geselecteerd)</option>
+                {andereTypes.map(t => <option key={t.slug} value={t.slug}>{t.naam}</option>)}
+              </select>
+            </div>
+            <div className="fg"><label>Beschrijving</label><textarea placeholder={`Beschrijf de ${type.naam.toLowerCase()} kort...`} /></div>
             <button className={`btn-form${submitted ? ' ok' : ''}`} onClick={() => setSubmitted(true)}>
               {submitted ? '✓ Aanvraag ontvangen!' : 'Stuur aanvraag →'}
             </button>
@@ -327,79 +304,125 @@ export default function LekkageType({ type }) {
         </div>
       </div>
 
-      {/* OORZAKEN */}
+      {/* INFO + OORZAKEN */}
       <section className="section">
         <div className="section-inner">
-          <div className="sec-head">
-            <div className="eyebrow">Oorzaken</div>
-            <h2>Waardoor ontstaat <em>{type.naam.toLowerCase()}?</em></h2>
-            <p className="sec-sub">Onze specialisten traceren de bron en repareren structureel — geen lapmiddelen.</p>
-          </div>
-          <div className="oorzaken-row">
-            {type.oorzaken.map((o, i) => (
-              <div key={i} className="oorzaak">
-                <div className="oorzaak-icon">{o.icon}</div>
-                <h3>{o.titel}</h3>
-                <p>{o.tekst}</p>
+          <div style={{display:'grid',gridTemplateColumns:'1.2fr 1fr',gap:'3.5rem',alignItems:'start'}}>
+            <div>
+              <div className="eyebrow">{type.naam} in {stad.naam}</div>
+              <h2><em>{type.naam}</em> in {stad.naam} — wat je moet weten</h2>
+              <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:'1.85',marginTop:'1.25rem',marginBottom:'1rem'}}>{stad.naam} heeft voornamelijk {stad.woningtype}. {stad.fact}</p>
+              <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:'1.85',marginBottom:'1rem'}}>{type.intro}</p>
+              <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:'0.55rem',marginTop:'1rem'}}>
+                {[
+                  `Snelle inzet van ervaren vakmensen in ${stad.naam}`,
+                  `Lokale kennis van ${stad.woningtype}`,
+                  'Transparante prijsopgave vooraf',
+                  'Erkend door verzekeraars — wij helpen met je claim',
+                  'Garantie op uitgevoerd werk',
+                  `Bereikbaar voor heel ${stad.provincie}`,
+                ].map((item, i) => (
+                  <li key={i} style={{display:'flex',alignItems:'flex-start',gap:'0.7rem',fontSize:'0.85rem',color:'var(--muted)',lineHeight:1.5}}>
+                    <span style={{width:'18px',height:'18px',background:'var(--green)',color:'white',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.6rem',fontWeight:800,flexShrink:0,marginTop:'0.1rem'}}>✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <div className="eyebrow">Oorzaken</div>
+              <h2 style={{fontSize:'1.3rem',marginBottom:'1rem'}}>Veelvoorkomende oorzaken in {stad.naam}</h2>
+              <div style={{display:'flex',flexDirection:'column',gap:'0.6rem'}}>
+                {type.oorzaken.map((o, i) => (
+                  <div key={i} style={{display:'flex',alignItems:'flex-start',gap:'0.85rem',background:'white',border:'1.5px solid var(--border)',borderRadius:'10px',padding:'1rem 1.1rem'}}>
+                    <div style={{width:'28px',height:'28px',background:'var(--green3)',color:'var(--green-dark)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.72rem',fontWeight:800,flexShrink:0}}>{i+1}</div>
+                    <div>
+                      <div style={{fontWeight:600,fontSize:'0.85rem',color:'var(--text)',marginBottom:'0.2rem'}}>{o.icon} {o.titel}</div>
+                      <p style={{fontSize:'0.82rem',color:'var(--muted)',lineHeight:1.5}}>{o.tekst}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* KAART + WERKGEBIED */}
+      <section className="section section-alt">
+        <div className="section-inner">
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:'3rem',alignItems:'start'}}>
+            <div>
+              <div className="eyebrow">Werkgebied</div>
+              <h2>{type.naam} in <em>{stad.naam}</em> en omgeving</h2>
+              <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:1.85,margin:'1rem 0'}}>
+                {stad.naam} telt {stad.inwoners} inwoners en bestaat voornamelijk uit {stad.woningtype}. {stad.fact}
+              </p>
+              <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:1.85,marginBottom:'1rem'}}>
+                Onze monteurs zijn dagelijks actief in {stad.naam} en de omliggende gemeenten in {stad.provincie}. Door onze lokale aanwezigheid zijn we gemiddeld binnen 30 minuten ter plaatse — ook voor spoedgevallen buiten kantooruren.
+              </p>
+              <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:1.85,marginBottom:'1.5rem'}}>
+                Wij kennen de specifieke eigenschappen van de bebouwing in {stad.naam}. Dat betekent sneller de juiste diagnose, minder onnodige werkzaamheden en een lagere eindrekening voor u.
+              </p>
+
+              {/* MONTEUR KAARTJE */}
+              <div style={{display:'flex',alignItems:'center',gap:'0.85rem',padding:'0.85rem 1rem',background:'white',borderRadius:'10px',border:'1.5px solid var(--border)',marginBottom:'1.5rem'}}>
+                <div style={{width:'42px',height:'42px',borderRadius:'50%',background:'var(--green)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.85rem',fontWeight:800,flexShrink:0}}>
+                  {monteur.foto}
+                </div>
+                <div>
+                  <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)'}}>{monteur.naam}</div>
+                  <div style={{fontSize:'0.72rem',color:'var(--muted)'}}>Uw specialist in {stad.provincie} · {monteur.ervaring} ervaring</div>
+                </div>
+                <a href={`tel:${PHONE}`} style={{marginLeft:'auto',background:'var(--orange)',color:'white',borderRadius:'8px',padding:'0.4rem 0.85rem',fontSize:'0.78rem',fontWeight:700,textDecoration:'none',whiteSpace:'nowrap'}}>Bel direct</a>
+              </div>
+            </div>
+
+            <div>
+              <div style={{borderRadius:'16px',overflow:'hidden',border:'2px solid var(--border)',boxShadow:'0 4px 20px rgba(0,0,0,0.08)',height:'300px',marginBottom:'1rem'}}>
+                <iframe
+                  title={`Kaart ${stad.naam}`}
+                  width="100%"
+                  height="100%"
+                  style={{border:0,display:'block'}}
+                  loading="lazy"
+                  src={`https://www.openstreetmap.org/export/embed.html?bbox=${stad.lon-0.08}%2C${stad.lat-0.05}%2C${stad.lon+0.08}%2C${stad.lat+0.05}&layer=mapnik&marker=${stad.lat}%2C${stad.lon}`}
+                />
+              </div>
+              {/* INTERNE LINKS ONDER KAART */}
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.4rem'}}>
+                {andereSteden.slice(0,8).map(s => (
+                  <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}
+                    style={{fontSize:'0.8rem',color:'var(--green)',textDecoration:'none',padding:'0.35rem 0.5rem',borderRadius:'6px',background:'white',border:'1px solid var(--border)',transition:'all 0.15s'}}
+                    onMouseEnter={e => e.currentTarget.style.borderColor='var(--green)'}
+                    onMouseLeave={e => e.currentTarget.style.borderColor='var(--border)'}
+                  >
+                    {type.naam} {s.naam}
+                  </a>
+                ))}
+                <a href={`/lekkage/${type.slug}`}
+                  style={{fontSize:'0.8rem',color:'var(--muted)',textDecoration:'none',padding:'0.35rem 0.5rem',borderRadius:'6px',background:'white',border:'1px solid var(--border)',gridColumn:'1/-1'}}>
+                  Alle steden in {stad.provincie} bekijken →
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* WERKWIJZE */}
-      <section className="section section-alt">
+      <section className="section section-white">
         <div className="section-inner">
           <div className="sec-head-center">
             <div className="eyebrow">Werkwijze</div>
-            <h2>Van melding tot <em>oplossing</em></h2>
-            <p className="sec-sub">Helder en transparant — zo lossen we elk lekkageprobleem op.</p>
+            <h2>Van melding tot <em>oplossing</em> in {stad.naam}</h2>
+            <p className="sec-sub">Helder en transparant — zo pakken we een {type.naam.toLowerCase()} aan in {stad.naam}.</p>
           </div>
           <div className="steps">
-            {[
-              {n:'1',t:'Melding',p:'Bel of stuur een aanvraag. We bespreken het probleem en plannen een afspraak.'},
-              {n:'2',t:'Vakman onderweg',p:'De dichtstbijzijnde monteur rijdt naar je toe. Gemiddeld binnen 30 minuten.'},
-              {n:'3',t:'Inspectie & offerte',p:'Grondige inspectie en transparante prijsopgave. Jij beslist voordat we beginnen.'},
-              {n:'4',t:'Opgelost',p:'Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten.'},
-            ].map(s => (
-              <div key={s.n} className="step">
-                <div className="step-num">{s.n}</div>
-                <h3>{s.t}</h3>
-                <p>{s.p}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* STEDEN */}
-      <section className="section" id="steden">
-        <div className="section-inner">
-          <div className="sec-head">
-            <div className="eyebrow">Werkgebied</div>
-            <h2>{type.naam} reparatie in <em>jouw stad</em></h2>
-            <p className="sec-sub">We lossen {type.naam.toLowerCase()} op door heel Nederland.</p>
-          </div>
-          <div className="cities-grid">
-            {topSteden.map(s => (
-              <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`} className="city-card">
-                <div className="city-name">{s.naam}</div>
-                <div className="city-prov">📍 {s.provincie}</div>
-                <div className="city-arrow">Bekijk {s.naam} →</div>
-              </a>
-            ))}
-          </div>
-          <div className="cities-cta">
-            <div className="cities-cta-left">
-              <h3>Jouw stad er niet bij?</h3>
-              <p>We lossen {type.naam.toLowerCase()} op in 46+ steden door heel Nederland.</p>
-            </div>
-            <div className="cities-counts">
-              <div className="count-item"><div className="count-num">46<sup>+</sup></div><div className="count-label">Steden</div></div>
-              <div className="count-item"><div className="count-num">12</div><div className="count-label">Provincies</div></div>
-              <div className="count-item"><div className="count-num">24<sup>/7</sup></div><div className="count-label">Bereikbaar</div></div>
-            </div>
-            <a href="/lekdetectie" className="btn-all">Alle steden →</a>
+            <div className="step"><div className="step-num">1</div><h3>Melding</h3><p>Bel of stuur een aanvraag. We bespreken het probleem en plannen een afspraak in {stad.naam}.</p></div>
+            <div className="step"><div className="step-num">2</div><h3>Vakman onderweg</h3><p>De dichtstbijzijnde monteur in {stad.provincie} rijdt naar je toe. Gemiddeld binnen 30 minuten.</p></div>
+            <div className="step"><div className="step-num">3</div><h3>Inspectie & offerte</h3><p>Grondige inspectie met moderne apparatuur. Transparante prijsopgave vooraf — geen verrassingen.</p></div>
+            <div className="step"><div className="step-num">4</div><h3>Opgelost & gegarandeerd</h3><p>Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten.</p></div>
           </div>
         </div>
       </section>
@@ -408,33 +431,24 @@ export default function LekkageType({ type }) {
       <section className="section section-alt">
         <div className="section-inner">
           <div className="sec-head-center">
-            <div className="eyebrow">Ervaringen</div>
-            <h2>Wat klanten zeggen over <em>{type.naam.toLowerCase()} reparatie</em></h2>
-          </div>
-          <div className="reviews-summary">
-            <div className="rating-big">
-              <div className="rating-num">4.9</div>
-              <div className="rating-stars">★★★★★</div>
-              <div className="rating-count">op basis van 2.847 reviews</div>
-            </div>
-            <div className="rating-bars">
-              {[['5★',89],['4★',8],['3★',2],['2★',1],['1★',0]].map(([s,w]) => (
-                <div key={s} className="bar-row">
-                  <span>{s}</span>
-                  <div className="bar-track"><div className="bar-fill" style={{width:`${w}%`}} /></div>
-                  <span>{w}%</span>
-                </div>
-              ))}
-            </div>
+            <div className="eyebrow">Klantervaringen in {stad.naam}</div>
+            <h2>Wat klanten in <em>{stad.naam}</em> zeggen</h2>
+            <p className="sec-sub">4.9 sterren op basis van 2.847 reviews.</p>
           </div>
           <div className="reviews-grid">
-            {reviews.map((r, i) => (
+            {localReviews.map((r, i) => (
               <div key={i} className="review">
-                <div className="review-top"><div className="stars">★★★★★</div><div className="review-date">{r.datum}</div></div>
+                <div className="review-top">
+                  <div className="stars">{'★'.repeat(r.rating)}</div>
+                  <div className="review-date">{r.datum}</div>
+                </div>
                 <p className="review-text">"{r.tekst}"</p>
                 <div className="reviewer">
                   <div className="avatar">{r.naam.split(' ').map(n => n[0]).join('')}</div>
-                  <div><div className="rev-name">{r.naam}</div><div className="rev-meta">{r.stad} · <span className="verified">✓ geverifieerd</span></div></div>
+                  <div>
+                    <div className="rev-name">{r.naam}</div>
+                    <div className="rev-meta">📍 {r.stad} · <span className="verified">✓ geverifieerd</span></div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -442,12 +456,97 @@ export default function LekkageType({ type }) {
         </div>
       </section>
 
+      {/* SEO CONTENT */}
+      <section className="section section-white">
+        <div className="section-inner">
+          <div className="seo-grid">
+            <div className="seo-block">
+              <div className="eyebrow">{type.naam} informatie</div>
+              <h2>{type.naam} in {stad.naam}: <em>alles wat je moet weten</em></h2>
+
+              <h3>{type.naam} in {stad.naam} herkennen</h3>
+              <p>{type.seo?.p1 || `${type.naam} in ${stad.naam} is een veelvoorkomend probleem, met name bij ${stad.woningtype}. ${stad.fact} Vroegtijdig ingrijpen voorkomt grotere schade.`}</p>
+              {type.seo?.bullets1 && (
+                <ul>{type.seo.bullets1.map((b,i) => <li key={i}>{b}</li>)}</ul>
+              )}
+
+              <h3>Oorzaken van {type.naam.toLowerCase()} in {stad.naam}</h3>
+              <p>{type.seo?.p2 || `In ${stad.naam} zijn de meest voorkomende oorzaken gerelateerd aan het type bebouwing: ${stad.woningtype}. ${stad.fact}`}</p>
+
+              <h3>Kosten {type.naam.toLowerCase()} reparatie in {stad.naam}</h3>
+              <p>{type.seo?.prijzenIntro || 'De kosten hangen af van de omvang en oorzaak van het probleem. Onderstaand een indicatief overzicht:'}</p>
+              {type.prijzen && (
+                <div className="price-table">
+                  <table>
+                    <thead><tr><th>Reparatie</th><th>Indicatie prijs</th><th>Reactietijd</th></tr></thead>
+                    <tbody>
+                      {type.prijzen.map((p, i) => (
+                        <tr key={i} className={i === type.prijzen.length-1 ? 'highlight-row' : ''}>
+                          <td>{p.label}</td><td>{p.prijs}</td><td>30 min</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie ter plaatse in {stad.naam}.</p>
+                </div>
+              )}
+
+              <h3>{type.naam} en uw verzekering in {stad.naam}</h3>
+              <p>{type.seo?.verzekering || `Plotselinge ${type.naam.toLowerCase()} valt doorgaans onder de opstalverzekering. Wij zijn erkend door alle grote Nederlandse verzekeraars en stellen een gedetailleerd inspectierapport op dat u direct kunt gebruiken voor uw claim.`}</p>
+            </div>
+
+            <div className="seo-sticky">
+              {/* MONTEUR CTA */}
+              <div style={{background:'var(--green-dark)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem',color:'white'}}>
+                <div style={{display:'flex',alignItems:'center',gap:'0.85rem',marginBottom:'1rem'}}>
+                  <div style={{width:'52px',height:'52px',borderRadius:'50%',background:'rgba(255,255,255,0.15)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1rem',fontWeight:800,flexShrink:0,border:'2px solid rgba(255,255,255,0.3)'}}>
+                    {monteur.foto}
+                  </div>
+                  <div>
+                    <div style={{fontWeight:700,fontSize:'0.9rem'}}>{monteur.naam}</div>
+                    <div style={{fontSize:'0.75rem',opacity:0.8}}>{monteur.functie} · {stad.provincie}</div>
+                    <div style={{fontSize:'0.72rem',opacity:0.7,marginTop:'0.1rem'}}>{monteur.ervaring} ervaring</div>
+                  </div>
+                </div>
+                <p style={{fontSize:'0.82rem',opacity:0.9,lineHeight:1.7,marginBottom:'1rem',fontStyle:'italic'}}>"{monteur.quote}"</p>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',background:'var(--orange)',fontSize:'0.9rem'}}>📞 Bel {monteur.naam.split(' ')[0]}</a>
+              </div>
+
+              <div style={{background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
+                <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Direct hulp in {stad.naam}</div>
+                <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Gemiddeld binnen 30 minuten ter plaatse in {stad.naam} en omgeving.</p>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 {PHONE_DISPLAY}</a>
+              </div>
+              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
+                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Wat wij controleren</div>
+                <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
+                  {type.oorzaken.slice(0,5).map((o,i) => (
+                    <span key={i}>✓ {o.titel || o}</span>
+                  ))}
+                </div>
+              </div>
+              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
+                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>Ook actief in {stad.provincie}</div>
+                <div style={{display:'flex',flexDirection:'column',gap:'0.4rem'}}>
+                  {andereSteden.slice(0,5).map(s => (
+                    <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}
+                      style={{fontSize:'0.82rem',color:'var(--green)',textDecoration:'none',fontWeight:500}}>
+                      {type.naam} {s.naam}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
-      <section className="section">
+      <section className="section" style={{background:'var(--green3)'}}>
         <div className="section-inner">
           <div className="sec-head-center">
             <div className="eyebrow">Veelgestelde vragen</div>
-            <h2>Alles over <em>{type.naam.toLowerCase()}</em></h2>
+            <h2>{type.naam} in <em>{stad.naam}</em></h2>
           </div>
           <div className="faq-grid">
             {faqs.map((f, i) => (
@@ -462,129 +561,32 @@ export default function LekkageType({ type }) {
         </div>
       </section>
 
-      {/* ANDERE DIENSTEN CARROUSEL */}
-      <section className="section section-alt">
-        <div className="section-inner">
-          <div className="sec-head" style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',flexWrap:'wrap',gap:'1rem'}}>
-            <div>
-              <div className="eyebrow">Overige diensten</div>
-              <h2>Ook last van een <em>ander probleem?</em></h2>
-              <p className="sec-sub">Naast {type.naam.toLowerCase()} lossen we alle typen lekkages op in heel Nederland.</p>
-            </div>
-            <div className="carousel-nav-top">
-              <button className="carousel-btn" onClick={() => goTo(activeSlide - 1)} disabled={activeSlide === 0} aria-label="Vorige">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-              </button>
-              <button className="carousel-btn" onClick={() => goTo(activeSlide + 1)} disabled={activeSlide === andereTypes.length - getVisible()} aria-label="Volgende">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-            </div>
-          </div>
-          <div className="carousel-wrap" onTouchStart={e => { touchStartX.current = e.touches[0].clientX }} onTouchEnd={e => { const d = touchStartX.current - e.changedTouches[0].clientX; if(Math.abs(d)>50) goTo(d>0?activeSlide+1:activeSlide-1) }}>
-            <div className="carousel-track" ref={trackRef} style={{transform:`translateX(-${offset}px)`}}>
-              {andereTypes.map(t => (
-                <a key={t.slug} href={`/lekkage/${t.slug}`} className="carousel-card">
-                  <div className="svc-icon">{t.icon}</div>
-                  <h3>{t.naam}</h3>
-                  <p>{t.omschrijving}</p>
-                  <div className="svc-cta">Meer over {t.naam.toLowerCase()} →</div>
+      {/* INTERNE LINKING */}
+      <section className="section section-white">
+        <div className="section-inner" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'3rem'}}>
+          <div>
+            <div className="eyebrow">{type.naam} per stad</div>
+            <h2 style={{fontSize:'1.3rem',marginBottom:'1.25rem'}}>Andere steden in <em>{stad.provincie}</em></h2>
+            <div className="steden-grid">
+              {andereSteden.map(s => (
+                <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`} className="stad-a">
+                  <span>📍 {s.naam}</span><span className="stad-arrow">→</span>
                 </a>
               ))}
-            </div>
-          </div>
-          <div className="carousel-footer">
-            {Array.from({length: Math.max(0, andereTypes.length - getVisible() + 1)}).map((_, i) => (
-              <button key={i} className={`carousel-dot${activeSlide === i ? ' active' : ''}`} onClick={() => goTo(i)} aria-label={`Dienst ${i+1}`} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* BLOG */}
-      <section className="section">
-        <div className="section-inner">
-          <div className="sec-head">
-            <div className="eyebrow">Kennisbank</div>
-            <h2>Handige tips & <em>uitleg</em></h2>
-            <p className="sec-sub">Alles wat je wilt weten over {type.naam.toLowerCase()} — van eerste hulp tot preventie.</p>
-          </div>
-          <div className="blog-grid">
-            {blogItems.map((b, i) => (
-              <a key={i} href={b.href} className="blog-card">
-                <div className={`blog-img${i===0?' blog-img-main':''}`}>
-                  <img src={b.img} alt={b.title} />
-                  <span className="blog-cat">{b.cat}</span>
-                </div>
-                <div className="blog-body">
-                  <div className="blog-meta"><span>📅 {b.datum}</span><span>⏱ {b.tijd}</span></div>
-                  <h3>{b.title}</h3>
-                  {b.excerpt && <p className="blog-excerpt">{b.excerpt}</p>}
-                  <div className="blog-link">Lees artikel →</div>
-                </div>
+              <a href={`/lekkage/${type.slug}`} className="stad-a" style={{color:'var(--green)',fontWeight:600}}>
+                <span>Alle steden</span><span className="stad-arrow">→</span>
               </a>
-            ))}
-          </div>
-          <div style={{display:'flex',justifyContent:'center',marginTop:'2rem'}}>
-            <a href="/blog" className="btn-all">Bekijk alle artikelen →</a>
-          </div>
-        </div>
-      </section>
-
-      {/* SEO TEKST */}
-      <section className="section section-white">
-        <div className="section-inner">
-          <div className="seo-grid">
-            <div className="seo-block">
-              <div className="eyebrow">{type.naam} informatie</div>
-              <h2 style={{marginBottom:'1.5rem'}}>{seo.h2}: <em>{seo.sub}</em></h2>
-
-              <h3>{seo.h3_1}</h3>
-              <p>{seo.p1}</p>
-              {seo.bullets1 && <ul style={{margin:'0.75rem 0 1rem 1.25rem',display:'flex',flexDirection:'column',gap:'0.4rem'}}>{seo.bullets1.map((b,i) => <li key={i} style={{fontSize:'0.9rem',color:'var(--muted)',lineHeight:1.6}}>{b}</li>)}</ul>}
-              {seo.p1b && <p>{seo.p1b}</p>}
-
-              <h3>{seo.h3_2}</h3>
-              <p>{seo.p2}</p>
-              {seo.p2b && <p style={{marginTop:'0.75rem'}}>{seo.p2b}</p>}
-              {seo.p2c && <p style={{marginTop:'0.75rem'}}>{seo.p2c}</p>}
-
-              <h3>Wat kost een {type.naam.toLowerCase()} reparatie?</h3>
-              <p>{seo.prijzenIntro || 'De kosten hangen af van de oorzaak en de omvang van de schade. Onderstaand een indicatief overzicht — u ontvangt altijd een transparante offerte vooraf.'}</p>
-
-              <div className="price-table">
-                <table>
-                  <thead><tr><th scope="col">Type reparatie</th><th scope="col">Indicatie</th><th scope="col">Doorlooptijd</th></tr></thead>
-                  <tbody>
-                    {seo.prijzen.map(([r,p,t], i) => (
-                      <tr key={i} className={i === seo.prijzen.length-1 ? 'highlight-row' : ''}>
-                        <td>{i === seo.prijzen.length-1 ? <strong>{r}</strong> : r}</td>
-                        <td>{p}</td><td>{t}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <p className="table-note">{seo.prijzenNote || '* Prijzen zijn indicatief en afhankelijk van locatie en omvang. Definitieve prijs na inspectie.'}</p>
-              </div>
-
-              <h3>{type.naam} en verzekering</h3>
-              <p>{seo.verzekering || 'Bij plotselinge schade door storm of extreme neerslag is de opstalverzekering vaak van toepassing. Bij slijtage of achterstallig onderhoud vergoeden verzekeraars doorgaans niet. LekkageFix is erkend door alle grote verzekeraars en helpt u met de documentatie voor uw claim.'}</p>
-
-              {seo.h3_3 && <><h3>{seo.h3_3}</h3><p>{seo.p3}</p></>}
-
-              <p style={{marginTop:'1rem'}}>{seo.slot}</p>
             </div>
-            <div className="seo-sticky">
-              <div style={{background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
-                <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Snel handelen?</div>
-                <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Bel direct voor spoedservice. Onze monteurs zijn gemiddeld binnen 30 minuten ter plaatse.</p>
-                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 {PHONE_DISPLAY}</a>
-              </div>
-              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
-                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Wat wij controleren</div>
-                <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
-                  {seo.checklist.map((c,i) => <span key={i}>✓ {c}</span>)}
-                </div>
-              </div>
+          </div>
+          <div>
+            <div className="eyebrow">Andere diensten in {stad.naam}</div>
+            <h2 style={{fontSize:'1.3rem',marginBottom:'1.25rem'}}>Meer <em>lekkageproblemen</em></h2>
+            <div className="steden-grid">
+              {andereTypes.map(t => (
+                <a key={t.slug} href={`/lekkage/${t.slug}/${stad.slug}`} className="stad-a">
+                  <span>{t.icon} {t.naam}</span><span className="stad-arrow">→</span>
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -592,12 +594,12 @@ export default function LekkageType({ type }) {
 
       {/* BOTTOM CTA */}
       <div className="bottom-cta">
-        <div className="eyebrow" style={{color:'#a8e6c0'}}>Direct geholpen</div>
-        <h2 style={{color:'white'}}>{type.naam}? Wacht niet te lang.</h2>
-        <p>Hoe eerder je belt, hoe kleiner de schade. Onze vakspecialisten staan dag en nacht voor je klaar.</p>
+        <div className="eyebrow" style={{color:'#a8e6c0'}}>{type.naam} in {stad.naam}</div>
+        <h2 style={{color:'white'}}>{type.naam} in {stad.naam}? Wacht niet te lang.</h2>
+        <p>Hoe eerder je belt, hoe kleiner de schade. Onze vakmensen staan dag en nacht voor je klaar in {stad.naam} en omgeving.</p>
         <div className="cta-btns">
           <a href={`tel:${PHONE}`} className="btn-call">📞 Bel nu: {PHONE_DISPLAY}</a>
-          <a href="#offerte" className="btn-white-ghost">Gratis offerte aanvragen</a>
+          <a href="#offerte" className="btn-white-ghost">Offerte aanvragen</a>
         </div>
       </div>
 
@@ -606,16 +608,16 @@ export default function LekkageType({ type }) {
         <div className="footer-top">
           <div>
             <div className="footer-logo">Lekkage<b>Fix</b></div>
-            <p className="footer-desc">Vakkundige lekkage reparaties door heel Nederland. Gecertificeerde vakmensen, transparante prijzen, garantie op werk.</p>
+            <p className="footer-desc">Vakkundige {type.naam.toLowerCase()} reparaties in {stad.naam} en heel {stad.provincie}. Gecertificeerde vakmensen, transparante prijzen, garantie.</p>
           </div>
           <div className="footer-col">
-            <h4>Diensten</h4>
-            {lekkageTypes.map(t => <a key={t.slug} href={`/lekkage/${t.slug}`}>{t.naam}</a>)}
+            <h4>Diensten in {stad.naam}</h4>
+            {lekkageTypes.map(t => <a key={t.slug} href={`/lekkage/${t.slug}/${stad.slug}`}>{t.naam}</a>)}
           </div>
           <div className="footer-col">
-            <h4>Steden</h4>
-            {steden.slice(0,5).map(s => <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}>{s.naam}</a>)}
-            <a href="/lekdetectie">Alle steden →</a>
+            <h4>{stad.provincie}</h4>
+            {andereSteden.slice(0,5).map(s => <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}>{s.naam}</a>)}
+            <a href={`/lekkage/${type.slug}`}>Alle steden →</a>
           </div>
           <div className="footer-col">
             <h4>Contact</h4>
@@ -626,7 +628,7 @@ export default function LekkageType({ type }) {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2025 LekkageFix · KvK 89586557 · <a href="#">Privacy</a> · <a href="#">Voorwaarden</a></p>
+          <p>© 2025 LekkageFix · KvK 89586557 · {type.naam} {stad.naam} · <a href="#">Privacy</a> · <a href="#">Voorwaarden</a></p>
           <div className="cert-badges"><span className="cert">VCA ✓</span><span className="cert">ISO 9001</span><span className="cert">Erkend verzekeraar</span></div>
         </div>
       </footer>
