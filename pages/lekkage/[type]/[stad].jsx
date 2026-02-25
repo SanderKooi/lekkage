@@ -386,9 +386,13 @@ export default function LekkageTypeStad({ type, stad }) {
 
               {/* MONTEUR KAARTJE */}
               <div style={{display:'flex',alignItems:'center',gap:'0.85rem',padding:'0.85rem 1rem',background:'white',borderRadius:'10px',border:'1.5px solid var(--border)',marginBottom:'1.5rem'}}>
-                <div style={{width:'42px',height:'42px',borderRadius:'50%',background:'var(--green)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.85rem',fontWeight:800,flexShrink:0}}>
-                  {monteur.foto}
-                </div>
+                {monteur.img ? (
+                  <img src={monteur.img} alt={monteur.naam} style={{width:'42px',height:'42px',borderRadius:'50%',objectFit:'cover',flexShrink:0}} />
+                ) : (
+                  <div style={{width:'42px',height:'42px',borderRadius:'50%',background:'var(--green)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.85rem',fontWeight:800,flexShrink:0}}>
+                    {monteur.foto}
+                  </div>
+                )}
                 <div>
                   <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)'}}>{monteur.naam}</div>
                   <div style={{fontSize:'0.72rem',color:'var(--muted)'}}>Uw specialist in {stad.provincie} · {monteur.ervaring} ervaring</div>
@@ -533,9 +537,9 @@ export default function LekkageTypeStad({ type, stad }) {
                 </div>
                 <p style={{fontSize:'0.82rem',opacity:0.9,lineHeight:1.7,marginBottom:'1.25rem',fontStyle:'italic'}}>"{monteur.quote}"</p>
                 <div style={{display:'flex',alignItems:'center',gap:'0.4rem',marginBottom:'0.5rem',opacity:0.75}}>
-                  <svg width="28" height="22" viewBox="0 0 28 22" fill="none">
-                    <path d="M3 3 C3 3, 14 2, 20 8 C23 11, 22 15, 20 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" strokeDasharray="3 2"/>
-                    <path d="M16 17 L20 20 L22 15" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  <svg width="24" height="28" viewBox="0 0 24 28" fill="none">
+                    <path d="M4 2 C4 2, 20 2, 20 12 C20 18, 14 22, 12 25" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" strokeDasharray="3 2"/>
+                    <path d="M8 23 L12 27 L16 23" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
                   <span style={{fontSize:'0.7rem'}}>direct verbonden met {monteur.naam.split(' ')[0]}</span>
                 </div>
