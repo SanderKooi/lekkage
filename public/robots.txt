@@ -1,1 +1,5 @@
 
+User-agent: *
+Disallow: /
+
+Sitemap: https://lekkagefix.nl/sitemap.xml
