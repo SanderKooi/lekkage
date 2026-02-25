@@ -9,15 +9,15 @@ const EMAIL = 'info@lekkagefix.nl'
 
 const monteurs = {
   'Noord-Holland':  { naam: 'Henk van der Berg',  foto: 'HB', img: '/images/henk.png', functie: 'Lekkage specialist', ervaring: '14 jaar', quote: 'In Noord-Holland ken ik elk woningtype van binnen en buiten.' },
-  'Zuid-Holland':   { naam: 'Marco de Wit',        foto: 'MW', img: null, functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Van grachtenpand tot jaren-70 flat — ik los het op.' },
+  'Zuid-Holland':   { naam: 'Marco de Wit',        foto: 'MW', img: null, functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Van grachtenpand tot jaren-70 flat. ik los het op.' },
   'Utrecht':        { naam: 'Jeroen Smit',          foto: 'JS', img: null, functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Utrecht kent zijn werfkelders, ik ken de lekkages.' },
   'Noord-Brabant':  { naam: 'Kevin Janssen',        foto: 'KJ', img: null, functie: 'Lekkage specialist', ervaring: '12 jaar', quote: 'Van Eindhoven tot Bergen op Zoom, ik ben er snel bij.' },
   'Gelderland':     { naam: 'Arjan Meijer',         foto: 'AM', img: null, functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'De Gelderse woningbouw heeft geen geheimen voor mij.' },
   'Overijssel':     { naam: 'Thomas Bos',           foto: 'TB', img: null, functie: 'Lekkage specialist', ervaring: '8 jaar',  quote: 'Twente en Zwolle, ik ben altijd in de buurt.' },
   'Groningen':      { naam: 'Sander Dijkstra',      foto: 'SD', img: null, functie: 'Lekkage specialist', ervaring: '7 jaar',  quote: 'Groningse studentenwoningen? Mijn specialiteit.' },
-  'Friesland':      { naam: 'Pieter Visser',        foto: 'PV', img: null, functie: 'Lekkage specialist', ervaring: '13 jaar', quote: 'De Friese wind tast daken aan — ik herstel ze.' },
+  'Friesland':      { naam: 'Pieter Visser',        foto: 'PV', img: null, functie: 'Lekkage specialist', ervaring: '13 jaar', quote: 'De Friese wind tast daken aan. ik herstel ze.' },
   'Drenthe':        { naam: 'Rob Hofstra',          foto: 'RH', img: null, functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Drentse woningen verdienen vakkundig onderhoud.' },
-  'Flevoland':      { naam: 'Danny Kramer',         foto: 'DK', img: null, functie: 'Lekkage specialist', ervaring: '6 jaar',  quote: 'Polderbouw heeft specifieke risico\'s — ik ken ze.' },
+  'Flevoland':      { naam: 'Danny Kramer',         foto: 'DK', img: null, functie: 'Lekkage specialist', ervaring: '6 jaar',  quote: 'Polderbouw heeft specifieke risico\'s. ik ken ze.' },
   'Limburg':        { naam: 'Luc Hermans',          foto: 'LH', img: null, functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Mergelstenen huizen zijn mijn specialiteit.' },
   'Zeeland':        { naam: 'Kees de Vos',          foto: 'KV', img: null, functie: 'Lekkage specialist', ervaring: '15 jaar', quote: 'Zeeuwse panden kennen hun eigen vochtproblemen.' },
 }
@@ -49,15 +49,15 @@ function getSeizoenTip(typeSlug, stadNaam) {
   const tips = {
     dak: {
       lente: `🌱 Lentetip voor ${stadNaam}: Inspecteer jouw dak na de winter op losgewaaide dakpannen en beschadigd voegwerk.`,
-      zomer: `☀️ Zomertip voor ${stadNaam}: Controleer dakdoorvoeringen en kit — warmte en UV-straling versnellen slijtage.`,
-      herfst: `🍂 Herfsttip voor ${stadNaam}: Reinig dakgoten vóór de natte periode — verstopte goten zijn de #1 oorzaak van daklekkages.`,
-      winter: `❄️ Wintertip voor ${stadNaam}: Let op ijsvorming bij dakranden en dakkapellen — bevroren water kan dakbedekking scheuren.`,
+      zomer: `☀️ Zomertip voor ${stadNaam}: Controleer dakdoorvoeringen en kit. warmte en UV-straling versnellen slijtage.`,
+      herfst: `🍂 Herfsttip voor ${stadNaam}: Reinig dakgoten vóór de natte periode. verstopte goten zijn de #1 oorzaak van daklekkages.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Let op ijsvorming bij dakranden en dakkapellen. bevroren water kan dakbedekking scheuren.`,
     },
     waterleiding: {
       lente: `🌱 Lentetip voor ${stadNaam}: Controleer buitenkranen na de winter op vorstschade aan leidingen.`,
       zomer: `☀️ Zomertip voor ${stadNaam}: Hogere waterdruk in de zomer kan zwakke verbindingen aan het licht brengen.`,
       herfst: `🍂 Herfsttip voor ${stadNaam}: Isoleer buitenleidingen vóór de eerste vorst om leidingbreuk te voorkomen.`,
-      winter: `❄️ Wintertip voor ${stadNaam}: Bij vorst kunnen leidingen bevriezen en barsten — houd de cv op minimaal 15°C.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Bij vorst kunnen leidingen bevriezen en barsten. houd de cv op minimaal 15°C.`,
     },
     badkamer: {
       lente: `🌱 Lentetip voor ${stadNaam}: Inspecteer kitnaden in douche en bad na de winter op scheuren.`,
@@ -66,28 +66,28 @@ function getSeizoenTip(typeSlug, stadNaam) {
       winter: `❄️ Wintertip voor ${stadNaam}: Temperatuurwisselingen in de badkamer kunnen voegwerk en tegels doen scheuren.`,
     },
     riool: {
-      lente: `🌱 Lentetip voor ${stadNaam}: Laat jouw riool inspecteren na de winter — wortels groeien het hardst in het voorjaar.`,
+      lente: `🌱 Lentetip voor ${stadNaam}: Laat jouw riool inspecteren na de winter. wortels groeien het hardst in het voorjaar.`,
       zomer: `☀️ Zomertip voor ${stadNaam}: Droge periodes kunnen rioolbuizen doen krimpen en scheuren.`,
-      herfst: `🍂 Herfsttip voor ${stadNaam}: Bladeren verstoppen rioolaansluitingen — laat ze tijdig reinigen.`,
-      winter: `❄️ Wintertip voor ${stadNaam}: Bevroren rioolaansluiting? Bel direct — dit kan snel leiden tot terugstromend water.`,
+      herfst: `🍂 Herfsttip voor ${stadNaam}: Bladeren verstoppen rioolaansluitingen. laat ze tijdig reinigen.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Bevroren rioolaansluiting? Bel direct. dit kan snel leiden tot terugstromend water.`,
     },
     vocht: {
-      lente: `🌱 Lentetip voor ${stadNaam}: Na de winter worden vochtplekken in muren zichtbaar — laat ze tijdig behandelen.`,
+      lente: `🌱 Lentetip voor ${stadNaam}: Na de winter worden vochtplekken in muren zichtbaar. laat ze tijdig behandelen.`,
       zomer: `☀️ Zomertip voor ${stadNaam}: Goed ventileren voorkomt condensatie en schimmelvorming.`,
       herfst: `🍂 Herfsttip voor ${stadNaam}: Stijgende grondwaterstand in het najaar vergroot het risico op kelderlekkages.`,
       winter: `❄️ Wintertip voor ${stadNaam}: Koudebruggen in de gevel zorgen voor condensatie en vochtproblemen in de winter.`,
     },
     gevel: {
       lente: `🌱 Lentetip voor ${stadNaam}: Inspecteer voegwerk na de winter op vorstschade en barsten.`,
-      zomer: `☀️ Zomertip voor ${stadNaam}: Droge zomers laten scheuren in de gevel groter worden — laat ze tijdig bijwerken.`,
+      zomer: `☀️ Zomertip voor ${stadNaam}: Droge zomers laten scheuren in de gevel groter worden. laat ze tijdig bijwerken.`,
       herfst: `🍂 Herfsttip voor ${stadNaam}: Herstel gevelvoegen vóór de regen- en stormperiode begint.`,
-      winter: `❄️ Wintertip voor ${stadNaam}: Waterinfiltratie in gevels bevriest en vergroot scheuren — tijdig repareren bespaart kosten.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Waterinfiltratie in gevels bevriest en vergroot scheuren. tijdig repareren bespaart kosten.`,
     },
     kelder: {
       lente: `🌱 Lentetip voor ${stadNaam}: Hogere grondwaterstanden in het voorjaar verhogen de druk op keldermuuren.`,
-      zomer: `☀️ Zomertip voor ${stadNaam}: Inspecteer de kelderafdichting na een droge zomer — uitdroging kan scheuren veroorzaken.`,
-      herfst: `🍂 Herfsttip voor ${stadNaam}: Bereid jouw kelder voor op de natte periode — controleer afdichting en afvoer.`,
-      winter: `❄️ Wintertip voor ${stadNaam}: Bevroren grond kan extra druk uitoefenen op keldermuuren — let op nieuwe scheuren.`,
+      zomer: `☀️ Zomertip voor ${stadNaam}: Inspecteer de kelderafdichting na een droge zomer. uitdroging kan scheuren veroorzaken.`,
+      herfst: `🍂 Herfsttip voor ${stadNaam}: Bereid jouw kelder voor op de natte periode. controleer afdichting en afvoer.`,
+      winter: `❄️ Wintertip voor ${stadNaam}: Bevroren grond kan extra druk uitoefenen op keldermuuren. let op nieuwe scheuren.`,
     },
   }
   return tips[typeSlug]?.[seizoen] || tips.dak[seizoen]
@@ -144,7 +144,7 @@ export default function LekkageTypeStad({ type, stad }) {
     { v: `Wat zijn typische oorzaken van ${type.naam.toLowerCase()} in ${stad.naam}?`, a: `In ${stad.naam}, met name bij ${stad.woningtype}, zijn veelvoorkomende oorzaken: ${type.oorzaken.slice(0,3).map(o => o.titel || o).join(', ')}. ${stad.fact}` },
     { v: `Wat kost ${type.naam.toLowerCase()} reparatie in ${stad.naam}?`, a: `De kosten hangen af van de omvang en oorzaak. We geven altijd een transparante offerte vooraf. Bel ons voor een vrijblijvende indicatie.` },
     { v: `Vergoedt mijn verzekering ${type.naam.toLowerCase()} in ${stad.naam}?`, a: `Plotselinge lekkages vallen doorgaans onder de opstalverzekering. Wij zijn erkend door alle grote verzekeraars en stellen een gedetailleerd rapport op voor jouw claim.` },
-    { v: 'Geven jullie garantie op het werk?', a: 'Ja — we geven garantie op alle uitgevoerde reparaties. Mocht er iets niet goed zijn, dan lossen we het kosteloos op.' },
+    { v: 'Geven jullie garantie op het werk?', a: 'Ja. we geven garantie op alle uitgevoerde reparaties. Mocht er iets niet goed zijn, dan lossen we het kosteloos op.' },
     { v: `Werken jullie ook 's nachts in ${stad.naam}?`, a: `Ja, we zijn dag en nacht bereikbaar in ${stad.naam} en omgeving. Ook in het weekend en op feestdagen.` },
     { v: `Hebben jullie ervaring met ${stad.woningtype}?`, a: `Absoluut. Onze monteurs in ${stad.provincie} hebben ruime ervaring met ${stad.woningtype} en kennen de specifieke uitdagingen hiervan.` },
   ]
@@ -329,7 +329,7 @@ export default function LekkageTypeStad({ type, stad }) {
           <div className="info-grid" style={{display:'grid',gridTemplateColumns:'1.2fr 1fr',gap:'3.5rem',alignItems:'start'}}>
             <div>
               <div className="eyebrow">{type.naam} in {stad.naam}</div>
-              <h2><em>{type.naam}</em> in {stad.naam} — wat je moet weten</h2>
+              <h2><em>{type.naam}</em> in {stad.naam}. wat je moet weten</h2>
               <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:'1.85',marginTop:'1.25rem',marginBottom:'1rem'}}>{stad.naam} heeft voornamelijk {stad.woningtype}. {stad.fact}</p>
               <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:'1.85',marginBottom:'1rem'}}>{type.intro}</p>
               <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:'0.55rem',marginTop:'1rem'}}>
@@ -337,7 +337,7 @@ export default function LekkageTypeStad({ type, stad }) {
                   `Snelle inzet van ervaren vakmensen in ${stad.naam}`,
                   `Lokale kennis van ${stad.woningtype}`,
                   'Transparante prijsopgave vooraf',
-                  'Erkend door verzekeraars — wij helpen met je claim',
+                  'Erkend door verzekeraars. wij helpen met je claim',
                   'Garantie op uitgevoerd werk',
                   `Bereikbaar voor heel ${stad.provincie}`,
                 ].map((item, i) => (
@@ -378,7 +378,7 @@ export default function LekkageTypeStad({ type, stad }) {
                 {stad.naam} telt {stad.inwoners} inwoners en bestaat voornamelijk uit {stad.woningtype}. {stad.fact}
               </p>
               <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:1.85,marginBottom:'1rem'}}>
-                Onze monteurs zijn dagelijks actief in {stad.naam} en de omliggende gemeenten in {stad.provincie}. Door onze lokale aanwezigheid zijn we gemiddeld binnen 30 minuten ter plaatse — ook voor spoedgevallen buiten kantooruren.
+                Onze monteurs zijn dagelijks actief in {stad.naam} en de omliggende gemeenten in {stad.provincie}. Door onze lokale aanwezigheid zijn we gemiddeld binnen 30 minuten ter plaatse. ook voor spoedgevallen buiten kantooruren.
               </p>
               <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:1.85,marginBottom:'1.5rem'}}>
                 Wij kennen de specifieke eigenschappen van de bebouwing in {stad.naam}. Dat betekent sneller de juiste diagnose, minder onnodige werkzaamheden en een lagere eindrekening voor je.
@@ -439,12 +439,12 @@ export default function LekkageTypeStad({ type, stad }) {
           <div className="sec-head-center">
             <div className="eyebrow">Werkwijze</div>
             <h2>Van melding tot <em>oplossing</em> in {stad.naam}</h2>
-            <p className="sec-sub">Helder en transparant — zo pakken we een {type.naam.toLowerCase()} aan in {stad.naam}.</p>
+            <p className="sec-sub">Helder en transparant. zo pakken we een {type.naam.toLowerCase()} aan in {stad.naam}.</p>
           </div>
           <div className="steps">
             <div className="step"><div className="step-num">1</div><h3>Melding</h3><p>Bel of stuur een aanvraag. We bespreken het probleem en plannen een afspraak in {stad.naam}.</p></div>
             <div className="step"><div className="step-num">2</div><h3>Vakman onderweg</h3><p>De dichtstbijzijnde monteur in {stad.provincie} rijdt naar je toe. Gemiddeld binnen 30 minuten.</p></div>
-            <div className="step"><div className="step-num">3</div><h3>Inspectie & offerte</h3><p>Grondige inspectie met moderne apparatuur. Transparante prijsopgave vooraf — geen verrassingen.</p></div>
+            <div className="step"><div className="step-num">3</div><h3>Inspectie & offerte</h3><p>Grondige inspectie met moderne apparatuur. Transparante prijsopgave vooraf. geen verrassingen.</p></div>
             <div className="step"><div className="step-num">4</div><h3>Opgelost & gegarandeerd</h3><p>Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten.</p></div>
           </div>
         </div>
@@ -488,14 +488,14 @@ export default function LekkageTypeStad({ type, stad }) {
               <h2>{type.naam} in {stad.naam}: <em>alles wat je moet weten</em></h2>
 
               <h3>{type.naam} in {stad.naam} herkennen</h3>
-              <p>{type.seo?.p1 || `We zien het dagelijks in ${stad.naam}: een vlek op het plafond die steeds groter wordt, een muur die vochtig aanvoelt of een kelder waar water blijft staan. ${stad.naam} heeft voornamelijk ${stad.woningtype} — en juist bij dit type bebouwing kan een kleine lekkage snel uitgroeien tot flinke schade als je er niet tijdig bij bent. ${stad.fact}`}</p>
-              <p style={{color:'var(--muted)',fontSize:'0.9rem',lineHeight:1.85,marginTop:'0.75rem'}}>Wacht niet af. Hoe eerder wij erbij zijn, hoe kleiner de ingreep én de rekening. Bel ons direct of vraag een gratis offerte aan — we zijn dag en nacht bereikbaar in {stad.naam} en omgeving.</p>
+              <p>{type.seo?.p1 || `We zien het dagelijks in ${stad.naam}: een vlek op het plafond die steeds groter wordt, een muur die vochtig aanvoelt of een kelder waar water blijft staan. ${stad.naam} heeft voornamelijk ${stad.woningtype}. en juist bij dit type bebouwing kan een kleine lekkage snel uitgroeien tot flinke schade als je er niet tijdig bij bent. ${stad.fact}`}</p>
+              <p style={{color:'var(--muted)',fontSize:'0.9rem',lineHeight:1.85,marginTop:'0.75rem'}}>Wacht niet af. Hoe eerder wij erbij zijn, hoe kleiner de ingreep én de rekening. Bel ons direct of vraag een gratis offerte aan. we zijn dag en nacht bereikbaar in {stad.naam} en omgeving.</p>
 
               <h3>Veelvoorkomende oorzaken in {stad.naam}</h3>
-              <p>{type.seo?.p2 || `In ${stad.naam} zien we bij ${stad.woningtype} een aantal oorzaken steeds terugkomen. Veel van deze problemen zijn goed te voorkomen met regelmatig onderhoud — maar als het eenmaal misgaat, is snelle actie het devies. Onze monteurs kennen de lokale bebouwing van binnen en buiten en stellen snel de juiste diagnose.`}</p>
+              <p>{type.seo?.p2 || `In ${stad.naam} zien we bij ${stad.woningtype} een aantal oorzaken steeds terugkomen. Veel van deze problemen zijn goed te voorkomen met regelmatig onderhoud. maar als het eenmaal misgaat, is snelle actie het devies. Onze monteurs kennen de lokale bebouwing van binnen en buiten en stellen snel de juiste diagnose.`}</p>
 
               <h3>Wat kost {type.naam.toLowerCase()} in {stad.naam}?</h3>
-              <p>{type.seo?.prijzenIntro || `Een eerlijke vraag — en één die we altijd transparant beantwoorden. De kosten hangen af van de omvang en de oorzaak, maar je weet altijd precies waar je aan toe bent vóórdat we beginnen. Onderstaand een indicatief overzicht voor ${stad.naam}:`}</p>
+              <p>{type.seo?.prijzenIntro || `Een eerlijke vraag. en één die we altijd transparant beantwoorden. De kosten hangen af van de omvang en de oorzaak, maar je weet altijd precies waar je aan toe bent vóórdat we beginnen. Onderstaand een indicatief overzicht voor ${stad.naam}:`}</p>
               <div className="price-table">
                 <table>
                   <thead><tr><th>Reparatie</th><th>Indicatie prijs</th><th>Reactietijd</th></tr></thead>
@@ -517,9 +517,9 @@ export default function LekkageTypeStad({ type, stad }) {
               </div>
 
               <h3>Vergoedt jouw verzekering de {type.naam.toLowerCase()} in {stad.naam}?</h3>
-              <p>Dat hangt af van jouw polis — maar in veel gevallen is het antwoord: ja. Een plotselinge en onvoorziene lekkage valt bij de meeste opstalverzekeringen onder de dekking. Denk aan een gesprongen leiding, een daklekkage door storm of een defecte aansluiting. Slijtage door achterstallig onderhoud is doorgaans niet gedekt, maar een acute lekkage vaak wél.</p>
-              <p style={{color:'var(--muted)',fontSize:'0.9rem',lineHeight:1.85,marginTop:'0.75rem'}}>Wij zijn erkend door alle grote Nederlandse verzekeraars — denk aan Centraal Beheer, Nationale-Nederlanden, Interpolis en OHRA. Na onze inspectie stellen we een gedetailleerd rapport op met foto's, bevindingen en de uitgevoerde werkzaamheden. Dat rapport kunt je direct indienen bij jouw verzekeraar voor een schadeclaim.</p>
-              <p style={{color:'var(--muted)',fontSize:'0.9rem',lineHeight:1.85,marginTop:'0.75rem'}}>Twijfelt je of jouw schade gedekt is? Bel ons gerust — we denken graag met je mee en helpen je op weg met de claim. Geen gedoe, gewoon duidelijkheid.</p>
+              <p>Dat hangt af van jouw polis. maar in veel gevallen is het antwoord: ja. Een plotselinge en onvoorziene lekkage valt bij de meeste opstalverzekeringen onder de dekking. Denk aan een gesprongen leiding, een daklekkage door storm of een defecte aansluiting. Slijtage door achterstallig onderhoud is doorgaans niet gedekt, maar een acute lekkage vaak wél.</p>
+              <p style={{color:'var(--muted)',fontSize:'0.9rem',lineHeight:1.85,marginTop:'0.75rem'}}>Wij zijn erkend door alle grote Nederlandse verzekeraars. denk aan Centraal Beheer, Nationale-Nederlanden, Interpolis en OHRA. Na onze inspectie stellen we een gedetailleerd rapport op met foto's, bevindingen en de uitgevoerde werkzaamheden. Dat rapport kunt je direct indienen bij jouw verzekeraar voor een schadeclaim.</p>
+              <p style={{color:'var(--muted)',fontSize:'0.9rem',lineHeight:1.85,marginTop:'0.75rem'}}>Twijfelt je of jouw schade gedekt is? Bel ons gerust. we denken graag met je mee en helpen je op weg met de claim. Geen gedoe, gewoon duidelijkheid.</p>
             </div>
 
             <div className="seo-sticky">
