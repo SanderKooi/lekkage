@@ -423,7 +423,7 @@ export default function LekkageTypeStad({ type, stad }) {
                     {type.naam} {s.naam}
                   </a>
                 ))}
-                <a href={`/lekkage/${type.slug}`}
+                <a href="/lekkage"
                   style={{fontSize:'0.8rem',color:'var(--muted)',textDecoration:'none',padding:'0.35rem 0.5rem',borderRadius:'6px',background:'white',border:'1px solid var(--border)',gridColumn:'1/-1'}}>
                   Alle steden in {stad.provincie} bekijken →
                 </a>
@@ -497,22 +497,26 @@ export default function LekkageTypeStad({ type, stad }) {
               <p>{type.seo?.p2 || `In ${stad.naam} zijn de meest voorkomende oorzaken gerelateerd aan het type bebouwing: ${stad.woningtype}. ${stad.fact}`}</p>
 
               <h3>Kosten {type.naam.toLowerCase()} reparatie in {stad.naam}</h3>
-              <p>{type.seo?.prijzenIntro || 'De kosten hangen af van de omvang en oorzaak van het probleem. Onderstaand een indicatief overzicht:'}</p>
-              {type.prijzen && (
-                <div className="price-table">
-                  <table>
-                    <thead><tr><th>Reparatie</th><th>Indicatie prijs</th><th>Reactietijd</th></tr></thead>
-                    <tbody>
-                      {type.prijzen.map((p, i) => (
-                        <tr key={i} className={i === type.prijzen.length-1 ? 'highlight-row' : ''}>
-                          <td>{p.label}</td><td>{p.prijs}</td><td>30 min</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie ter plaatse in {stad.naam}.</p>
-                </div>
-              )}
+              <p>{type.seo?.prijzenIntro || `De kosten voor ${type.naam.toLowerCase()} in ${stad.naam} hangen af van de omvang en de oorzaak. Onderstaand een indicatief overzicht — u ontvangt altijd een transparante offerte vooraf.`}</p>
+              <div className="price-table">
+                <table>
+                  <thead><tr><th>Reparatie</th><th>Indicatie prijs</th><th>Reactietijd</th></tr></thead>
+                  <tbody>
+                    {(type.prijzen || [
+                      { label: 'Kleine reparatie', prijs: '€ 95 – € 175' },
+                      { label: 'Middelgrote reparatie', prijs: '€ 175 – € 350' },
+                      { label: 'Grote reparatie', prijs: '€ 350 – € 750' },
+                      { label: 'Spoedreparatie (24/7)', prijs: '€ 145 – € 295' },
+                      { label: 'Gratis inspectie + offerte', prijs: '€ 0', highlight: true },
+                    ]).map((p, i, arr) => (
+                      <tr key={i} className={(p.highlight || i === arr.length-1) ? 'highlight-row' : ''}>
+                        <td>{p.label}</td><td>{p.prijs}</td><td>30 min</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie ter plaatse in {stad.naam}.</p>
+              </div>
 
               <h3>{type.naam} en uw verzekering in {stad.naam}</h3>
               <p>{type.seo?.verzekering || `Plotselinge ${type.naam.toLowerCase()} valt doorgaans onder de opstalverzekering. Wij zijn erkend door alle grote Nederlandse verzekeraars en stellen een gedetailleerd inspectierapport op dat u direct kunt gebruiken voor uw claim.`}</p>
@@ -590,33 +594,26 @@ export default function LekkageTypeStad({ type, stad }) {
         </div>
       </section>
 
-      {/* INTERNE LINKING */}
+      {/* ANDERE DIENSTEN */}
       <section className="section section-white">
-        <div className="section-inner linking-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'3rem'}}>
-          <div>
-            <div className="eyebrow">{type.naam} per stad</div>
-            <h2 style={{fontSize:'1.3rem',marginBottom:'1.25rem'}}>Andere steden in <em>{stad.provincie}</em></h2>
-            <div className="steden-grid">
-              {andereSteden.map(s => (
-                <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`} className="stad-a">
-                  <span>📍 {s.naam}</span><span className="stad-arrow">→</span>
-                </a>
-              ))}
-              <a href={`/lekkage/${type.slug}`} className="stad-a" style={{color:'var(--green)',fontWeight:600}}>
-                <span>Alle steden</span><span className="stad-arrow">→</span>
+        <div className="section-inner">
+          <div className="eyebrow">Andere diensten in {stad.naam}</div>
+          <h2 style={{fontSize:'1.3rem',marginBottom:'1.5rem'}}>Meer <em>lekkageproblemen</em> in {stad.naam}</h2>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill, minmax(220px, 1fr))',gap:'0.75rem'}}>
+            {andereTypes.map(t => (
+              <a key={t.slug} href={`/lekkage/${t.slug}/${stad.slug}`}
+                style={{display:'flex',alignItems:'center',gap:'0.75rem',padding:'0.9rem 1rem',background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'10px',textDecoration:'none',color:'var(--text)',fontWeight:500,fontSize:'0.88rem',transition:'all 0.2s'}}
+                onMouseEnter={e => { e.currentTarget.style.background='var(--green4)'; e.currentTarget.style.borderColor='var(--green)' }}
+                onMouseLeave={e => { e.currentTarget.style.background='var(--green3)'; e.currentTarget.style.borderColor='var(--green4)' }}
+              >
+                <span style={{fontSize:'1.2rem'}}>{t.icon}</span>
+                <div>
+                  <div style={{fontWeight:600}}>{t.naam}</div>
+                  <div style={{fontSize:'0.75rem',color:'var(--muted)',marginTop:'0.1rem'}}>in {stad.naam}</div>
+                </div>
+                <span style={{marginLeft:'auto',color:'var(--green)',fontSize:'0.85rem'}}>→</span>
               </a>
-            </div>
-          </div>
-          <div>
-            <div className="eyebrow">Andere diensten in {stad.naam}</div>
-            <h2 style={{fontSize:'1.3rem',marginBottom:'1.25rem'}}>Meer <em>lekkageproblemen</em></h2>
-            <div className="steden-grid">
-              {andereTypes.map(t => (
-                <a key={t.slug} href={`/lekkage/${t.slug}/${stad.slug}`} className="stad-a">
-                  <span>{t.icon} {t.naam}</span><span className="stad-arrow">→</span>
-                </a>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
       </section>
