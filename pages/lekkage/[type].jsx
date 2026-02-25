@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Nav from '../../../components/Nav'
+import Nav from '../../components/Nav'
 import { useState, useEffect } from 'react'
 import { steden, lekkageTypes, getSted, getType } from '../../../data'
 
