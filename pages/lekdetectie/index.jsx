@@ -31,7 +31,7 @@ export default function LekdetectieIndex() {
     <>
       <Head>
         <title>Lekdetectie Nederland – Lek Opsporen Zonder Sloopwerk | LekkageFix</title>
-        <meta name="description" content="Professionele lekdetectie door heel Nederland. Wij vinden de exacte locatie van uw lekkage met thermische camera, akoestische detectie en tracergas — zonder sloopwerk. 24/7 bereikbaar." />
+        <meta name="description" content="Professionele lekdetectie door heel Nederland. Wij vinden de exacte locatie van jouw lekkage met thermische camera, akoestische detectie en tracergas — zonder sloopwerk. 24/7 bereikbaar." />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://lekkagefix.nl/lekdetectie" />
         <meta property="og:title" content="Lekdetectie Nederland – Lek Opsporen Zonder Sloopwerk | LekkageFix" />
@@ -104,7 +104,7 @@ export default function LekdetectieIndex() {
           <div>
             <div className="hero-badge"><span className="pulse" /> Zonder sloopwerk · heel Nederland</div>
             <h1>Lekdetectie — <em>lek opsporen zonder hak- en breekwerk</em></h1>
-            <p className="hero-sub" style={{margin:'0 auto 2rem',maxWidth:'620px'}}>Wij vinden de exacte locatie van uw lekkage met geavanceerde detectieapparatuur. Thermische camera, akoestische detectie en tracergas — 95% van alle lekken opgespoord zonder ook maar één tegel te breken.</p>
+            <p className="hero-sub" style={{margin:'0 auto 2rem',maxWidth:'620px'}}>Wij vinden de exacte locatie van jouw lekkage met geavanceerde detectieapparatuur. Thermische camera, akoestische detectie en tracergas — 95% van alle lekken opgespoord zonder ook maar één tegel te breken.</p>
 
             {/* ZOEKBALK */}
             <div style={{position:'relative',maxWidth:'480px',margin:'0 auto 2rem'}}>
@@ -175,9 +175,9 @@ export default function LekdetectieIndex() {
               { icon:'🌡️', naam:'Thermische camera', omschrijving:'Warmtebeeldcamera\'s detecteren temperatuurverschillen door vocht achter muren en vloeren — volledig non-destructief en direct zichtbaar.' },
               { icon:'🔊', naam:'Akoestische detectie', omschrijving:'Geavanceerde luisterapparatuur vangt het geluid van stromend water op, zelfs diep in de muur of onder de vloer.' },
               { icon:'🧪', naam:'Tracergas detectie', omschrijving:'Een onschadelijk gas in de leiding ontsnapt op de lekplek — een detector vindt exact de positie aan de oppervlakte.' },
-              { icon:'📋', naam:'Lekrapportage', omschrijving:'Na elke detectie ontvangt u een gedetailleerd rapport met foto\'s en bevindingen — direct bruikbaar voor de verzekering.' },
-              { icon:'💧', naam:'Druktest leidingen', omschrijving:'Met een druktest bepalen we snel of er een lekkage in uw leidingnet aanwezig is en hoe groot die is.' },
-              { icon:'📷', naam:'Camera-inspectie riool', omschrijving:'Een HD-camera rijdt door uw riolering en toont live de staat van de leidingen — verzakking, wortelindringing en scheuren.' },
+              { icon:'📋', naam:'Lekrapportage', omschrijving:'Na elke detectie ontvangt je een gedetailleerd rapport met foto\'s en bevindingen — direct bruikbaar voor de verzekering.' },
+              { icon:'💧', naam:'Druktest leidingen', omschrijving:'Met een druktest bepalen we snel of er een lekkage in jouw leidingnet aanwezig is en hoe groot die is.' },
+              { icon:'📷', naam:'Camera-inspectie riool', omschrijving:'Een HD-camera rijdt door jouw riolering en toont live de staat van de leidingen — verzakking, wortelindringing en scheuren.' },
             ].map(m => (
               <div key={m.naam} className="svc" style={{cursor:'default'}}>
                 <div className="svc-icon">{m.icon}</div>
@@ -282,17 +282,17 @@ export default function LekdetectieIndex() {
               <div className="eyebrow">Lekdetectie informatie</div>
               <h2 style={{marginBottom:'1.5rem'}}>Lekdetectie: <em>alles wat je moet weten</em></h2>
 
-              <h3>Wat is lekdetectie en wanneer heeft u het nodig?</h3>
-              <p>Lekdetectie is het professioneel opsporen van de exacte locatie van een lekkage met behulp van geavanceerde apparatuur. U heeft lekdetectie nodig als de oorzaak van uw lekkage niet zichtbaar is — water reist namelijk langs constructies en wordt zichtbaar op een plek die soms meters verwijderd is van het werkelijke lek. Zonder detectie wordt er onnodig gesloopt of wordt de verkeerde plek gerepareerd.</p>
+              <h3>Wat is lekdetectie en wanneer heeft je het nodig?</h3>
+              <p>Lekdetectie is het professioneel opsporen van de exacte locatie van een lekkage met behulp van geavanceerde apparatuur. Je heeft lekdetectie nodig als de oorzaak van jouw lekkage niet zichtbaar is — water reist namelijk langs constructies en wordt zichtbaar op een plek die soms meters verwijderd is van het werkelijke lek. Zonder detectie wordt er onnodig gesloopt of wordt de verkeerde plek gerepareerd.</p>
 
               <h3>Lekdetectie zonder sloopwerk: hoe werkt het?</h3>
               <p>Moderne lekdetectie is volledig non-destructief. Met een thermische camera meten we temperatuurverschillen in muren en vloeren — vochtige plekken zijn koeler en direct zichtbaar op het scherm. Akoestische detectieapparatuur 'hoort' het geluid van stromend water door muren heen. Bij leidinglekkages gebruiken we tracergas: een onschadelijke gasmix die via het leidingnet ontsnapt op de lekplek en door een detector aan de oppervlakte wordt gevonden. In 95% van de gevallen vinden we het lek zonder ook maar één tegel te verwijderen.</p>
 
               <h3>Lekdetectie kosten en verzekering</h3>
-              <p>De kosten voor lekdetectie variëren van € 150 tot € 450 afhankelijk van de methode en de complexiteit. Bij LekkageFix ontvangt u altijd een transparante offerte vooraf. Veel verzekeringen vergoeden de detectiekosten als onderdeel van de waterschadeclaim — wij stellen een gedetailleerd rapport op dat u direct kunt indienen bij uw verzekeraar. We zijn erkend door alle grote Nederlandse verzekeraars.</p>
+              <p>De kosten voor lekdetectie variëren van € 150 tot € 450 afhankelijk van de methode en de complexiteit. Bij LekkageFix ontvangt je altijd een transparante offerte vooraf. Veel verzekeringen vergoeden de detectiekosten als onderdeel van de waterschadeclaim — wij stellen een gedetailleerd rapport op dat je direct kunt indienen bij jouw verzekeraar. We zijn erkend door alle grote Nederlandse verzekeraars.</p>
 
-              <h3>Lekdetectie in uw regio</h3>
-              <p>LekkageFix is actief in meer dan 130 steden door heel Nederland. Onze specialisten zijn gelijkmatig verspreid over het land zodat we gemiddeld binnen 30 minuten bij u zijn. Van Groningen tot Zeeland, van Utrecht tot de Randstad — er is altijd een gecertificeerde lekdetectie specialist in uw buurt beschikbaar.</p>
+              <h3>Lekdetectie in jouw regio</h3>
+              <p>LekkageFix is actief in meer dan 130 steden door heel Nederland. Onze specialisten zijn gelijkmatig verspreid over het land zodat we gemiddeld binnen 30 minuten bij je zijn. Van Groningen tot Zeeland, van Utrecht tot de Randstad — er is altijd een gecertificeerde lekdetectie specialist in jouw buurt beschikbaar.</p>
             </div>
 
             <div className="seo-sticky">
