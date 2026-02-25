@@ -536,12 +536,12 @@ export default function LekkageTypeStad({ type, stad }) {
                   </div>
                 </div>
                 <p style={{fontSize:'0.82rem',opacity:0.9,lineHeight:1.7,marginBottom:'1.25rem',fontStyle:'italic'}}>"{monteur.quote}"</p>
-                <div style={{display:'flex',alignItems:'center',gap:'0.4rem',marginBottom:'0.5rem',opacity:0.75}}>
-                  <svg width="24" height="28" viewBox="0 0 24 28" fill="none">
-                    <path d="M4 2 C4 2, 20 2, 20 12 C20 18, 14 22, 12 25" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" strokeDasharray="3 2"/>
-                    <path d="M8 23 L12 27 L16 23" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'0.5rem'}}>
+                  <span style={{fontSize:'0.7rem',opacity:0.75}}>direct verbonden met {monteur.naam.split(' ')[0]}</span>
+                  <svg width="24" height="32" viewBox="0 0 24 32" fill="none" style={{opacity:0.7,flexShrink:0}}>
+                    <path d="M12 2 C18 2, 22 8, 20 16 C19 20, 16 24, 12 28" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" strokeDasharray="3 2"/>
+                    <path d="M7 25 L12 30 L17 25" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
-                  <span style={{fontSize:'0.7rem'}}>direct verbonden met {monteur.naam.split(' ')[0]}</span>
                 </div>
                 <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',background:'var(--orange)',fontSize:'0.9rem',display:'flex'}}>📞 Bel {monteur.naam.split(' ')[0]}</a>
               </div>
