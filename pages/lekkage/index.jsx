@@ -188,7 +188,7 @@ export default function LekkageIndex() {
           <div className="sec-head-center">
             <div className="eyebrow">Specialisaties</div>
             <h2>Elk type lekkage <em>opgelost</em></h2>
-            <p className="sec-sub">Kies uw type lekkage voor gedetailleerde informatie, prijzen en een overzicht van steden waar wij actief zijn.</p>
+            <p className="sec-sub">Kies jouw type lekkage voor gedetailleerde informatie, prijzen en een overzicht van steden waar wij actief zijn.</p>
           </div>
           <div className="svc-grid">
             {lekkageTypes.map(t => (
@@ -276,7 +276,7 @@ export default function LekkageIndex() {
           <div className="sec-head-center">
             <div className="eyebrow">Werkgebied</div>
             <h2>Lekkage reparatie in <em>jouw stad</em></h2>
-            <p className="sec-sub">Wij zijn actief in 130+ steden door heel Nederland. Selecteer uw stad voor lokale informatie en direct een vakman aanvragen.</p>
+            <p className="sec-sub">Wij zijn actief in 130+ steden door heel Nederland. Selecteer jouw stad voor lokale informatie en direct een vakman aanvragen.</p>
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:'2rem'}}>
             {provincies.map(prov => {
@@ -327,8 +327,8 @@ export default function LekkageIndex() {
               <div className="eyebrow">Lekkage informatie</div>
               <h2 style={{marginBottom:'1.5rem'}}>Lekkage reparatie: <em>alles wat je moet weten</em></h2>
 
-              <h3>Wat is een lekkage en wanneer moet u handelen?</h3>
-              <p>Een lekkage is ongecontroleerde waterindringing in uw woning of gebouw. Van een klein druppeltje op het plafond tot een ondergelopen kelder — elke lekkage vraagt om snelle actie. Water richt in korte tijd aanzienlijke schade aan: houtrot, schimmelvorming, verzwakking van constructies en schade aan interieur. Hoe eerder u ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
+              <h3>Wat is een lekkage en wanneer moet je handelen?</h3>
+              <p>Een lekkage is ongecontroleerde waterindringing in jouw woning of gebouw. Van een klein druppeltje op het plafond tot een ondergelopen kelder — elke lekkage vraagt om snelle actie. Water richt in korte tijd aanzienlijke schade aan: houtrot, schimmelvorming, verzwakking van constructies en schade aan interieur. Hoe eerder je ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
 
               <h3>De 7 meest voorkomende typen lekkages in Nederland</h3>
               <p>In Nederland komen zeven typen lekkages het meest voor, elk met een eigen oorzaak en aanpak:</p>
@@ -336,8 +336,8 @@ export default function LekkageIndex() {
                 {lekkageTypes.map(t => <li key={t.slug}><strong>{t.naam}</strong> — {t.omschrijving}</li>)}
               </ul>
 
-              <h3>Lekkage reparatie kosten: wat kunt u verwachten?</h3>
-              <p>De kosten van lekkage reparatie variëren sterk per type en omvang. Een eenvoudige kitrand vervangen kost tussen de € 80 en € 200. Een daklekkage reparatie begint vanaf € 75 voor een losse dakpan tot € 1.500 of meer voor gedeeltelijke dakbedekking. Rioollekken en kelderwaterdichting zijn de meest kostbare reparaties. Bij LekkageFix ontvangt u altijd een transparante offerte vooraf — volledig vrijblijvend en zonder verborgen kosten.</p>
+              <h3>Lekkage reparatie kosten: wat kunt je verwachten?</h3>
+              <p>De kosten van lekkage reparatie variëren sterk per type en omvang. Een eenvoudige kitrand vervangen kost tussen de € 80 en € 200. Een daklekkage reparatie begint vanaf € 75 voor een losse dakpan tot € 1.500 of meer voor gedeeltelijke dakbedekking. Rioollekken en kelderwaterdichting zijn de meest kostbare reparaties. Bij LekkageFix ontvangt je altijd een transparante offerte vooraf — volledig vrijblijvend en zonder verborgen kosten.</p>
 
               <div className="price-table">
                 <table>
@@ -363,8 +363,8 @@ export default function LekkageIndex() {
                 <p className="table-note">* Prijzen zijn indicatief en afhankelijk van type, omvang en locatie. Definitieve prijs na inspectie.</p>
               </div>
 
-              <h3>Lekkage en uw verzekering</h3>
-              <p>Of uw verzekering de schade vergoedt hangt af van de oorzaak en uw polisvoorwaarden. Plotselinge schade door storm, extreme neerslag of gesprongen leidingen valt doorgaans onder de opstalverzekering. Slijtage, achterstallig onderhoud of geleidelijke lekkages worden vrijwel nooit vergoed. LekkageFix is erkend door alle grote Nederlandse verzekeraars en stelt gedetailleerde rapporten op die u direct kunt gebruiken voor uw schadeclaim.</p>
+              <h3>Lekkage en jouw verzekering</h3>
+              <p>Of jouw verzekering de schade vergoedt hangt af van de oorzaak en jouw polisvoorwaarden. Plotselinge schade door storm, extreme neerslag of gesprongen leidingen valt doorgaans onder de opstalverzekering. Slijtage, achterstallig onderhoud of geleidelijke lekkages worden vrijwel nooit vergoed. LekkageFix is erkend door alle grote Nederlandse verzekeraars en stelt gedetailleerde rapporten op die je direct kunt gebruiken voor jouw schadeclaim.</p>
 
               <h3>Waarom kiezen voor LekkageFix?</h3>
               <p>Met meer dan 12.000 opgeloste lekkages en een gemiddelde beoordeling van 4.9 sterren is LekkageFix de meest gekozen lekkage specialist van Nederland. Onze monteurs zijn VCA-gecertificeerd, werken met de nieuwste detectieapparatuur en geven garantie op al het uitgevoerde werk. Dag en nacht bereikbaar, gemiddeld binnen 30 minuten ter plaatse.</p>
