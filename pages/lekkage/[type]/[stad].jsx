@@ -488,16 +488,14 @@ export default function LekkageTypeStad({ type, stad }) {
               <h2>{type.naam} in {stad.naam}: <em>alles wat je moet weten</em></h2>
 
               <h3>{type.naam} in {stad.naam} herkennen</h3>
-              <p>{type.seo?.p1 || `${type.naam} in ${stad.naam} is een veelvoorkomend probleem, met name bij ${stad.woningtype}. ${stad.fact} Vroegtijdig ingrijpen voorkomt grotere schade.`}</p>
-              {type.seo?.bullets1 && (
-                <ul>{type.seo.bullets1.map((b,i) => <li key={i}>{b}</li>)}</ul>
-              )}
+              <p>{type.seo?.p1 || `We zien het dagelijks in ${stad.naam}: een vlek op het plafond die steeds groter wordt, een muur die vochtig aanvoelt of een kelder waar water blijft staan. ${stad.naam} heeft voornamelijk ${stad.woningtype} — en juist bij dit type bebouwing kan een kleine lekkage snel uitgroeien tot flinke schade als je er niet tijdig bij bent. ${stad.fact}`}</p>
+              <p style={{color:'var(--muted)',fontSize:'0.9rem',lineHeight:1.85,marginTop:'0.75rem'}}>Wacht niet af. Hoe eerder wij erbij zijn, hoe kleiner de ingreep én de rekening. Bel ons direct of vraag een gratis offerte aan — we zijn dag en nacht bereikbaar in {stad.naam} en omgeving.</p>
 
-              <h3>Oorzaken van {type.naam.toLowerCase()} in {stad.naam}</h3>
-              <p>{type.seo?.p2 || `In ${stad.naam} zijn de meest voorkomende oorzaken gerelateerd aan het type bebouwing: ${stad.woningtype}. ${stad.fact}`}</p>
+              <h3>Veelvoorkomende oorzaken in {stad.naam}</h3>
+              <p>{type.seo?.p2 || `In ${stad.naam} zien we bij ${stad.woningtype} een aantal oorzaken steeds terugkomen. Veel van deze problemen zijn goed te voorkomen met regelmatig onderhoud — maar als het eenmaal misgaat, is snelle actie het devies. Onze monteurs kennen de lokale bebouwing van binnen en buiten en stellen snel de juiste diagnose.`}</p>
 
-              <h3>Kosten {type.naam.toLowerCase()} reparatie in {stad.naam}</h3>
-              <p>{type.seo?.prijzenIntro || `De kosten voor ${type.naam.toLowerCase()} in ${stad.naam} hangen af van de omvang en de oorzaak. Onderstaand een indicatief overzicht — u ontvangt altijd een transparante offerte vooraf.`}</p>
+              <h3>Wat kost {type.naam.toLowerCase()} in {stad.naam}?</h3>
+              <p>{type.seo?.prijzenIntro || `Een eerlijke vraag — en één die we altijd transparant beantwoorden. De kosten hangen af van de omvang en de oorzaak, maar u weet altijd precies waar u aan toe bent vóórdat we beginnen. Onderstaand een indicatief overzicht voor ${stad.naam}:`}</p>
               <div className="price-table">
                 <table>
                   <thead><tr><th>Reparatie</th><th>Indicatie prijs</th><th>Reactietijd</th></tr></thead>
@@ -518,8 +516,10 @@ export default function LekkageTypeStad({ type, stad }) {
                 <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie ter plaatse in {stad.naam}.</p>
               </div>
 
-              <h3>{type.naam} en uw verzekering in {stad.naam}</h3>
-              <p>{type.seo?.verzekering || `Plotselinge ${type.naam.toLowerCase()} valt doorgaans onder de opstalverzekering. Wij zijn erkend door alle grote Nederlandse verzekeraars en stellen een gedetailleerd inspectierapport op dat u direct kunt gebruiken voor uw claim.`}</p>
+              <h3>Vergoedt uw verzekering de {type.naam.toLowerCase()} in {stad.naam}?</h3>
+              <p>Dat hangt af van uw polis — maar in veel gevallen is het antwoord: ja. Een plotselinge en onvoorziene lekkage valt bij de meeste opstalverzekeringen onder de dekking. Denk aan een gesprongen leiding, een daklekkage door storm of een defecte aansluiting. Slijtage door achterstallig onderhoud is doorgaans niet gedekt, maar een acute lekkage vaak wél.</p>
+              <p style={{color:'var(--muted)',fontSize:'0.9rem',lineHeight:1.85,marginTop:'0.75rem'}}>Wij zijn erkend door alle grote Nederlandse verzekeraars — denk aan Centraal Beheer, Nationale-Nederlanden, Interpolis en OHRA. Na onze inspectie stellen we een gedetailleerd rapport op met foto's, bevindingen en de uitgevoerde werkzaamheden. Dat rapport kunt u direct indienen bij uw verzekeraar voor een schadeclaim.</p>
+              <p style={{color:'var(--muted)',fontSize:'0.9rem',lineHeight:1.85,marginTop:'0.75rem'}}>Twijfelt u of uw schade gedekt is? Bel ons gerust — we denken graag met u mee en helpen u op weg met de claim. Geen gedoe, gewoon duidelijkheid.</p>
             </div>
 
             <div className="seo-sticky">
