@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Nav from '../../components/Nav'
 import { useState, useEffect } from 'react'
-import { steden, lekkageTypes, getSted, getType } from '../../../data'
+import { steden, lekkageTypes, getSted, getType } from '../../data'
 
 const PHONE = '0800-1234'
 const PHONE_DISPLAY = '0800-1234'
