@@ -215,6 +215,22 @@ export default function LekkageTypeStad({ type, stad }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }} />
+        <style>{`
+          @media (max-width: 768px) {
+            .hero-inner { grid-template-columns: 1fr !important; }
+            .form-card { display: block !important; }
+            .seo-grid { grid-template-columns: 1fr !important; }
+            .seo-sticky { position: static !important; }
+            .kaart-grid { grid-template-columns: 1fr !important; }
+            .info-grid { grid-template-columns: 1fr !important; }
+            .linking-grid { grid-template-columns: 1fr !important; }
+            .monteur-hero-intro { display: flex !important; }
+          }
+          @media (max-width: 600px) {
+            .steps { grid-template-columns: 1fr 1fr !important; }
+            .kaart-iframe { height: 220px !important; }
+          }
+        `}</style>
       </Head>
       <Nav activePath="/lekkage" />
 
@@ -310,7 +326,7 @@ export default function LekkageTypeStad({ type, stad }) {
       {/* INFO + OORZAKEN */}
       <section className="section">
         <div className="section-inner">
-          <div style={{display:'grid',gridTemplateColumns:'1.2fr 1fr',gap:'3.5rem',alignItems:'start'}}>
+          <div className="info-grid" style={{display:'grid',gridTemplateColumns:'1.2fr 1fr',gap:'3.5rem',alignItems:'start'}}>
             <div>
               <div className="eyebrow">{type.naam} in {stad.naam}</div>
               <h2><em>{type.naam}</em> in {stad.naam} — wat je moet weten</h2>
@@ -354,9 +370,7 @@ export default function LekkageTypeStad({ type, stad }) {
       {/* KAART + WERKGEBIED */}
       <section className="section section-alt">
         <div className="section-inner">
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:'3rem',alignItems:'start'}}>
-            <div>
-              <div className="eyebrow">Werkgebied</div>
+          <div className="kaart-grid" style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:'3rem',alignItems:'start'}}>
               <h2>{type.naam} in <em>{stad.naam}</em> en omgeving</h2>
               <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:1.85,margin:'1rem 0'}}>
                 {stad.naam} telt {stad.inwoners} inwoners en bestaat voornamelijk uit {stad.woningtype}. {stad.fact}
@@ -517,9 +531,9 @@ export default function LekkageTypeStad({ type, stad }) {
                 </div>
                 <p style={{fontSize:'0.82rem',opacity:0.9,lineHeight:1.7,marginBottom:'1.25rem',fontStyle:'italic'}}>"{monteur.quote}"</p>
                 <div style={{display:'flex',alignItems:'center',gap:'0.4rem',marginBottom:'0.5rem',opacity:0.75}}>
-                  <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
-                    <path d="M2 4 C6 1, 16 1, 22 10 C24 13, 25 15, 24 17" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" strokeDasharray="3 2"/>
-                    <path d="M20 15 L24 18 L26 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  <svg width="28" height="22" viewBox="0 0 28 22" fill="none">
+                    <path d="M3 3 C3 3, 14 2, 20 8 C23 11, 22 15, 20 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" strokeDasharray="3 2"/>
+                    <path d="M16 17 L20 20 L22 15" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
                   <span style={{fontSize:'0.7rem'}}>direct verbonden met {monteur.naam.split(' ')[0]}</span>
                 </div>
@@ -572,7 +586,7 @@ export default function LekkageTypeStad({ type, stad }) {
 
       {/* INTERNE LINKING */}
       <section className="section section-white">
-        <div className="section-inner" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'3rem'}}>
+        <div className="section-inner linking-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'3rem'}}>
           <div>
             <div className="eyebrow">{type.naam} per stad</div>
             <h2 style={{fontSize:'1.3rem',marginBottom:'1.25rem'}}>Andere steden in <em>{stad.provincie}</em></h2>
