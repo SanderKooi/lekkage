@@ -284,7 +284,7 @@ export default function LekkageIndex() {
               const visible = isOpen ? provSteden : provSteden.slice(0, MAX_VISIBLE)
               const hasMore = !isOpen && provSteden.length > MAX_VISIBLE
               return (
-                <div key={prov}>
+                <div key={prov} id={prov.toLowerCase().replace(/\s+/g, '-')}>
                   <h3 style={{fontSize:'0.82rem',fontWeight:700,color:'var(--green-dark)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:'0.85rem',paddingBottom:'0.5rem',borderBottom:'2px solid var(--green4)'}}>📍 {prov}</h3>
                   <div className="steden-grid">
                     {visible.map(s => (
