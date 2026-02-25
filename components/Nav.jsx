@@ -82,7 +82,8 @@ export default function Nav({ activePath }) {
           height: 66px;
           display: flex;
           align-items: center;
-          gap: 0;
+          justify-content: space-between;
+          gap: 2rem;
         }
         .nav-logo {
           font-size: 1.4rem;
@@ -114,9 +115,6 @@ export default function Nav({ activePath }) {
           align-items: center;
           gap: 0.25rem;
           list-style: none;
-          flex: 1;
-          justify-content: flex-end;
-          margin-right: 1.5rem;
         }
         .nav-item {
           position: relative;
