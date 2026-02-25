@@ -8,19 +8,18 @@ const PHONE_DISPLAY = '0800-1234'
 const EMAIL = 'info@lekkagefix.nl'
 
 const monteurs = {
-  'Noord-Holland':  { naam: 'Henk van der Berg',  foto: 'HB', functie: 'Lekkage specialist', ervaring: '14 jaar', quote: 'In Noord-Holland ken ik elk woningtype van binnen en buiten.' },
-  'Zuid-Holland':   { naam: 'Marco de Wit',        foto: 'MW', functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Van grachtenpand tot jaren-70 flat — ik los het op.' },
-  'Utrecht':        { naam: 'Jeroen Smit',          foto: 'JS', functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Utrecht kent zijn werfkelders, ik ken de lekkages.' },
-  'Noord-Brabant':  { naam: 'Kevin Janssen',        foto: 'KJ', functie: 'Lekkage specialist', ervaring: '12 jaar', quote: 'Van Eindhoven tot Bergen op Zoom, ik ben er snel bij.' },
-  'Gelderland':     { naam: 'Arjan Meijer',         foto: 'AM', functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'De Gelderse woningbouw heeft geen geheimen voor mij.' },
-  'Overijssel':     { naam: 'Thomas Bos',           foto: 'TB', functie: 'Lekkage specialist', ervaring: '8 jaar',  quote: 'Twente en Zwolle, ik ben altijd in de buurt.' },
-  'Groningen':      { naam: 'Sander Dijkstra',      foto: 'SD', functie: 'Lekkage specialist', ervaring: '7 jaar',  quote: 'Groningse studentenwoningen? Mijn specialiteit.' },
-  'Friesland':      { naam: 'Pieter Visser',        foto: 'PV', functie: 'Lekkage specialist', ervaring: '13 jaar', quote: 'De Friese wind tast daken aan — ik herstel ze.' },
-  'Drenthe':        { naam: 'Rob Hofstra',          foto: 'RH', functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Drentse woningen verdienen vakkundig onderhoud.' },
-  'Flevoland':      { naam: 'Danny Kramer',         foto: 'DK', functie: 'Lekkage specialist', ervaring: '6 jaar',  quote: 'Polderbouw heeft specifieke risico\'s — ik ken ze.' },
-  'Overijssel':     { naam: 'Thomas Bos',           foto: 'TB', functie: 'Lekkage specialist', ervaring: '8 jaar',  quote: 'Twente en Zwolle, ik ben altijd in de buurt.' },
-  'Limburg':        { naam: 'Luc Hermans',          foto: 'LH', functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Mergelstenen huizen zijn mijn specialiteit.' },
-  'Zeeland':        { naam: 'Kees de Vos',          foto: 'KV', functie: 'Lekkage specialist', ervaring: '15 jaar', quote: 'Zeeuwse panden kennen hun eigen vochtproblemen.' },
+  'Noord-Holland':  { naam: 'Henk van der Berg',  foto: 'HB', img: '/images/monteurs/henk.jpg', functie: 'Lekkage specialist', ervaring: '14 jaar', quote: 'In Noord-Holland ken ik elk woningtype van binnen en buiten.' },
+  'Zuid-Holland':   { naam: 'Marco de Wit',        foto: 'MW', img: null, functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Van grachtenpand tot jaren-70 flat — ik los het op.' },
+  'Utrecht':        { naam: 'Jeroen Smit',          foto: 'JS', img: null, functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Utrecht kent zijn werfkelders, ik ken de lekkages.' },
+  'Noord-Brabant':  { naam: 'Kevin Janssen',        foto: 'KJ', img: null, functie: 'Lekkage specialist', ervaring: '12 jaar', quote: 'Van Eindhoven tot Bergen op Zoom, ik ben er snel bij.' },
+  'Gelderland':     { naam: 'Arjan Meijer',         foto: 'AM', img: null, functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'De Gelderse woningbouw heeft geen geheimen voor mij.' },
+  'Overijssel':     { naam: 'Thomas Bos',           foto: 'TB', img: null, functie: 'Lekkage specialist', ervaring: '8 jaar',  quote: 'Twente en Zwolle, ik ben altijd in de buurt.' },
+  'Groningen':      { naam: 'Sander Dijkstra',      foto: 'SD', img: null, functie: 'Lekkage specialist', ervaring: '7 jaar',  quote: 'Groningse studentenwoningen? Mijn specialiteit.' },
+  'Friesland':      { naam: 'Pieter Visser',        foto: 'PV', img: null, functie: 'Lekkage specialist', ervaring: '13 jaar', quote: 'De Friese wind tast daken aan — ik herstel ze.' },
+  'Drenthe':        { naam: 'Rob Hofstra',          foto: 'RH', img: null, functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Drentse woningen verdienen vakkundig onderhoud.' },
+  'Flevoland':      { naam: 'Danny Kramer',         foto: 'DK', img: null, functie: 'Lekkage specialist', ervaring: '6 jaar',  quote: 'Polderbouw heeft specifieke risico\'s — ik ken ze.' },
+  'Limburg':        { naam: 'Luc Hermans',          foto: 'LH', img: null, functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Mergelstenen huizen zijn mijn specialiteit.' },
+  'Zeeland':        { naam: 'Kees de Vos',          foto: 'KV', img: null, functie: 'Lekkage specialist', ervaring: '15 jaar', quote: 'Zeeuwse panden kennen hun eigen vochtproblemen.' },
 }
 
 function getMonteur(provincie) {
@@ -261,9 +260,13 @@ export default function LekkageTypeStad({ type, stad }) {
           <div className="form-card" id="offerte">
             {/* MONTEUR INTRO */}
             <div style={{display:'flex',alignItems:'center',gap:'0.85rem',padding:'0.85rem 1rem',background:'var(--green3)',borderRadius:'10px',marginBottom:'1.25rem',border:'1px solid var(--green4)'}}>
-              <div style={{width:'46px',height:'46px',borderRadius:'50%',background:'var(--green)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.9rem',fontWeight:800,flexShrink:0,border:'2.5px solid white',boxShadow:'0 2px 8px rgba(26,122,74,0.25)'}}>
-                {monteur.foto}
-              </div>
+              {monteur.img ? (
+                <img src={monteur.img} alt={monteur.naam} style={{width:'46px',height:'46px',borderRadius:'50%',objectFit:'cover',border:'2px solid white',boxShadow:'0 2px 8px rgba(26,122,74,0.25)',flexShrink:0}} />
+              ) : (
+                <div style={{width:'46px',height:'46px',borderRadius:'50%',background:'var(--green)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.9rem',fontWeight:800,flexShrink:0,border:'2.5px solid white',boxShadow:'0 2px 8px rgba(26,122,74,0.25)'}}>
+                  {monteur.foto}
+                </div>
+              )}
               <div>
                 <div style={{fontSize:'0.78rem',fontWeight:700,color:'var(--green-dark)'}}>{monteur.naam} · {monteur.functie}</div>
                 <div style={{fontSize:'0.72rem',color:'var(--muted)',lineHeight:1.4}}>Actief in {stad.provincie} · {monteur.ervaring} ervaring</div>
@@ -499,24 +502,30 @@ export default function LekkageTypeStad({ type, stad }) {
               {/* MONTEUR CTA */}
               <div style={{background:'var(--green-dark)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem',color:'white'}}>
                 <div style={{display:'flex',alignItems:'center',gap:'0.85rem',marginBottom:'1rem'}}>
-                  <div style={{width:'52px',height:'52px',borderRadius:'50%',background:'rgba(255,255,255,0.15)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1rem',fontWeight:800,flexShrink:0,border:'2px solid rgba(255,255,255,0.3)'}}>
-                    {monteur.foto}
-                  </div>
+                  {monteur.img ? (
+                    <img src={monteur.img} alt={monteur.naam} style={{width:'56px',height:'56px',borderRadius:'50%',objectFit:'cover',border:'2.5px solid rgba(255,255,255,0.4)',flexShrink:0}} />
+                  ) : (
+                    <div style={{width:'56px',height:'56px',borderRadius:'50%',background:'rgba(255,255,255,0.15)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1rem',fontWeight:800,flexShrink:0,border:'2px solid rgba(255,255,255,0.3)'}}>
+                      {monteur.foto}
+                    </div>
+                  )}
                   <div>
                     <div style={{fontWeight:700,fontSize:'0.9rem'}}>{monteur.naam}</div>
                     <div style={{fontSize:'0.75rem',opacity:0.8}}>{monteur.functie} · {stad.provincie}</div>
                     <div style={{fontSize:'0.72rem',opacity:0.7,marginTop:'0.1rem'}}>{monteur.ervaring} ervaring</div>
                   </div>
                 </div>
-                <p style={{fontSize:'0.82rem',opacity:0.9,lineHeight:1.7,marginBottom:'1rem',fontStyle:'italic'}}>"{monteur.quote}"</p>
-                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',background:'var(--orange)',fontSize:'0.9rem'}}>📞 Bel {monteur.naam.split(' ')[0]}</a>
+                <p style={{fontSize:'0.82rem',opacity:0.9,lineHeight:1.7,marginBottom:'1.25rem',fontStyle:'italic'}}>"{monteur.quote}"</p>
+                <div style={{display:'flex',alignItems:'center',gap:'0.4rem',marginBottom:'0.5rem',opacity:0.75}}>
+                  <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
+                    <path d="M2 5 C7 1, 18 1, 24 10" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" strokeDasharray="3 2"/>
+                    <path d="M21 7 L25 11 L20 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  </svg>
+                  <span style={{fontSize:'0.7rem'}}>direct verbonden met {monteur.naam.split(' ')[0]}</span>
+                </div>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',background:'var(--orange)',fontSize:'0.9rem',display:'flex'}}>📞 Bel {monteur.naam.split(' ')[0]}</a>
               </div>
 
-              <div style={{background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
-                <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Direct hulp in {stad.naam}</div>
-                <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Gemiddeld binnen 30 minuten ter plaatse in {stad.naam} en omgeving.</p>
-                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 {PHONE_DISPLAY}</a>
-              </div>
               <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
                 <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Wat wij controleren</div>
                 <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
