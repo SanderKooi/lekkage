@@ -76,14 +76,13 @@ export default function Nav({ activePath }) {
           box-shadow: 0 2px 16px rgba(20,92,56,0.3);
         }
         .nav-inner {
-          max-width: 1200px;
+          max-width: 1400px;
           margin: 0 auto;
-          padding: 0 clamp(1rem,4vw,2rem);
+          padding: 0 clamp(1rem,4vw,3rem);
           height: 66px;
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          gap: 2rem;
+          gap: 0;
         }
         .nav-logo {
           font-size: 1.4rem;
@@ -115,6 +114,9 @@ export default function Nav({ activePath }) {
           align-items: center;
           gap: 0.25rem;
           list-style: none;
+          flex: 1;
+          justify-content: flex-end;
+          margin-right: 1.5rem;
         }
         .nav-item {
           position: relative;
