@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useState, useRef, useEffect } from 'react'
-import Nav from '../components/Nav'
+import Nav from '../components/Nav' 
 
 const steden = [
   { naam: 'Amsterdam', slug: 'amsterdam', prov: 'Noord-Holland', tags: ['Daklekkage','Loodgieter','Riool'] },
