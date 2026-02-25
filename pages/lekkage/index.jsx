@@ -31,7 +31,7 @@ export default function LekkageIndex() {
     <>
       <Head>
         <title>Lekkage Reparatie Nederland – Alle Diensten & Steden | LekkageFix</title>
-        <meta name="description" content="Lekkage reparatie in heel Nederland. Daklekkage, waterleiding, badkamer, riool, vocht, gevel of kelder — gecertificeerde vakmensen, gemiddeld 30 min ter plaatse. Gratis offerte." />
+        <meta name="description" content="Lekkage reparatie in heel Nederland. Daklekkage, waterleiding, badkamer, riool, vocht, gevel of kelder. gecertificeerde vakmensen, gemiddeld 30 min ter plaatse. Gratis offerte." />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://lekkagefix.nl/lekkage" />
         <meta property="og:title" content="Lekkage Reparatie Nederland – Alle Diensten | LekkageFix" />
@@ -64,7 +64,7 @@ export default function LekkageIndex() {
                   "@type": "Review",
                   "author": { "@type": "Person", "name": "Martijn V." },
                   "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-                  "reviewBody": "Al maanden last van een druipend plafond na regen. LekkageFix vond het lek binnen 20 minuten — een losse dakpan én gescheurde nokbedekking. Dezelfde dag gerepareerd.",
+                  "reviewBody": "Al maanden last van een druipend plafond na regen. LekkageFix vond het lek binnen 20 minuten. een losse dakpan én gescheurde nokbedekking. Dezelfde dag gerepareerd.",
                   "datePublished": "2025-02-10"
                 },
                 {
@@ -123,8 +123,8 @@ export default function LekkageIndex() {
         <div className="hero-inner" style={{gridTemplateColumns:'1fr',maxWidth:'820px',margin:'0 auto',textAlign:'center'}}>
           <div>
             <div className="hero-badge"><span className="pulse" /> 24/7 bereikbaar · heel Nederland</div>
-            <h1>Lekkage reparatie — <em>snel, vakkundig & gegarandeerd</em></h1>
-            <p className="hero-sub" style={{margin:'0 auto 2rem',maxWidth:'620px'}}>Van daklekkage tot rioolprobleem — onze gecertificeerde vakmensen lossen elk type lekkage op. Gemiddeld binnen 30 minuten ter plaatse, dag en nacht.</p>
+            <h1>Lekkage reparatie. <em>snel, vakkundig & gegarandeerd</em></h1>
+            <p className="hero-sub" style={{margin:'0 auto 2rem',maxWidth:'620px'}}>Van daklekkage tot rioolprobleem. onze gecertificeerde vakmensen lossen elk type lekkage op. Gemiddeld binnen 30 minuten ter plaatse, dag en nacht.</p>
 
             {/* ZOEKBALK */}
             <div style={{position:'relative',maxWidth:'480px',margin:'0 auto 2rem'}}>
@@ -209,13 +209,13 @@ export default function LekkageIndex() {
           <div className="sec-head-center">
             <div className="eyebrow">Werkwijze</div>
             <h2>Van melding tot <em>oplossing</em></h2>
-            <p className="sec-sub">Helder en transparant — zo lossen we elk lekkageprobleem op.</p>
+            <p className="sec-sub">Helder en transparant. zo lossen we elk lekkageprobleem op.</p>
           </div>
           <div className="steps">
             {[
               {n:'1',t:'Melding',p:'Bel of stuur een aanvraag. We bespreken het probleem en plannen direct een afspraak in.'},
               {n:'2',t:'Vakman onderweg',p:'De dichtstbijzijnde gecertificeerde monteur rijdt naar je toe. Gemiddeld binnen 30 minuten.'},
-              {n:'3',t:'Inspectie & offerte',p:'Grondige inspectie met moderne detectieapparatuur. Transparante prijsopgave vooraf — geen verrassingen.'},
+              {n:'3',t:'Inspectie & offerte',p:'Grondige inspectie met moderne detectieapparatuur. Transparante prijsopgave vooraf. geen verrassingen.'},
               {n:'4',t:'Opgelost & gegarandeerd',p:'Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten.'},
             ].map(s => (
               <div key={s.n} className="step">
@@ -253,7 +253,7 @@ export default function LekkageIndex() {
           </div>
           <div className="reviews-grid">
             {[
-              { naam:'Martijn V.', stad:'Amsterdam', tekst:'Al maanden last van een druipend plafond na regen. LekkageFix vond het lek binnen 20 minuten — een losse dakpan én gescheurde nokbedekking. Dezelfde dag gerepareerd.', datum:'2 weken geleden' },
+              { naam:'Martijn V.', stad:'Amsterdam', tekst:'Al maanden last van een druipend plafond na regen. LekkageFix vond het lek binnen 20 minuten. een losse dakpan én gescheurde nokbedekking. Dezelfde dag gerepareerd.', datum:'2 weken geleden' },
               { naam:'Sandra K.', stad:'Rotterdam', tekst:'Plat dak van onze uitbouw lekte al twee winters. Twee andere bedrijven hadden het niet gevonden. LekkageFix traceerde het naar een verkeerd afgedichte dakdoorvoer. Eindelijk droog!', datum:'1 maand geleden' },
               { naam:'Karin M.', stad:'Den Haag', tekst:'Gesprongen leiding in de muur. LekkageFix vond de oorzaak snel zonder onnodig sloopwerk. Netjes afgedicht en opgeruimd. Aanrader!', datum:'1 week geleden' },
             ].map((r, i) => (
@@ -328,16 +328,16 @@ export default function LekkageIndex() {
               <h2 style={{marginBottom:'1.5rem'}}>Lekkage reparatie: <em>alles wat je moet weten</em></h2>
 
               <h3>Wat is een lekkage en wanneer moet je handelen?</h3>
-              <p>Een lekkage is ongecontroleerde waterindringing in jouw woning of gebouw. Van een klein druppeltje op het plafond tot een ondergelopen kelder — elke lekkage vraagt om snelle actie. Water richt in korte tijd aanzienlijke schade aan: houtrot, schimmelvorming, verzwakking van constructies en schade aan interieur. Hoe eerder je ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
+              <p>Een lekkage is ongecontroleerde waterindringing in jouw woning of gebouw. Van een klein druppeltje op het plafond tot een ondergelopen kelder. elke lekkage vraagt om snelle actie. Water richt in korte tijd aanzienlijke schade aan: houtrot, schimmelvorming, verzwakking van constructies en schade aan interieur. Hoe eerder je ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
 
               <h3>De 7 meest voorkomende typen lekkages in Nederland</h3>
               <p>In Nederland komen zeven typen lekkages het meest voor, elk met een eigen oorzaak en aanpak:</p>
               <ul>
-                {lekkageTypes.map(t => <li key={t.slug}><strong>{t.naam}</strong> — {t.omschrijving}</li>)}
+                {lekkageTypes.map(t => <li key={t.slug}><strong>{t.naam}</strong>. {t.omschrijving}</li>)}
               </ul>
 
               <h3>Lekkage reparatie kosten: wat kunt je verwachten?</h3>
-              <p>De kosten van lekkage reparatie variëren sterk per type en omvang. Een eenvoudige kitrand vervangen kost tussen de € 80 en € 200. Een daklekkage reparatie begint vanaf € 75 voor een losse dakpan tot € 1.500 of meer voor gedeeltelijke dakbedekking. Rioollekken en kelderwaterdichting zijn de meest kostbare reparaties. Bij LekkageFix ontvangt je altijd een transparante offerte vooraf — volledig vrijblijvend en zonder verborgen kosten.</p>
+              <p>De kosten van lekkage reparatie variëren sterk per type en omvang. Een eenvoudige kitrand vervangen kost tussen de € 80 en € 200. Een daklekkage reparatie begint vanaf € 75 voor een losse dakpan tot € 1.500 of meer voor gedeeltelijke dakbedekking. Rioollekken en kelderwaterdichting zijn de meest kostbare reparaties. Bij LekkageFix ontvangt je altijd een transparante offerte vooraf. volledig vrijblijvend en zonder verborgen kosten.</p>
 
               <div className="price-table">
                 <table>
