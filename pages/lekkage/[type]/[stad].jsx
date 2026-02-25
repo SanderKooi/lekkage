@@ -371,6 +371,8 @@ export default function LekkageTypeStad({ type, stad }) {
       <section className="section section-alt">
         <div className="section-inner">
           <div className="kaart-grid" style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:'3rem',alignItems:'start'}}>
+            <div>
+              <div className="eyebrow">Werkgebied</div>
               <h2>{type.naam} in <em>{stad.naam}</em> en omgeving</h2>
               <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:1.85,margin:'1rem 0'}}>
                 {stad.naam} telt {stad.inwoners} inwoners en bestaat voornamelijk uit {stad.woningtype}. {stad.fact}
