@@ -32,7 +32,7 @@ export default function LekdetectieIndex() {
       <Head>
         <title>Lekdetectie Nederland – Lek Opsporen Zonder Sloopwerk | LekkageFix</title>
         <meta name="description" content="Professionele lekdetectie door heel Nederland. Wij vinden de exacte locatie van jouw lekkage met thermische camera, akoestische detectie en tracergas. zonder sloopwerk. 24/7 bereikbaar." />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="noindex, nofollow" />
         <link rel="canonical" href="https://lekkagefix.nl/lekdetectie" />
         <meta property="og:title" content="Lekdetectie Nederland – Lek Opsporen Zonder Sloopwerk | LekkageFix" />
         <meta property="og:description" content="Professionele lekdetectie in heel Nederland. 95% zonder sloopwerk. 24/7 bereikbaar." />
@@ -185,6 +185,39 @@ export default function LekdetectieIndex() {
                 <p>{m.omschrijving}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WERKWIJZE */}
+      <section className="section section-alt">
+        <div className="section-inner">
+          <div className="sec-head-center">
+            <div className="eyebrow">Werkwijze</div>
+            <h2>Van melding tot <em>rapport</em> in 4 stappen</h2>
+            <p className="sec-sub">Helder en transparant. zo pakt LekkageFix een lekdetectie aan.</p>
+          </div>
+          <div className="steps">
+            <div className="step">
+              <div className="step-num">1</div>
+              <h3>Melding</h3>
+              <p>Bel of stuur een aanvraag. We bespreken jouw situatie en plannen een afspraak in op een tijdstip dat jou uitkomt.</p>
+            </div>
+            <div className="step">
+              <div className="step-num">2</div>
+              <h3>Specialist ter plaatse</h3>
+              <p>Een gecertificeerde lekdetectie-specialist komt naar je toe met professionele apparatuur. Gemiddeld binnen 30 minuten.</p>
+            </div>
+            <div className="step">
+              <div className="step-num">3</div>
+              <h3>Detectie zonder sloopwerk</h3>
+              <p>Met thermische camera, akoestische detectie of tracergas vinden we 95% van alle lekken zonder één tegel te breken.</p>
+            </div>
+            <div className="step">
+              <div className="step-num">4</div>
+              <h3>Rapport & advies</h3>
+              <p>Je ontvangt een gedetailleerd inspectierapport met foto's, exacte locatie en aanbeveling. Direct bruikbaar voor de verzekering.</p>
+            </div>
           </div>
         </div>
       </section>
