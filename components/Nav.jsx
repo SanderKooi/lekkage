@@ -1,192 +1,418 @@
-import { useState, useEffect, useRef } from 'react'
-import { lekkageTypes, steden } from '../data' 
+import { useState, useRef } from 'react'
+import { lekkageTypes } from '../data'
 
-const topSteden = steden.slice(0, 8)
+const PHONE = '0800-1234'
+const PHONE_DISPLAY = '0800-1234'
 
-export default function Nav({ activePath = '' }) {
+export default function Nav({ activePath }) {
+  const [openMenu, setOpenMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [lekdetectieOpen, setLekdetectieOpen] = useState(false)
-  const [lekkageOpen, setLekkageOpen] = useState(false)
-  const navRef = useRef(null)
+  const closeTimer = useRef(null)
 
-  // Sluit menu bij klik buiten nav
-  useEffect(() => {
-    function handleClick(e) {
-      if (navRef.current && !navRef.current.contains(e.target)) {
-        setLekdetectieOpen(false)
-        setLekkageOpen(false)
-        setMobileOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [])
+  function openDropdown(name) {
+    clearTimeout(closeTimer.current)
+    setOpenMenu(name)
+  }
 
-  // Sluit mobiel menu bij resize naar desktop
-  useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth > 900) {
-        setMobileOpen(false)
+  function scheduleClose() {
+    closeTimer.current = setTimeout(() => setOpenMenu(null), 120)
+  }
+
+  function cancelClose() {
+    clearTimeout(closeTimer.current)
+  }
+
+  const navItems = [
+    {
+      label: 'Lekkage',
+      href: '/lekkage',
+      key: 'lekkage',
+      dropdown: {
+        intro: { label: 'Alle lekkage diensten →', href: '/lekkage' },
+        items: lekkageTypes.map(t => ({
+          icon: t.icon,
+          label: t.naam,
+          sub: t.omschrijving?.slice(0, 48) + '...',
+          href: `/lekkage/${t.slug}`,
+        }))
       }
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    },
+    {
+      label: 'Lekdetectie',
+      href: '/lekdetectie',
+      key: 'lekdetectie',
+      dropdown: {
+        intro: { label: 'Alle lekdetectie diensten →', href: '/lekdetectie' },
+        items: [
+          { icon: '🌡️', label: 'Thermische camera', sub: 'Non-destructief via warmtebeelden', href: '/lekdetectie' },
+          { icon: '🔊', label: 'Akoestische detectie', sub: 'Geluid van stromend water opsporen', href: '/lekdetectie' },
+          { icon: '🧪', label: 'Tracergas detectie', sub: 'Exacte leklocatie zonder sloopwerk', href: '/lekdetectie' },
+          { icon: '📷', label: 'Camera-inspectie', sub: 'HD-inspectie van riolering', href: '/lekdetectie' },
+          { icon: '💧', label: 'Druktest leidingen', sub: 'Snel vaststellen of er een lek is', href: '/lekdetectie' },
+          { icon: '📋', label: 'Lekrapportage', sub: 'Rapport voor je verzekeraar', href: '/lekdetectie' },
+        ]
+      }
+    },
+    {
+      label: 'Over ons',
+      href: '/over-ons',
+      key: 'over',
+    },
+    {
+      label: 'Contact',
+      href: '/contact',
+      key: 'contact',
+    },
+  ]
 
   return (
     <>
       <style>{`
-        .nav-dropdown-wrap{position:relative}
-        .nav-dropdown-btn{display:flex;align-items:center;gap:0.3rem;color:rgba(255,255,255,0.75);font-size:0.88rem;font-weight:500;background:none;border:none;cursor:pointer;font-family:var(--font);padding:0;transition:color 0.15s}
-        .nav-dropdown-btn:hover,.nav-dropdown-btn.active{color:white}
-        .nav-chevron{font-size:0.6rem;transition:transform 0.2s;display:inline-block}
-        .nav-chevron.open{transform:rotate(180deg)}
-        .dropdown{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);background:white;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,0.2);padding:1.25rem;display:none;z-index:200;min-width:520px;border:1px solid var(--border)}
-        .dropdown.open{display:flex;gap:1.5rem}
-        .dropdown::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:white;border-left:1px solid var(--border);border-top:1px solid var(--border);transform:translateX(-50%) rotate(45deg)}
-        .dd-col h4{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.65rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border)}
-        .dd-link{display:flex;align-items:center;gap:0.5rem;color:var(--text);font-size:0.83rem;text-decoration:none;padding:0.35rem 0.5rem;border-radius:6px;transition:all 0.15s;white-space:nowrap}
-        .dd-link:hover{background:var(--green3);color:var(--green-dark)}
-        .dd-link-icon{font-size:1rem;width:20px;text-align:center}
-        .dd-all{display:flex;align-items:center;gap:0.4rem;color:var(--green);font-size:0.8rem;font-weight:700;text-decoration:none;margin-top:0.65rem;padding:0.35rem 0.5rem;border-radius:6px;transition:background 0.15s}
-        .dd-all:hover{background:var(--green3)}
+        .nav-wrap {
+          position: sticky;
+          top: 0;
+          z-index: 200;
+          background: var(--green-dark);
+          box-shadow: 0 2px 16px rgba(20,92,56,0.3);
+        }
+        .nav-inner {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 clamp(1rem,4vw,2rem);
+          height: 66px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 2rem;
+        }
+        .nav-logo {
+          font-size: 1.4rem;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          color: white;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          flex-shrink: 0;
+        }
+        .nav-logo-icon {
+          background: white;
+          color: var(--green-dark);
+          width: 28px;
+          height: 28px;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.9rem;
+        }
+        .nav-logo b { color: #a8e6c0; }
 
-        /* MOBIEL */
-        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;flex-shrink:0}
-        .hamburger span{display:block;width:22px;height:2px;background:white;border-radius:2px;transition:all 0.25s}
-        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-        .hamburger.open span:nth-child(2){opacity:0}
-        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+        /* DESKTOP NAV */
+        .nav-links {
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+          list-style: none;
+        }
+        .nav-item {
+          position: relative;
+        }
+        .nav-item-link {
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          padding: 0.5rem 0.85rem;
+          color: rgba(255,255,255,0.82);
+          font-size: 0.88rem;
+          font-weight: 500;
+          text-decoration: none;
+          border-radius: 8px;
+          transition: color 0.15s, background 0.15s;
+          cursor: pointer;
+          white-space: nowrap;
+        }
+        .nav-item-link:hover,
+        .nav-item-link.active {
+          color: white;
+          background: rgba(255,255,255,0.1);
+        }
+        .nav-item-link .chevron {
+          font-size: 0.6rem;
+          opacity: 0.6;
+          transition: transform 0.2s;
+        }
+        .nav-item-link.open .chevron {
+          transform: rotate(180deg);
+        }
 
-        .mobile-menu{display:none;position:fixed;top:66px;left:0;right:0;bottom:0;background:var(--green-dark);z-index:150;overflow-y:auto;padding:1.5rem}
-        .mobile-menu.open{display:block}
-        .mobile-section{margin-bottom:1.5rem}
-        .mobile-section-title{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);margin-bottom:0.65rem}
-        .mobile-link{display:flex;align-items:center;gap:0.65rem;color:rgba(255,255,255,0.85);font-size:0.92rem;text-decoration:none;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.08)}
-        .mobile-link:hover{color:white}
-        .mobile-link-icon{font-size:1.1rem;width:24px;text-align:center}
-        .mobile-cta-wrap{margin-top:1.5rem}
-        .mobile-cta-btn{display:block;background:var(--orange);color:white;text-align:center;padding:1rem;border-radius:var(--radius);font-weight:700;font-size:1rem;text-decoration:none;margin-bottom:0.75rem}
+        /* DROPDOWN */
+        .nav-dropdown {
+          position: absolute;
+          top: calc(100% + 8px);
+          left: 50%;
+          transform: translateX(-50%);
+          background: white;
+          border: 1.5px solid var(--border);
+          border-radius: 16px;
+          box-shadow: 0 12px 40px rgba(0,0,0,0.14);
+          padding: 0.75rem;
+          min-width: 540px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.3rem;
+          z-index: 300;
+          /* Truc: negatieve margin-top + padding-top zorgt dat muis niet "valt" */
+          margin-top: -4px;
+          padding-top: 1rem;
+        }
+        /* Onzichtbare brug tussen nav-item en dropdown */
+        .nav-dropdown::before {
+          content: '';
+          position: absolute;
+          top: -12px;
+          left: 0;
+          right: 0;
+          height: 12px;
+        }
+        .nav-dropdown-intro {
+          grid-column: 1 / -1;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.5rem 0.75rem;
+          margin-bottom: 0.25rem;
+          border-bottom: 1px solid var(--border);
+        }
+        .nav-dropdown-intro a {
+          font-size: 0.8rem;
+          font-weight: 700;
+          color: var(--green);
+          text-decoration: none;
+        }
+        .nav-dropdown-intro a:hover { text-decoration: underline; }
+        .nav-dd-item {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.65rem 0.75rem;
+          border-radius: 10px;
+          text-decoration: none;
+          color: var(--text);
+          transition: background 0.15s;
+        }
+        .nav-dd-item:hover {
+          background: var(--green3);
+        }
+        .nav-dd-icon {
+          width: 36px;
+          height: 36px;
+          background: var(--green3);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.1rem;
+          flex-shrink: 0;
+        }
+        .nav-dd-label {
+          font-size: 0.84rem;
+          font-weight: 600;
+          color: var(--text);
+          line-height: 1.2;
+        }
+        .nav-dd-sub {
+          font-size: 0.73rem;
+          color: var(--muted);
+          line-height: 1.3;
+          margin-top: 0.1rem;
+        }
 
-        @media(max-width:900px){
-          .hamburger{display:flex!important}
-          .nav-desktop{display:none!important}
+        /* CTA PHONE */
+        .nav-phone {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: var(--orange);
+          color: white;
+          padding: 0.5rem 1.2rem;
+          border-radius: var(--radius);
+          font-weight: 700;
+          font-size: 0.88rem;
+          text-decoration: none;
+          transition: background 0.2s;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+        .nav-phone:hover { background: var(--orange2); }
+
+        /* MOBILE */
+        .nav-hamburger {
+          display: none;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0.5rem;
+          color: white;
+          font-size: 1.4rem;
+        }
+        .nav-mobile-menu {
+          display: none;
+          position: fixed;
+          inset: 0;
+          background: var(--green-dark);
+          z-index: 500;
+          overflow-y: auto;
+          padding: 1.5rem;
+        }
+        .nav-mobile-menu.open { display: block; }
+        .nav-mobile-close {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+        .nav-mobile-items { display: flex; flex-direction: column; gap: 0.5rem; }
+        .nav-mobile-link {
+          display: block;
+          padding: 0.85rem 1rem;
+          color: white;
+          font-size: 1.05rem;
+          font-weight: 600;
+          text-decoration: none;
+          border-radius: 10px;
+          background: rgba(255,255,255,0.08);
+        }
+        .nav-mobile-sub {
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+          margin-top: 0.35rem;
+          padding-left: 1rem;
+        }
+        .nav-mobile-sub a {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: rgba(255,255,255,0.75);
+          font-size: 0.88rem;
+          text-decoration: none;
+          padding: 0.4rem 0.5rem;
+          border-radius: 6px;
+        }
+        .nav-mobile-sub a:hover { background: rgba(255,255,255,0.08); }
+        .nav-mobile-phone {
+          display: block;
+          background: var(--orange);
+          color: white;
+          text-align: center;
+          padding: 1rem;
+          border-radius: 10px;
+          font-weight: 700;
+          font-size: 1rem;
+          text-decoration: none;
+          margin-top: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+          .nav-links, .nav-phone { display: none; }
+          .nav-hamburger { display: block; }
         }
       `}</style>
 
-      <nav ref={navRef}>
-        <a href="/" className="logo"><span className="logo-icon">💧</span>Lekkage<b>Fix</b></a>
+      <nav className="nav-wrap">
+        <div className="nav-inner">
+          {/* LOGO */}
+          <a href="/" className="nav-logo">
+            <div className="nav-logo-icon">💧</div>
+            Lekkage<b>Fix</b>
+          </a>
 
-        {/* DESKTOP */}
-        <div className="nav-right nav-desktop">
-          {/* Lekdetectie dropdown */}
-          <div className="nav-dropdown-wrap"
-            onMouseEnter={() => { setLekdetectieOpen(true); setLekkageOpen(false) }}
-            onMouseLeave={() => setLekdetectieOpen(false)}
-          >
-            <button className={`nav-dropdown-btn${activePath.startsWith('/lekdetectie') ? ' active' : ''}`}>
-              Lekdetectie <span className={`nav-chevron${lekdetectieOpen ? ' open' : ''}`}>▾</span>
-            </button>
-            <div className={`dropdown${lekdetectieOpen ? ' open' : ''}`}>
-              <div className="dd-col">
-                <h4>Populaire steden</h4>
-                {topSteden.map(s => (
-                  <a key={s.slug} href={`/lekdetectie/${s.slug}`} className="dd-link">
-                    <span className="dd-link-icon">📍</span>{s.naam}
-                  </a>
-                ))}
-                <a href="/lekdetectie" className="dd-all">Alle 46 steden →</a>
-              </div>
-              <div className="dd-col" style={{minWidth:'200px'}}>
-                <h4>Over lekdetectie</h4>
-                <a href="/lekdetectie" className="dd-link"><span className="dd-link-icon">🔍</span>Wat is lekdetectie?</a>
-                <a href="/lekdetectie" className="dd-link"><span className="dd-link-icon">🌡️</span>Thermische camera</a>
-                <a href="/lekdetectie" className="dd-link"><span className="dd-link-icon">🔊</span>Akoestische detectie</a>
-                <a href="/lekdetectie" className="dd-link"><span className="dd-link-icon">🧪</span>Tracergas methode</a>
-                <a href="/lekdetectie" className="dd-link"><span className="dd-link-icon">📋</span>Verzekering & vergoeding</a>
-              </div>
-            </div>
-          </div>
+          {/* DESKTOP LINKS */}
+          <ul className="nav-links">
+            {navItems.map(item => (
+              <li key={item.key} className="nav-item"
+                onMouseEnter={() => item.dropdown && openDropdown(item.key)}
+                onMouseLeave={() => item.dropdown && scheduleClose()}
+              >
+                <a
+                  href={item.href}
+                  className={`nav-item-link${activePath?.startsWith(item.href) ? ' active' : ''}${openMenu === item.key ? ' open' : ''}`}
+                  onMouseEnter={() => item.dropdown && cancelClose()}
+                >
+                  {item.label}
+                  {item.dropdown && <span className="chevron">▼</span>}
+                </a>
 
-          {/* Lekkage dropdown */}
-          <div className="nav-dropdown-wrap"
-            onMouseEnter={() => { setLekkageOpen(true); setLekdetectieOpen(false) }}
-            onMouseLeave={() => setLekkageOpen(false)}
-          >
-            <button className={`nav-dropdown-btn${activePath.startsWith('/lekkage') ? ' active' : ''}`}>
-              Lekkage <span className={`nav-chevron${lekkageOpen ? ' open' : ''}`}>▾</span>
-            </button>
-            <div className={`dropdown${lekkageOpen ? ' open' : ''}`}>
-              <div className="dd-col">
-                <h4>Type lekkage</h4>
-                {lekkageTypes.map(t => (
-                  <a key={t.slug} href={`/lekkage/${t.slug}`} className="dd-link">
-                    <span className="dd-link-icon">{t.icon}</span>{t.naam}
-                  </a>
-                ))}
-                <a href="/lekkage" className="dd-all">Alle diensten →</a>
-              </div>
-              <div className="dd-col" style={{minWidth:'200px'}}>
-                <h4>Populaire combinaties</h4>
-                <a href="/lekkage/dak/amsterdam" className="dd-link"><span className="dd-link-icon">🏠</span>Daklekkage Amsterdam</a>
-                <a href="/lekkage/waterleiding/rotterdam" className="dd-link"><span className="dd-link-icon">🔧</span>Waterleiding Rotterdam</a>
-                <a href="/lekkage/badkamer/den-haag" className="dd-link"><span className="dd-link-icon">🚿</span>Badkamer Den Haag</a>
-                <a href="/lekkage/dak/utrecht" className="dd-link"><span className="dd-link-icon">🏠</span>Daklekkage Utrecht</a>
-                <a href="/lekkage/riool/eindhoven" className="dd-link"><span className="dd-link-icon">🚰</span>Riool Eindhoven</a>
-                <a href="/lekkage/dak/amsterdam" className="dd-all">Meer combinaties →</a>
-              </div>
-            </div>
-          </div>
+                {item.dropdown && openMenu === item.key && (
+                  <div
+                    className="nav-dropdown"
+                    onMouseEnter={cancelClose}
+                    onMouseLeave={scheduleClose}
+                  >
+                    <div className="nav-dropdown-intro">
+                      <span style={{fontSize:'0.75rem',color:'var(--muted)',fontWeight:600}}>
+                        {item.label.toUpperCase()}
+                      </span>
+                      <a href={item.dropdown.intro.href}>{item.dropdown.intro.label}</a>
+                    </div>
+                    {item.dropdown.items.map((d, i) => (
+                      <a key={i} href={d.href} className="nav-dd-item">
+                        <div className="nav-dd-icon">{d.icon}</div>
+                        <div>
+                          <div className="nav-dd-label">{d.label}</div>
+                          <div className="nav-dd-sub">{d.sub}</div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
 
-          <a href="/blog" className="nav-link">Blog</a>
-          <a href="tel:0800-1234" className="nav-phone">📞 0800-1234</a>
+          {/* PHONE CTA */}
+          <a href={`tel:${PHONE}`} className="nav-phone">
+            📞 {PHONE_DISPLAY}
+          </a>
+
+          {/* HAMBURGER */}
+          <button className="nav-hamburger" onClick={() => setMobileOpen(true)} aria-label="Menu openen">
+            ☰
+          </button>
         </div>
-
-        {/* HAMBURGER */}
-        <button
-          className={`hamburger${mobileOpen ? ' open' : ''}`}
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Menu"
-        >
-          <span /><span /><span />
-        </button>
       </nav>
 
-      {/* MOBIEL MENU */}
-      <div className={`mobile-menu${mobileOpen ? ' open' : ''}`}>
-        <div className="mobile-cta-wrap">
-          <a href="tel:0800-1234" className="mobile-cta-btn">📞 Bel nu: 0800-1234</a>
-        </div>
-
-        <div className="mobile-section">
-          <div className="mobile-section-title">Lekdetectie</div>
-          {topSteden.map(s => (
-            <a key={s.slug} href={`/lekdetectie/${s.slug}`} className="mobile-link" onClick={() => setMobileOpen(false)}>
-              <span className="mobile-link-icon">📍</span>{s.naam}
-            </a>
-          ))}
-          <a href="/lekdetectie" className="mobile-link" style={{color:'#a8e6c0',fontWeight:600}} onClick={() => setMobileOpen(false)}>
-            <span className="mobile-link-icon">→</span>Alle steden
+      {/* MOBILE MENU */}
+      <div className={`nav-mobile-menu${mobileOpen ? ' open' : ''}`}>
+        <div className="nav-mobile-close">
+          <a href="/" className="nav-logo" style={{fontSize:'1.2rem'}}>
+            <div className="nav-logo-icon">💧</div>
+            Lekkage<b>Fix</b>
           </a>
+          <button onClick={() => setMobileOpen(false)}
+            style={{background:'none',border:'none',color:'white',fontSize:'1.6rem',cursor:'pointer'}}>
+            ✕
+          </button>
         </div>
-
-        <div className="mobile-section">
-          <div className="mobile-section-title">Lekkage types</div>
-          {lekkageTypes.map(t => (
-            <a key={t.slug} href={`/lekkage/${t.slug}`} className="mobile-link" onClick={() => setMobileOpen(false)}>
-              <span className="mobile-link-icon">{t.icon}</span>{t.naam}
-            </a>
+        <div className="nav-mobile-items">
+          {navItems.map(item => (
+            <div key={item.key}>
+              <a href={item.href} className="nav-mobile-link">{item.label}</a>
+              {item.dropdown && (
+                <div className="nav-mobile-sub">
+                  {item.dropdown.items.map((d, i) => (
+                    <a key={i} href={d.href}>
+                      <span>{d.icon}</span><span>{d.label}</span>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
-          <a href="/lekkage" className="mobile-link" style={{color:'#a8e6c0',fontWeight:600}} onClick={() => setMobileOpen(false)}>
-            <span className="mobile-link-icon">→</span>Alle diensten
-          </a>
         </div>
-
-        <div className="mobile-section">
-          <div className="mobile-section-title">Overig</div>
-          <a href="/" className="mobile-link" onClick={() => setMobileOpen(false)}><span className="mobile-link-icon">🏠</span>Home</a>
-          <a href="/blog" className="mobile-link" onClick={() => setMobileOpen(false)}><span className="mobile-link-icon">📝</span>Blog</a>
-        </div>
+        <a href={`tel:${PHONE}`} className="nav-mobile-phone">📞 Bel nu: {PHONE_DISPLAY}</a>
       </div>
     </>
   )
