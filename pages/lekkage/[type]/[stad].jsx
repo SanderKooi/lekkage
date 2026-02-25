@@ -423,7 +423,7 @@ export default function LekkageTypeStad({ type, stad }) {
                     {type.naam} {s.naam}
                   </a>
                 ))}
-                <a href="/lekkage"
+                <a href={`/lekkage#${stad.provincie.toLowerCase().replace(/\s+/g, '-')}`}
                   style={{fontSize:'0.8rem',color:'var(--muted)',textDecoration:'none',padding:'0.35rem 0.5rem',borderRadius:'6px',background:'white',border:'1px solid var(--border)',gridColumn:'1/-1'}}>
                   Alle steden in {stad.provincie} bekijken →
                 </a>
@@ -550,22 +550,11 @@ export default function LekkageTypeStad({ type, stad }) {
                 <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',background:'var(--orange)',fontSize:'0.9rem',display:'flex'}}>📞 Bel {monteur.naam.split(' ')[0]}</a>
               </div>
 
-              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
+              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
                 <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Wat wij controleren</div>
                 <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
                   {type.oorzaken.slice(0,5).map((o,i) => (
                     <span key={i}>✓ {o.titel || o}</span>
-                  ))}
-                </div>
-              </div>
-              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
-                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>Ook actief in {stad.provincie}</div>
-                <div style={{display:'flex',flexDirection:'column',gap:'0.4rem'}}>
-                  {andereSteden.slice(0,5).map(s => (
-                    <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}
-                      style={{fontSize:'0.82rem',color:'var(--green)',textDecoration:'none',fontWeight:500}}>
-                      {type.naam} {s.naam}
-                    </a>
                   ))}
                 </div>
               </div>
