@@ -32,7 +32,7 @@ export default function LekkageIndex() {
       <Head>
         <title>Lekkage Reparatie Nederland – Alle Diensten & Steden | LekkageFix</title>
         <meta name="description" content="Lekkage reparatie in heel Nederland. Daklekkage, waterleiding, badkamer, riool, vocht, gevel of kelder. gecertificeerde vakmensen, gemiddeld 30 min ter plaatse. Gratis offerte." />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="noindex, nofollow" />
         <link rel="canonical" href="https://lekkagefix.nl/lekkage" />
         <meta property="og:title" content="Lekkage Reparatie Nederland – Alle Diensten | LekkageFix" />
         <meta property="og:description" content="Lekkage reparatie in heel Nederland. 7 specialisaties, 130 steden, 24/7 bereikbaar." />
@@ -139,7 +139,7 @@ export default function LekkageIndex() {
               {filtered.length > 0 && (
                 <div style={{position:'absolute',top:'calc(100% + 8px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',boxShadow:'0 8px 24px rgba(0,0,0,0.12)',zIndex:100,overflow:'hidden'}}>
                   {filtered.slice(0,6).map(s => (
-                    <a key={s.slug} href={`/lekkage/dak/${s.slug}`} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.75rem 1.25rem',textDecoration:'none',color:'var(--text)',borderBottom:'1px solid var(--border)',fontSize:'0.9rem',transition:'background 0.15s'}}
+                    <a key={s.slug} href={`/lekkage/${s.slug}`} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.75rem 1.25rem',textDecoration:'none',color:'var(--text)',borderBottom:'1px solid var(--border)',fontSize:'0.9rem',transition:'background 0.15s'}}
                       onMouseEnter={e => e.currentTarget.style.background='var(--green3)'}
                       onMouseLeave={e => e.currentTarget.style.background='white'}
                     >
@@ -289,7 +289,7 @@ export default function LekkageIndex() {
                   <h3 style={{fontSize:'0.82rem',fontWeight:700,color:'var(--green-dark)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:'0.85rem',paddingBottom:'0.5rem',borderBottom:'2px solid var(--green4)'}}>📍 {prov}</h3>
                   <div className="steden-grid">
                     {visible.map(s => (
-                      <a key={s.slug} href={`/lekkage/dak/${s.slug}`} className="stad-a">
+                      <a key={s.slug} href={`/lekkage/${s.slug}`} className="stad-a">
                         <span>{s.naam}</span><span className="stad-arrow">→</span>
                       </a>
                     ))}
@@ -418,7 +418,7 @@ export default function LekkageIndex() {
           </div>
           <div className="footer-col">
             <h4>Steden</h4>
-            {topSteden.slice(0,5).map(s => <a key={s.slug} href={`/lekkage/dak/${s.slug}`}>{s.naam}</a>)}
+            {topSteden.slice(0,5).map(s => <a key={s.slug} href={`/lekkage/${s.slug}`}>{s.naam}</a>)}
             <a href="#steden">Alle steden →</a>
           </div>
           <div className="footer-col">
