@@ -140,7 +140,7 @@ export const lekkageTypes = [
   },
   {
     naam: 'Rioollekkage',
-    slug: 'rioollekkage',
+    slug: 'riool-lekkage',
     icon: '🚰',
     omschrijving: 'Verstopt of lekkend riool, afvoer of riolering.',
     intro: 'Een lekkend of verstopt riool is niet alleen vervelend — het kan ook gevaarlijk zijn voor de volksgezondheid. Rioolgas, terugstromend afvalwater en verzakkende leidingen vragen om professionele aanpak.',
