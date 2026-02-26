@@ -88,8 +88,8 @@ export const steden = [
 ]
 export const lekkageTypes = [
   {
-    naam: 'Daklekkage',
-    slug: 'dak',
+    naam: 'Lekkage dak',
+    slug: 'lekkage-dak',
     icon: '🏠',
     omschrijving: 'Waterindringing via plat dak, schuin dak, pannendak of dakkapel.',
     intro: 'Een daklekkage is een van de meest voorkomende en kostbare problemen voor huiseigenaren in Nederland. Regen, wind en temperatuurwisselingen tasten dakbedekking aan — soms jarenlang ongemerkt totdat er waterschade zichtbaar wordt.',
@@ -107,8 +107,8 @@ export const lekkageTypes = [
     keywords: ['daklekkage', 'lekkage dak', 'dak lekt', 'lekkend dak repareren'],
   },
   {
-    naam: 'Waterleiding',
-    slug: 'waterleiding',
+    naam: 'Lekkage waterleiding',
+    slug: 'lekkage-waterleiding',
     icon: '🔧',
     omschrijving: 'Lekkende of gesprongen waterleiding, kraan of cv-installatie.',
     intro: 'Een lekkende waterleiding kan in korte tijd aanzienlijke schade veroorzaken. Van een druppelende kraan tot een gesprongen leiding — waterlekkages vragen om snelle actie om verdere waterschade te voorkomen.',
@@ -123,8 +123,8 @@ export const lekkageTypes = [
     keywords: ['waterleiding lekkage', 'gesprongen leiding', 'lekkende waterleiding', 'loodgieter lekkage'],
   },
   {
-    naam: 'Badkamerlekkage',
-    slug: 'badkamer',
+    naam: 'Lekkage badkamer',
+    slug: 'lekkage-badkamer',
     icon: '🚿',
     omschrijving: 'Lekkage vanuit de badkamer naar de verdieping eronder.',
     intro: 'Badkamerlekkages worden vaak te laat ontdekt — het water sijpelt door vloeren en wanden voordat het zichtbaar wordt op het plafond eronder. Schimmelvorming en houtrot zijn het gevolg als je te lang wacht.',
@@ -140,7 +140,7 @@ export const lekkageTypes = [
   },
   {
     naam: 'Rioollekkage',
-    slug: 'riool',
+    slug: 'rioollekkage',
     icon: '🚰',
     omschrijving: 'Verstopt of lekkend riool, afvoer of riolering.',
     intro: 'Een lekkend of verstopt riool is niet alleen vervelend — het kan ook gevaarlijk zijn voor de volksgezondheid. Rioolgas, terugstromend afvalwater en verzakkende leidingen vragen om professionele aanpak.',
@@ -156,7 +156,7 @@ export const lekkageTypes = [
   },
   {
     naam: 'Vochtproblemen',
-    slug: 'vocht',
+    slug: 'vochtprobleem',
     icon: '💧',
     omschrijving: 'Schimmel, condensatie, optrekkend vocht of vochtige muren.',
     intro: 'Vochtproblemen zijn verraderlijk — ze zijn niet altijd direct zichtbaar maar kunnen jarenlang schade aanrichten aan de constructie van je woning. Schimmel is bovendien schadelijk voor de gezondheid van bewoners.',
@@ -171,8 +171,8 @@ export const lekkageTypes = [
     keywords: ['vochtproblemen', 'schimmel muur', 'optrekkend vocht', 'vochtige muren'],
   },
   {
-    naam: 'Gevellekkage',
-    slug: 'gevel',
+    naam: 'Lekkage muur',
+    slug: 'lekkage-muur',
     icon: '🧱',
     omschrijving: 'Waterindringing via gevels, spouwmuur of kozijnen.',
     intro: 'Gevellekkages worden door veel eigenaren niet herkend als zodanig — vochtige muren worden toegeschreven aan condensatie terwijl het water van buiten naar binnen trekt. Zeker bij oudere woningen met slechte voegen.',
@@ -187,8 +187,8 @@ export const lekkageTypes = [
     keywords: ['gevellekkage', 'lekkage gevel', 'spouwmuur lekkage', 'vocht door muur'],
   },
   {
-    naam: 'Kelderwaterdichting',
-    slug: 'kelder',
+    naam: 'Kelderafdichting',
+    slug: 'kelderafdichting',
     icon: '🏚️',
     omschrijving: 'Grondwater of regenwater dat de kelder binnendringt.',
     intro: 'Een lekkende kelder is een van de meest complexe lekkageproblemen. Grondwaterdruk, capillaire werking en directe waterindringing vragen elk om een andere aanpak. Tijdig ingrijpen voorkomt structurele schade.',
