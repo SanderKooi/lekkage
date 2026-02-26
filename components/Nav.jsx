@@ -78,7 +78,7 @@ export default function Nav({ activePath }) {
         .nav-inner {
           max-width: 1400px;
           margin: 0 auto;
-          padding: 0 clamp(1.5rem,5vw,4rem);
+          padding: 0 clamp(2rem,6vw,6rem);
           height: 66px;
           display: flex;
           align-items: center;
