@@ -33,7 +33,7 @@ export default function Nav({ activePath }) {
           icon: t.icon,
           label: t.naam,
           sub: t.omschrijving?.slice(0, 48) + '...',
-          href: `/lekkage/${t.slug}`,
+          href: `/lekkage/dienst/${t.slug}`,
         }))
       }
     },
@@ -78,12 +78,12 @@ export default function Nav({ activePath }) {
         .nav-inner {
           max-width: 1400px;
           margin: 0 auto;
-          padding: 0 clamp(1rem,4vw,3rem);
+          padding: 0 clamp(1.5rem,5vw,4rem);
           height: 66px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 2rem;
+          gap: 3rem;
         }
         .nav-logo {
           font-size: 1.4rem;
@@ -113,8 +113,9 @@ export default function Nav({ activePath }) {
         .nav-links {
           display: flex;
           align-items: center;
-          gap: 0.25rem;
+          gap: 0.5rem;
           list-style: none;
+          margin-right: 1rem;
         }
         .nav-item {
           position: relative;
@@ -123,7 +124,7 @@ export default function Nav({ activePath }) {
           display: flex;
           align-items: center;
           gap: 0.3rem;
-          padding: 0.5rem 0.85rem;
+          padding: 0.5rem 1rem;
           color: rgba(255,255,255,0.82);
           font-size: 0.88rem;
           font-weight: 500;
