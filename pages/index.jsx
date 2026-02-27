@@ -1,17 +1,7 @@
 import Head from 'next/head'
 import { useState, useRef, useEffect } from 'react'
-import Nav from '../components/Nav' 
-
-const steden = [
-  { naam: 'Amsterdam', slug: 'amsterdam', prov: 'Noord-Holland', tags: ['Daklekkage','Loodgieter','Riool'] },
-  { naam: 'Rotterdam', slug: 'rotterdam', prov: 'Zuid-Holland', tags: ['Daklekkage','Loodgieter','Vocht'] },
-  { naam: 'Den Haag', slug: 'den-haag', prov: 'Zuid-Holland', tags: ['Daklekkage','Riool','Vocht'] },
-  { naam: 'Utrecht', slug: 'utrecht', prov: 'Utrecht', tags: ['Daklekkage','Loodgieter','Riool'] },
-  { naam: 'Eindhoven', slug: 'eindhoven', prov: 'Noord-Brabant', tags: ['Daklekkage','Loodgieter'] },
-  { naam: 'Groningen', slug: 'groningen', prov: 'Groningen', tags: ['Daklekkage','Vocht'] },
-  { naam: 'Tilburg', slug: 'tilburg', prov: 'Noord-Brabant', tags: ['Loodgieter','Riool'] },
-  { naam: 'Breda', slug: 'breda', prov: 'Noord-Brabant', tags: ['Daklekkage','Riool'] },
-]
+import Nav from '../components/Nav'
+import { steden as alleSteden, lekkageTypes } from '../data'
 
 const faqs = [
   { v: 'Hoe snel komen jullie bij een lekkage?', a: 'We streven ernaar zo snel mogelijk bij je te zijn. Gemiddeld zijn we binnen 30 minuten ter plaatse. Bel ons voor een actuele inschatting.' },
@@ -41,6 +31,31 @@ export default function Homepage() {
   const touchStartX = useRef(0)
   const VISIBLE = 3
   const GAP = 20
+
+  // Funnel state
+  const [funnelDienst, setFunnelDienst] = useState(null)
+  const [funnelStad, setFunnelStad] = useState('')
+  const [funnelSuggestions, setFunnelSuggestions] = useState([])
+  const [funnelStadSlug, setFunnelStadSlug] = useState(null)
+
+  function handleFunnelStadInput(val) {
+    setFunnelStad(val)
+    setFunnelStadSlug(null)
+    if (val.length < 2) { setFunnelSuggestions([]); return }
+    const matches = alleSteden.filter(s => s.naam.toLowerCase().startsWith(val.toLowerCase())).slice(0, 6)
+    setFunnelSuggestions(matches)
+  }
+
+  function selectFunnelStad(s) {
+    setFunnelStad(s.naam)
+    setFunnelStadSlug(s.slug)
+    setFunnelSuggestions([])
+  }
+
+  function funnelGo() {
+    if (!funnelDienst || !funnelStadSlug) return
+    window.location.href = `/lekkage/${funnelDienst}/${funnelStadSlug}`
+  }
 
   function getVisible() {
     if (typeof window === 'undefined') return 3
@@ -197,32 +212,92 @@ export default function Homepage() {
         </div>
       </section>
 
-      {/* STEDEN */}
-      <section className="section" id="steden">
+      {/* FUNNEL */}
+      <section className="section section-alt" id="steden">
         <div className="section-inner">
-          <div className="sec-head">
-            <div className="eyebrow">Werkgebied</div>
-            <h2>Actief in <em>jouw stad</em></h2>
-            <p className="sec-sub">We werken door heel Nederland. Klik op jouw stad voor specifieke informatie.</p>
+          <div className="sec-head-center">
+            <div className="eyebrow">Direct naar jouw oplossing</div>
+            <h2>Kies je probleem & <em>jouw stad</em></h2>
+            <p className="sec-sub">In twee stappen direct naar alle informatie en een vakman in jouw buurt.</p>
           </div>
-          <div className="cities-grid">
-            {steden.map(s => (
-              <a key={s.slug} href={`/lekdetectie/${s.slug}`} className="city-card">
-                <div className="city-name">{s.naam}</div>
-                <div className="city-prov">📍 {s.prov}</div>
-                <div className="city-tags">{s.tags.map(t => <span key={t} className="city-tag">{t}</span>)}</div>
-                <div className="city-arrow">Bekijk {s.naam} →</div>
-              </a>
-            ))}
-          </div>
-          <div className="cities-cta">
-            <div className="cities-cta-left"><h3>Jouw stad er niet bij?</h3><p>We zijn actief in 500+ steden en plaatsen door heel Nederland.</p></div>
-            <div className="cities-counts">
-              <div className="count-item"><div className="count-num">500<sup>+</sup></div><div className="count-label">Steden</div></div>
-              <div className="count-item"><div className="count-num">12</div><div className="count-label">Provincies</div></div>
-              <div className="count-item"><div className="count-num">24<sup>/7</sup></div><div className="count-label">Bereikbaar</div></div>
+
+          <div style={{maxWidth:'680px',margin:'0 auto'}}>
+            {/* STAP 1 — Dienst */}
+            <div style={{marginBottom:'1.5rem'}}>
+              <div style={{fontSize:'0.75rem',fontWeight:700,color:'var(--green-dark)',letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:'0.75rem'}}>
+                Stap 1 — Wat is het probleem?
+              </div>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))',gap:'0.5rem'}}>
+                {lekkageTypes.map(t => (
+                  <button
+                    key={t.slug}
+                    onClick={() => setFunnelDienst(t.slug)}
+                    style={{
+                      display:'flex',alignItems:'center',gap:'0.6rem',
+                      padding:'0.65rem 0.85rem',borderRadius:'10px',
+                      border: funnelDienst === t.slug ? '2px solid var(--green)' : '1.5px solid var(--border)',
+                      background: funnelDienst === t.slug ? 'var(--green3)' : 'white',
+                      cursor:'pointer',fontSize:'0.85rem',fontWeight: funnelDienst === t.slug ? 700 : 500,
+                      color: funnelDienst === t.slug ? 'var(--green-dark)' : 'var(--text)',
+                      transition:'all 0.15s',fontFamily:'inherit',textAlign:'left'
+                    }}
+                  >
+                    <span style={{fontSize:'1.1rem'}}>{t.icon}</span> {t.naam}
+                  </button>
+                ))}
+              </div>
             </div>
-            <a href="/alle-steden" className="btn-all">Alle steden bekijken →</a>
+
+            {/* STAP 2 — Stad */}
+            <div style={{marginBottom:'1.25rem',opacity: funnelDienst ? 1 : 0.4,transition:'opacity 0.2s',pointerEvents: funnelDienst ? 'auto' : 'none'}}>
+              <div style={{fontSize:'0.75rem',fontWeight:700,color:'var(--green-dark)',letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:'0.75rem'}}>
+                Stap 2 — In welke stad?
+              </div>
+              <div style={{position:'relative'}}>
+                <input
+                  type="text"
+                  placeholder="Typ je stad, bijv. Amsterdam..."
+                  value={funnelStad}
+                  onChange={e => handleFunnelStadInput(e.target.value)}
+                  style={{width:'100%',padding:'0.75rem 1rem',border:'1.5px solid var(--border)',borderRadius:'10px',fontSize:'0.92rem',fontFamily:'inherit',outline:'none',boxSizing:'border-box',color:'var(--text)'}}
+                  onFocus={e => e.target.style.borderColor='var(--green)'}
+                  onBlur={e => { e.target.style.borderColor='var(--border)'; setTimeout(() => setFunnelSuggestions([]), 150) }}
+                />
+                {funnelSuggestions.length > 0 && (
+                  <div style={{position:'absolute',top:'calc(100% + 4px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'10px',boxShadow:'0 8px 24px rgba(0,0,0,0.1)',zIndex:10,overflow:'hidden'}}>
+                    {funnelSuggestions.map(s => (
+                      <div
+                        key={s.slug}
+                        onMouseDown={() => selectFunnelStad(s)}
+                        style={{padding:'0.65rem 1rem',cursor:'pointer',fontSize:'0.88rem',color:'var(--text)',borderBottom:'1px solid var(--border)',display:'flex',justifyContent:'space-between',alignItems:'center'}}
+                        onMouseEnter={e => e.currentTarget.style.background='var(--green3)'}
+                        onMouseLeave={e => e.currentTarget.style.background='white'}
+                      >
+                        <span>📍 {s.naam}</span>
+                        <span style={{fontSize:'0.75rem',color:'var(--muted)'}}>{s.provincie}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* GO KNOP */}
+            <button
+              onClick={funnelGo}
+              disabled={!funnelDienst || !funnelStadSlug}
+              style={{
+                width:'100%',padding:'0.9rem',borderRadius:'10px',border:'none',
+                background: funnelDienst && funnelStadSlug ? 'var(--orange)' : 'var(--border)',
+                color: funnelDienst && funnelStadSlug ? 'white' : 'var(--muted)',
+                fontSize:'1rem',fontWeight:700,cursor: funnelDienst && funnelStadSlug ? 'pointer' : 'not-allowed',
+                transition:'all 0.2s',fontFamily:'inherit'
+              }}
+            >
+              {funnelDienst && funnelStadSlug
+                ? `${lekkageTypes.find(t => t.slug === funnelDienst)?.naam} in ${funnelStad} bekijken →`
+                : 'Kies eerst een probleem en stad'}
+            </button>
           </div>
         </div>
       </section>
@@ -359,8 +434,8 @@ export default function Homepage() {
           </div>
           <div className="footer-col">
             <h4>Steden</h4>
-            {steden.slice(0,4).map(s => <a key={s.slug} href={`/lekdetectie/${s.slug}`}>{s.naam}</a>)}
-            <a href="/lekdetectie">Alle steden →</a>
+            {alleSteden.slice(0,4).map(s => <a key={s.slug} href={`/lekkage/${s.slug}`}>{s.naam}</a>)}
+            <a href="/lekkage">Alle steden →</a>
           </div>
           <div className="footer-col">
             <h4>Contact</h4>
