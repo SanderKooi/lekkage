@@ -8,40 +8,29 @@ const PHONE_DISPLAY = '0800-1234'
 const EMAIL = 'info@lekkagefix.nl'
 
 const monteurs = {
-  'Noord-Holland':  { naam: 'Henk van der Berg',  foto: 'HB', img: '/images/henk.png',       functie: 'Lekkage specialist', ervaring: '14 jaar', quote: 'In Noord-Holland ken ik elk woningtype van binnen en buiten.' },
-  'Zuid-Holland':   { naam: 'Marco de Wit',        foto: 'MW', img: '/images/marco.png',      functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Van grachtenpand tot jaren-70 flat, ik los het op.' },
-  'Utrecht':        { naam: 'Jeroen Smit',          foto: 'JS', img: '/images/jeroen.png',     functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Utrecht kent zijn werfkelders, ik ken de lekkages.' },
-  'Noord-Brabant':  { naam: 'Kevin Janssen',        foto: 'KJ', img: '/images/kevin.png',      functie: 'Lekkage specialist', ervaring: '12 jaar', quote: 'Van Eindhoven tot Bergen op Zoom, ik ben er snel bij.' },
-  'Gelderland':     { naam: 'Arjan Meijer',         foto: 'AM', img: '/images/arjan.png',      functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'De Gelderse woningbouw heeft geen geheimen voor mij.' },
-  'Overijssel':     { naam: 'Thomas Bos',           foto: 'TB', img: '/images/thomas.png',     functie: 'Lekkage specialist', ervaring: '8 jaar',  quote: 'Twente en Zwolle, ik ben altijd in de buurt.' },
-  'Groningen':      { naam: 'Sander Dijkstra',      foto: 'SD', img: '/images/sander.png',     functie: 'Lekkage specialist', ervaring: '7 jaar',  quote: 'Groningse studentenwoningen? Mijn specialiteit.' },
-  'Friesland':      { naam: 'Pieter Visser',        foto: 'PV', img: '/images/pieter.png',     functie: 'Lekkage specialist', ervaring: '13 jaar', quote: 'De Friese wind tast daken aan, ik herstel ze.' },
-  'Drenthe':        { naam: 'Rob Hofstra',          foto: 'RH', img: '/images/rob.png',        functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Drentse woningen verdienen vakkundig onderhoud.' },
-  'Flevoland':      { naam: 'Danny Kramer',         foto: 'DK', img: '/images/danny.png',      functie: 'Lekkage specialist', ervaring: '6 jaar',  quote: "Polderbouw heeft specifieke risico's, ik ken ze." },
-  'Limburg':        { naam: 'Luc Hermans',          foto: 'LH', img: '/images/luc.png',        functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Mergelstenen huizen zijn mijn specialiteit.' },
-  'Zeeland':        { naam: 'Kees de Vos',          foto: 'KV', img: '/images/kees.png',       functie: 'Lekkage specialist', ervaring: '15 jaar', quote: 'Zeeuwse panden kennen hun eigen vochtproblemen.' },
-}
-
-// Helper: render monteur avatar (foto als beschikbaar, anders initials)
-function MonteurAvatar({ monteur, size = 52, border = '2px solid rgba(255,255,255,0.3)', bg = 'rgba(255,255,255,0.15)' }) {
-  if (monteur.img) {
-    return (
-      <img
-        src={monteur.img}
-        alt={monteur.naam}
-        style={{width:size,height:size,borderRadius:'50%',objectFit:'cover',flexShrink:0,border,boxShadow:'0 2px 8px rgba(26,122,74,0.25)'}}
-      />
-    )
-  }
-  return (
-    <div style={{width:size,height:size,borderRadius:'50%',background:bg,color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:size*0.32+'px',fontWeight:800,flexShrink:0,border}}>
-      {monteur.foto}
-    </div>
-  )
+  'Noord-Holland':  { naam: 'Henk van der Berg',  foto: 'HB', img: '/images/henk.png',   functie: 'Lekkage specialist', ervaring: '14 jaar', quote: 'In Noord-Holland ken ik elk woningtype van binnen en buiten.' },
+  'Zuid-Holland':   { naam: 'Marco de Wit',        foto: 'MW', img: '/images/marco.png',  functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Van grachtenpand tot jaren-70 flat, ik los het op.' },
+  'Utrecht':        { naam: 'Jeroen Smit',          foto: 'JS', img: '/images/jeroen.png', functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Utrecht kent zijn werfkelders, ik ken de lekkages.' },
+  'Noord-Brabant':  { naam: 'Kevin Janssen',        foto: 'KJ', img: '/images/kevin.png',  functie: 'Lekkage specialist', ervaring: '12 jaar', quote: 'Van Eindhoven tot Bergen op Zoom, ik ben er snel bij.' },
+  'Gelderland':     { naam: 'Arjan Meijer',         foto: 'AM', img: '/images/arjan.png',  functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'De Gelderse woningbouw heeft geen geheimen voor mij.' },
+  'Overijssel':     { naam: 'Thomas Bos',           foto: 'TB', img: '/images/thomas.png', functie: 'Lekkage specialist', ervaring: '8 jaar',  quote: 'Twente en Zwolle, ik ben altijd in de buurt.' },
+  'Groningen':      { naam: 'Sander Dijkstra',      foto: 'SD', img: '/images/sander.png', functie: 'Lekkage specialist', ervaring: '7 jaar',  quote: 'Groningse studentenwoningen? Mijn specialiteit.' },
+  'Friesland':      { naam: 'Pieter Visser',        foto: 'PV', img: '/images/pieter.png', functie: 'Lekkage specialist', ervaring: '13 jaar', quote: 'De Friese wind tast daken aan, ik herstel ze.' },
+  'Drenthe':        { naam: 'Rob Hofstra',          foto: 'RH', img: '/images/rob.png',    functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Drentse woningen verdienen vakkundig onderhoud.' },
+  'Flevoland':      { naam: 'Danny Kramer',         foto: 'DK', img: '/images/danny.png',  functie: 'Lekkage specialist', ervaring: '6 jaar',  quote: "Polderbouw heeft specifieke risico's, ik ken ze." },
+  'Limburg':        { naam: 'Luc Hermans',          foto: 'LH', img: '/images/luc.png',    functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Mergelstenen huizen zijn mijn specialiteit.' },
+  'Zeeland':        { naam: 'Kees de Vos',          foto: 'KV', img: '/images/kees.png',   functie: 'Lekkage specialist', ervaring: '15 jaar', quote: 'Zeeuwse panden kennen hun eigen vochtproblemen.' },
 }
 
 function getMonteur(provincie) {
-  return monteurs[provincie] || { naam: 'Jan Peters', foto: 'JP', functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'Vakkundig en snel door heel Nederland.' }
+  return monteurs[provincie] || { naam: 'Jan Peters', foto: 'JP', img: null, functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'Vakkundig en snel door heel Nederland.' }
+}
+
+function MonteurAvatar({ monteur, size = 52, border = '2.5px solid white', bg = 'var(--green)' }) {
+  if (monteur.img) {
+    return <img src={monteur.img} alt={monteur.naam} style={{width:size,height:size,borderRadius:'50%',objectFit:'cover',flexShrink:0,border,boxShadow:'0 2px 8px rgba(26,122,74,0.25)'}} />
+  }
+  return <div style={{width:size,height:size,borderRadius:'50%',background:bg,color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:size*0.32+'px',fontWeight:800,flexShrink:0,border}}>{monteur.foto}</div>
 }
 
 // Extra stadsdata voor unieke content
@@ -495,14 +484,11 @@ export default function LekkageTypeStad({ type, stad }) {
               <MonteurAvatar monteur={monteur} size={52} border="2.5px solid var(--green3)" bg="var(--green)" />
               <div>
                 <div style={{fontWeight:700,fontSize:'0.9rem'}}>{monteur.naam}</div>
-                <div style={{fontSize:'0.75rem',color:'var(--muted)'}}>{monteur.functie} · {stad.provincie}</div>
-                <div style={{fontSize:'0.72rem',color:'var(--muted)',marginTop:'0.1rem'}}>{monteur.ervaring} ervaring</div>
+                <div style={{fontSize:'0.75rem',opacity:0.8}}>{monteur.functie} · {stad.provincie}</div>
+                <div style={{fontSize:'0.72rem',opacity:0.7,marginTop:'0.1rem'}}>{monteur.ervaring} ervaring</div>
               </div>
             </div>
             <p style={{fontSize:'0.82rem',lineHeight:1.7,marginBottom:'1rem',fontStyle:'italic',color:'var(--muted)'}}>"{monteur.quote}"</p>
-            <p style={{fontSize:'0.88rem',lineHeight:1.8,color:'var(--muted)',marginBottom:'1.25rem'}}>
-              {stad.naam} heeft voornamelijk <strong>{stad.woningtype}</strong>. {stad.fact} {monteur.naam} kent deze woningtypen van binnen en buiten en stelt snel de juiste diagnose.
-            </p>
             <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',background:'var(--orange)',fontSize:'0.9rem'}}>📞 Bel {monteur.naam.split(' ')[0]}</a>
           </div>
 
@@ -634,29 +620,11 @@ export default function LekkageTypeStad({ type, stad }) {
                 <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',background:'var(--orange)',fontSize:'0.9rem'}}>📞 Bel {monteur.naam.split(' ')[0]}</a>
               </div>
 
-              <div style={{background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
-                <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Direct hulp in {stad.naam}</div>
-                <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Gemiddeld binnen 30 minuten ter plaatse in {stad.naam} en omgeving.</p>
-                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 {PHONE_DISPLAY}</a>
-              </div>
-
-              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
+              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
                 <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Wat wij controleren</div>
                 <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
                   {type.oorzaken.slice(0,5).map((o,i) => (
                     <span key={i}>✓ {o.titel || o}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
-                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>Ook actief in {stad.provincie}</div>
-                <div style={{display:'flex',flexDirection:'column',gap:'0.4rem'}}>
-                  {andereSteden.slice(0,5).map(s => (
-                    <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}
-                      style={{fontSize:'0.82rem',color:'var(--green)',textDecoration:'none',fontWeight:500}}>
-                      {type.naam} {s.naam}
-                    </a>
                   ))}
                 </div>
               </div>
@@ -681,37 +649,6 @@ export default function LekkageTypeStad({ type, stad }) {
                 <div className="faq-a">{f.a}</div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* INTERNE LINKING */}
-      <section className="section section-white">
-        <div className="section-inner" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'3rem'}}>
-          <div>
-            <div className="eyebrow">{type.naam} per stad</div>
-            <h2 style={{fontSize:'1.3rem',marginBottom:'1.25rem'}}>Andere steden in <em>{stad.provincie}</em></h2>
-            <div className="steden-grid">
-              {andereSteden.map(s => (
-                <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`} className="stad-a">
-                  <span>📍 {s.naam}</span><span className="stad-arrow">→</span>
-                </a>
-              ))}
-              <a href={`/lekkage/dienst/${type.slug}`} className="stad-a" style={{color:'var(--green)',fontWeight:600}}>
-                <span>Alle steden bekijken</span><span className="stad-arrow">→</span>
-              </a>
-            </div>
-          </div>
-          <div>
-            <div className="eyebrow">Andere diensten in {stad.naam}</div>
-            <h2 style={{fontSize:'1.3rem',marginBottom:'1.25rem'}}>Meer <em>lekkageproblemen</em></h2>
-            <div className="steden-grid">
-              {andereTypes.map(t => (
-                <a key={t.slug} href={`/lekkage/${t.slug}/${stad.slug}`} className="stad-a">
-                  <span>{t.icon} {t.naam}</span><span className="stad-arrow">→</span>
-                </a>
-              ))}
-            </div>
           </div>
         </div>
       </section>
