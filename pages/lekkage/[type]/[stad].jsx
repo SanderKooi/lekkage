@@ -191,7 +191,7 @@ export default function LekkageTypeStad({ type, stad }) {
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lekkagefix.nl" },
           { "@type": "ListItem", "position": 2, "name": "Lekkage", "item": "https://lekkagefix.nl/lekkage" },
-          { "@type": "ListItem", "position": 3, "name": type.naam, "item": `https://lekkagefix.nl/lekkage/${stad.slug}` },
+          { "@type": "ListItem", "position": 3, "name": type.naam, "item": `https://lekkagefix.nl/lekkage/dienst/${type.slug}` },
           { "@type": "ListItem", "position": 4, "name": stad.naam, "item": `https://lekkagefix.nl/lekkage/${type.slug}/${stad.slug}` },
         ]
       },
