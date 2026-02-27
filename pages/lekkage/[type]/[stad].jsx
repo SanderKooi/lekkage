@@ -442,33 +442,29 @@ export default function LekkageTypeStad({ type, stad }) {
               </div>
               <div>
                 <div style={{fontSize:'0.78rem',fontWeight:700,color:'var(--green-dark)'}}>{monteur.naam} · {monteur.functie}</div>
-                <div style={{fontSize:'0.72rem',color:'var(--muted)'}}>Uw specialist in {stad.provincie} · {monteur.ervaring} ervaring</div>
+                <div style={{fontSize:'0.72rem',color:'var(--muted)',lineHeight:1.4}}>Actief in {stad.provincie} · {monteur.ervaring} ervaring</div>
+                <div style={{fontSize:'0.72rem',color:'var(--muted)',fontStyle:'italic',marginTop:'0.15rem'}}>"{monteur.quote}"</div>
               </div>
             </div>
-            {!submitted ? (
-              <>
-                <h3 style={{fontSize:'1rem',marginBottom:'1rem',color:'var(--text)'}}>Gratis offerte aanvragen</h3>
-                <div style={{display:'flex',flexDirection:'column',gap:'0.65rem'}}>
-                  <input type="text" placeholder="Uw naam" className="form-input" />
-                  <input type="tel" placeholder="Telefoonnummer" className="form-input" />
-                  <input type="text" placeholder={`Adres in ${stad.naam}`} className="form-input" />
-                  <select className="form-input">
-                    <option value="">Type probleem</option>
-                    {lekkageTypes.map(t => <option key={t.slug} value={t.slug}>{t.naam}</option>)}
-                  </select>
-                  <textarea placeholder="Korte omschrijving van het probleem" className="form-input" rows={3} style={{resize:'vertical'}} />
-                  <button onClick={() => setSubmitted(true)} className="btn-call" style={{width:'100%',justifyContent:'center'}}>
-                    Offerte aanvragen →
-                  </button>
-                </div>
-              </>
-            ) : (
-              <div style={{textAlign:'center',padding:'1.5rem 0'}}>
-                <div style={{fontSize:'2rem',marginBottom:'0.75rem'}}>✅</div>
-                <h3 style={{color:'var(--green)'}}>Aanvraag ontvangen!</h3>
-                <p style={{fontSize:'0.85rem',color:'var(--muted)'}}>We nemen binnen 15 minuten contact op.</p>
-              </div>
-            )}
+            <div className="form-title">{type.naam} in {stad.naam}</div>
+            <div className="form-sub">Gratis inspectie · we nemen snel contact op</div>
+            <div className="fg"><label>Adres in {stad.naam}</label><input type="text" placeholder="Straat + huisnummer" /></div>
+            <div className="form-row">
+              <div className="fg"><label>Naam</label><input type="text" placeholder="Jan de Vries" /></div>
+              <div className="fg"><label>Telefoon</label><input type="tel" placeholder="06-12345678" /></div>
+            </div>
+            <div className="fg">
+              <label>Type lekkage</label>
+              <select style={{width:'100%',padding:'0.65rem 0.85rem',border:'1.5px solid var(--border)',borderRadius:'var(--radius)',fontFamily:'inherit',fontSize:'0.88rem',color:'var(--text)',background:'white'}}>
+                <option value={type.slug}>{type.naam}</option>
+                {lekkageTypes.filter(t => t.slug !== type.slug).map(t => <option key={t.slug} value={t.slug}>{t.naam}</option>)}
+              </select>
+            </div>
+            <div className="fg"><label>Beschrijving</label><textarea placeholder={`Beschrijf de ${type.naam.toLowerCase()} kort...`} /></div>
+            <button className={`btn-form${submitted ? ' ok' : ''}`} onClick={() => setSubmitted(true)}>
+              {submitted ? '✓ Aanvraag ontvangen!' : 'Stuur aanvraag →'}
+            </button>
+            <div className="form-trust"><span>🔒 Veilig</span><span>✓ Geen spam</span><span>⚡ Snelle reactie</span></div>
           </div>
         </div>
       </section>
