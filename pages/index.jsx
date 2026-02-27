@@ -394,10 +394,10 @@ export default function Homepage() {
                 if (!s) return null
                 return (
                   <a key={slug} href={`/lekkage/${slug}`} className="svc carousel-card" style={{textDecoration:'none'}}>
-                    <div style={{fontSize:'1.5rem',marginBottom:'0.5rem'}}>📍</div>
-                    <h3 style={{fontSize:'1rem',marginBottom:'0.25rem'}}>{s.naam}</h3>
-                    <p style={{fontSize:'0.8rem',color:'var(--muted)',marginBottom:'0.75rem'}}>{s.provincie}</p>
-                    <div className="svc-cta">Lekkage {s.naam} <span className="arrow">→</span></div>
+                    <div style={{fontSize:'0.68rem',fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'var(--green)',marginBottom:'0.5rem'}}>Lekkage reparatie</div>
+                    <h3 style={{fontSize:'1.15rem',marginBottom:'0.2rem'}}>{s.naam}</h3>
+                    <p style={{fontSize:'0.8rem',color:'var(--muted)',marginBottom:'0.75rem'}}>📍 {s.provincie}</p>
+                    <div className="svc-cta">Bekijk {s.naam} <span className="arrow">→</span></div>
                   </a>
                 )
               })}
@@ -430,10 +430,10 @@ export default function Homepage() {
                 if (!s) return null
                 return (
                   <a key={slug} href={`/lekdetectie/${slug}`} className="svc carousel-card" style={{textDecoration:'none'}}>
-                    <div style={{fontSize:'1.5rem',marginBottom:'0.5rem'}}>🔍</div>
-                    <h3 style={{fontSize:'1rem',marginBottom:'0.25rem'}}>{s.naam}</h3>
-                    <p style={{fontSize:'0.8rem',color:'var(--muted)',marginBottom:'0.75rem'}}>{s.provincie}</p>
-                    <div className="svc-cta">Lekdetectie {s.naam} <span className="arrow">→</span></div>
+                    <div style={{fontSize:'0.68rem',fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'var(--green)',marginBottom:'0.5rem'}}>Lekdetectie</div>
+                    <h3 style={{fontSize:'1.15rem',marginBottom:'0.2rem'}}>{s.naam}</h3>
+                    <p style={{fontSize:'0.8rem',color:'var(--muted)',marginBottom:'0.75rem'}}>📍 {s.provincie}</p>
+                    <div className="svc-cta">Bekijk {s.naam} <span className="arrow">→</span></div>
                   </a>
                 )
               })}
