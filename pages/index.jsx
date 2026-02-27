@@ -32,17 +32,62 @@ export default function Homepage() {
   const VISIBLE = 3
   const GAP = 20
 
+  // Postcode → stad mapping (hoofdplaatsen per reeks)
+  const postcodeMap = [
+    { from: 1000, to: 1109, slug: 'amsterdam', naam: 'Amsterdam' },
+    { from: 1110, to: 1135, slug: 'diemen', naam: 'Diemen' },
+    { from: 1180, to: 1187, slug: 'amstelveen', naam: 'Amstelveen' },
+    { from: 2000, to: 2099, slug: 'haarlem', naam: 'Haarlem' },
+    { from: 2490, to: 2599, slug: 'den-haag', naam: 'Den Haag' },
+    { from: 2600, to: 2729, slug: 'delft', naam: 'Delft' },
+    { from: 3000, to: 3099, slug: 'rotterdam', naam: 'Rotterdam' },
+    { from: 3500, to: 3599, slug: 'utrecht', naam: 'Utrecht' },
+    { from: 3800, to: 3899, slug: 'amersfoort', naam: 'Amersfoort' },
+    { from: 4600, to: 4699, slug: 'bergen-op-zoom', naam: 'Bergen op Zoom' },
+    { from: 4800, to: 4899, slug: 'breda', naam: 'Breda' },
+    { from: 5000, to: 5099, slug: 'tilburg', naam: 'Tilburg' },
+    { from: 5600, to: 5659, slug: 'eindhoven', naam: 'Eindhoven' },
+    { from: 6200, to: 6229, slug: 'maastricht', naam: 'Maastricht' },
+    { from: 6500, to: 6549, slug: 'nijmegen', naam: 'Nijmegen' },
+    { from: 6800, to: 6839, slug: 'arnhem', naam: 'Arnhem' },
+    { from: 7400, to: 7429, slug: 'deventer', naam: 'Deventer' },
+    { from: 7500, to: 7549, slug: 'enschede', naam: 'Enschede' },
+    { from: 8000, to: 8049, slug: 'zwolle', naam: 'Zwolle' },
+    { from: 8900, to: 8939, slug: 'leeuwarden', naam: 'Leeuwarden' },
+    { from: 9700, to: 9779, slug: 'groningen', naam: 'Groningen' },
+    { from: 9400, to: 9419, slug: 'assen', naam: 'Assen' },
+  ]
+
+  function resolvePostcode(val) {
+    const num = parseInt(val.replace(/\D/g, '').slice(0, 4))
+    if (isNaN(num) || num < 1000 || num > 9999) return null
+    return postcodeMap.find(p => num >= p.from && num <= p.to) || null
+  }
+
   // Funnel state
   const [funnelDienst, setFunnelDienst] = useState(null)
   const [funnelStad, setFunnelStad] = useState('')
   const [funnelSuggestions, setFunnelSuggestions] = useState([])
   const [funnelStadSlug, setFunnelStadSlug] = useState(null)
+  const [funnelPostcodeHint, setFunnelPostcodeHint] = useState(null)
 
   function handleFunnelStadInput(val) {
     setFunnelStad(val)
     setFunnelStadSlug(null)
+    setFunnelPostcodeHint(null)
+
+    // Postcode check
+    if (/^\d{4}/.test(val.trim())) {
+      const hit = resolvePostcode(val)
+      if (hit) setFunnelPostcodeHint(hit)
+      setFunnelSuggestions([])
+      return
+    }
+
     if (val.length < 2) { setFunnelSuggestions([]); return }
-    const matches = alleSteden.filter(s => s.naam.toLowerCase().startsWith(val.toLowerCase())).slice(0, 6)
+    const matches = alleSteden.filter(s =>
+      s.naam.toLowerCase().startsWith(val.toLowerCase())
+    ).slice(0, 6)
     setFunnelSuggestions(matches)
   }
 
@@ -50,11 +95,50 @@ export default function Homepage() {
     setFunnelStad(s.naam)
     setFunnelStadSlug(s.slug)
     setFunnelSuggestions([])
+    setFunnelPostcodeHint(null)
   }
 
   function funnelGo() {
-    if (!funnelDienst || !funnelStadSlug) return
-    window.location.href = `/lekkage/${funnelDienst}/${funnelStadSlug}`
+    if (!funnelDienst) return
+    if (funnelStadSlug) {
+      window.location.href = `/lekkage/${funnelDienst}/${funnelStadSlug}`
+    } else if (funnelPostcodeHint) {
+      window.location.href = `/lekkage/${funnelDienst}/${funnelPostcodeHint.slug}`
+    } else if (funnelStad.trim().length > 1) {
+      // Vrije tekst, stad niet in database → hoofddienst pagina
+      window.location.href = `/lekkage/dienst/${funnelDienst}`
+    }
+  }
+
+  const funnelCanGo = funnelDienst && (funnelStadSlug || funnelPostcodeHint || funnelStad.trim().length > 1)
+  const funnelLabel = () => {
+    if (!funnelDienst) return 'Kies eerst een probleem en stad'
+    const dienstNaam = lekkageTypes.find(t => t.slug === funnelDienst)?.naam
+    const stadNaam = funnelStadSlug
+      ? funnelStad
+      : funnelPostcodeHint
+        ? funnelPostcodeHint.naam
+        : funnelStad.trim()
+    return stadNaam ? `${dienstNaam} in ${stadNaam} bekijken →` : `Typ je stad of postcode`
+  }
+
+  // Steden carrousels
+  const lekkageSteden = ['amsterdam','rotterdam','den-haag','utrecht','eindhoven','groningen','tilburg','breda','nijmegen','haarlem']
+  const lekdetectieSteden = ['amsterdam','rotterdam','den-haag','utrecht','eindhoven','groningen','tilburg','breda','arnhem','leiden']
+
+  const [slideLekkage, setSlideLekkage] = useState(0)
+  const [slideLekdetectie, setSlideLekdetectie] = useState(0)
+  const trackLekkageRef = useRef(null)
+  const trackLekdetectieRef = useRef(null)
+
+  function goCarousel(slugs, slide, setSlide, trackRef2) {
+    const vis = getVisible()
+    const max = slugs.length - vis
+    const next = Math.max(0, Math.min(max, slide))
+    const wrapWidth = trackRef2.current?.parentElement?.offsetWidth || window.innerWidth - 32
+    const cardWidth = (wrapWidth - (vis - 1) * GAP) / vis
+    trackRef2.current.style.transform = `translateX(-${next * (cardWidth + GAP)}px)`
+    setSlide(next)
   }
 
   function getVisible() {
@@ -222,82 +306,138 @@ export default function Homepage() {
           </div>
 
           <div style={{maxWidth:'680px',margin:'0 auto'}}>
-            {/* STAP 1 — Dienst */}
+            {/* STAP 1 */}
             <div style={{marginBottom:'1.5rem'}}>
-              <div style={{fontSize:'0.75rem',fontWeight:700,color:'var(--green-dark)',letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:'0.75rem'}}>
-                Stap 1 — Wat is het probleem?
-              </div>
+              <div style={{fontSize:'0.75rem',fontWeight:700,color:'var(--green-dark)',letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:'0.75rem'}}>Stap 1 — Wat is het probleem?</div>
               <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))',gap:'0.5rem'}}>
                 {lekkageTypes.map(t => (
-                  <button
-                    key={t.slug}
-                    onClick={() => setFunnelDienst(t.slug)}
-                    style={{
-                      display:'flex',alignItems:'center',gap:'0.6rem',
-                      padding:'0.65rem 0.85rem',borderRadius:'10px',
-                      border: funnelDienst === t.slug ? '2px solid var(--green)' : '1.5px solid var(--border)',
-                      background: funnelDienst === t.slug ? 'var(--green3)' : 'white',
-                      cursor:'pointer',fontSize:'0.85rem',fontWeight: funnelDienst === t.slug ? 700 : 500,
-                      color: funnelDienst === t.slug ? 'var(--green-dark)' : 'var(--text)',
-                      transition:'all 0.15s',fontFamily:'inherit',textAlign:'left'
-                    }}
-                  >
+                  <button key={t.slug} onClick={() => setFunnelDienst(t.slug)} style={{display:'flex',alignItems:'center',gap:'0.6rem',padding:'0.65rem 0.85rem',borderRadius:'10px',border:funnelDienst===t.slug?'2px solid var(--green)':'1.5px solid var(--border)',background:funnelDienst===t.slug?'var(--green3)':'white',cursor:'pointer',fontSize:'0.85rem',fontWeight:funnelDienst===t.slug?700:500,color:funnelDienst===t.slug?'var(--green-dark)':'var(--text)',transition:'all 0.15s',fontFamily:'inherit',textAlign:'left'}}>
                     <span style={{fontSize:'1.1rem'}}>{t.icon}</span> {t.naam}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* STAP 2 — Stad */}
-            <div style={{marginBottom:'1.25rem',opacity: funnelDienst ? 1 : 0.4,transition:'opacity 0.2s',pointerEvents: funnelDienst ? 'auto' : 'none'}}>
-              <div style={{fontSize:'0.75rem',fontWeight:700,color:'var(--green-dark)',letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:'0.75rem'}}>
-                Stap 2 — In welke stad?
-              </div>
+            {/* STAP 2 */}
+            <div style={{marginBottom:'1.25rem',opacity:funnelDienst?1:0.4,transition:'opacity 0.2s',pointerEvents:funnelDienst?'auto':'none'}}>
+              <div style={{fontSize:'0.75rem',fontWeight:700,color:'var(--green-dark)',letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:'0.75rem'}}>Stap 2 — In welke stad of postcode?</div>
               <div style={{position:'relative'}}>
                 <input
                   type="text"
-                  placeholder="Typ je stad, bijv. Amsterdam..."
+                  placeholder="Typ je stad of postcode, bijv. Amsterdam of 1011..."
                   value={funnelStad}
                   onChange={e => handleFunnelStadInput(e.target.value)}
                   style={{width:'100%',padding:'0.75rem 1rem',border:'1.5px solid var(--border)',borderRadius:'10px',fontSize:'0.92rem',fontFamily:'inherit',outline:'none',boxSizing:'border-box',color:'var(--text)'}}
                   onFocus={e => e.target.style.borderColor='var(--green)'}
                   onBlur={e => { e.target.style.borderColor='var(--border)'; setTimeout(() => setFunnelSuggestions([]), 150) }}
                 />
+                {/* Autocomplete dropdown */}
                 {funnelSuggestions.length > 0 && (
                   <div style={{position:'absolute',top:'calc(100% + 4px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'10px',boxShadow:'0 8px 24px rgba(0,0,0,0.1)',zIndex:10,overflow:'hidden'}}>
                     {funnelSuggestions.map(s => (
-                      <div
-                        key={s.slug}
-                        onMouseDown={() => selectFunnelStad(s)}
+                      <div key={s.slug} onMouseDown={() => selectFunnelStad(s)}
                         style={{padding:'0.65rem 1rem',cursor:'pointer',fontSize:'0.88rem',color:'var(--text)',borderBottom:'1px solid var(--border)',display:'flex',justifyContent:'space-between',alignItems:'center'}}
                         onMouseEnter={e => e.currentTarget.style.background='var(--green3)'}
-                        onMouseLeave={e => e.currentTarget.style.background='white'}
-                      >
+                        onMouseLeave={e => e.currentTarget.style.background='white'}>
                         <span>📍 {s.naam}</span>
                         <span style={{fontSize:'0.75rem',color:'var(--muted)'}}>{s.provincie}</span>
                       </div>
                     ))}
                   </div>
                 )}
+                {/* Postcode hint */}
+                {funnelPostcodeHint && (
+                  <div style={{marginTop:'0.5rem',padding:'0.6rem 1rem',background:'var(--green3)',border:'1px solid var(--green4)',borderRadius:'8px',fontSize:'0.83rem',color:'var(--green-dark)',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                    <span>📍 Postcode herkend als <strong>{funnelPostcodeHint.naam}</strong></span>
+                    <button onMouseDown={() => selectFunnelStad(funnelPostcodeHint)} style={{background:'var(--green)',color:'white',border:'none',borderRadius:'6px',padding:'0.25rem 0.65rem',fontSize:'0.78rem',fontWeight:700,cursor:'pointer',fontFamily:'inherit'}}>Gebruik deze stad</button>
+                  </div>
+                )}
+                {/* Vrije tekst hint — stad niet in database */}
+                {funnelStad.trim().length > 2 && !funnelStadSlug && !funnelPostcodeHint && funnelSuggestions.length === 0 && !/^\d/.test(funnelStad) && (
+                  <div style={{marginTop:'0.5rem',padding:'0.6rem 1rem',background:'#fff8ed',border:'1px solid #fed7aa',borderRadius:'8px',fontSize:'0.83rem',color:'#92400e'}}>
+                    💡 <strong>{funnelStad}</strong> staat nog niet in onze database. Je wordt doorgestuurd naar alle informatie over deze dienst.
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* GO KNOP */}
-            <button
-              onClick={funnelGo}
-              disabled={!funnelDienst || !funnelStadSlug}
-              style={{
-                width:'100%',padding:'0.9rem',borderRadius:'10px',border:'none',
-                background: funnelDienst && funnelStadSlug ? 'var(--orange)' : 'var(--border)',
-                color: funnelDienst && funnelStadSlug ? 'white' : 'var(--muted)',
-                fontSize:'1rem',fontWeight:700,cursor: funnelDienst && funnelStadSlug ? 'pointer' : 'not-allowed',
-                transition:'all 0.2s',fontFamily:'inherit'
-              }}
-            >
-              {funnelDienst && funnelStadSlug
-                ? `${lekkageTypes.find(t => t.slug === funnelDienst)?.naam} in ${funnelStad} bekijken →`
-                : 'Kies eerst een probleem en stad'}
+            {/* GO */}
+            <button onClick={funnelGo} disabled={!funnelCanGo}
+              style={{width:'100%',padding:'0.9rem',borderRadius:'10px',border:'none',background:funnelCanGo?'var(--orange)':'var(--border)',color:funnelCanGo?'white':'var(--muted)',fontSize:'1rem',fontWeight:700,cursor:funnelCanGo?'pointer':'not-allowed',transition:'all 0.2s',fontFamily:'inherit'}}>
+              {funnelLabel()}
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* STEDEN CARROUSEL — LEKKAGE */}
+      <section className="section section-white">
+        <div className="section-inner">
+          <div className="sec-head" style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',flexWrap:'wrap',gap:'1rem',marginBottom:'1.5rem'}}>
+            <div>
+              <div className="eyebrow">Lekkage reparatie</div>
+              <h2>Populaire <em>steden</em></h2>
+            </div>
+            <div className="carousel-nav-top">
+              <button className="carousel-btn" onClick={() => goCarousel(lekkageSteden, slideLekkage-1, setSlideLekkage, trackLekkageRef)} disabled={slideLekkage===0} aria-label="Vorige">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button className="carousel-btn" onClick={() => goCarousel(lekkageSteden, slideLekkage+1, setSlideLekkage, trackLekkageRef)} disabled={slideLekkage>=lekkageSteden.length-getVisible()} aria-label="Volgende">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div className="carousel-wrap">
+            <div className="carousel-track" ref={trackLekkageRef} style={{transform:'translateX(0)'}}>
+              {lekkageSteden.map(slug => {
+                const s = alleSteden.find(x => x.slug === slug)
+                if (!s) return null
+                return (
+                  <a key={slug} href={`/lekkage/${slug}`} className="svc carousel-card" style={{textDecoration:'none'}}>
+                    <div style={{fontSize:'1.5rem',marginBottom:'0.5rem'}}>📍</div>
+                    <h3 style={{fontSize:'1rem',marginBottom:'0.25rem'}}>{s.naam}</h3>
+                    <p style={{fontSize:'0.8rem',color:'var(--muted)',marginBottom:'0.75rem'}}>{s.provincie}</p>
+                    <div className="svc-cta">Lekkage {s.naam} <span className="arrow">→</span></div>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* STEDEN CARROUSEL — LEKDETECTIE */}
+      <section className="section section-alt">
+        <div className="section-inner">
+          <div className="sec-head" style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',flexWrap:'wrap',gap:'1rem',marginBottom:'1.5rem'}}>
+            <div>
+              <div className="eyebrow">Lekdetectie</div>
+              <h2>Populaire <em>steden</em></h2>
+            </div>
+            <div className="carousel-nav-top">
+              <button className="carousel-btn" onClick={() => goCarousel(lekdetectieSteden, slideLekdetectie-1, setSlideLekdetectie, trackLekdetectieRef)} disabled={slideLekdetectie===0} aria-label="Vorige">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button className="carousel-btn" onClick={() => goCarousel(lekdetectieSteden, slideLekdetectie+1, setSlideLekdetectie, trackLekdetectieRef)} disabled={slideLekdetectie>=lekdetectieSteden.length-getVisible()} aria-label="Volgende">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div className="carousel-wrap">
+            <div className="carousel-track" ref={trackLekdetectieRef} style={{transform:'translateX(0)'}}>
+              {lekdetectieSteden.map(slug => {
+                const s = alleSteden.find(x => x.slug === slug)
+                if (!s) return null
+                return (
+                  <a key={slug} href={`/lekdetectie/${slug}`} className="svc carousel-card" style={{textDecoration:'none'}}>
+                    <div style={{fontSize:'1.5rem',marginBottom:'0.5rem'}}>🔍</div>
+                    <h3 style={{fontSize:'1rem',marginBottom:'0.25rem'}}>{s.naam}</h3>
+                    <p style={{fontSize:'0.8rem',color:'var(--muted)',marginBottom:'0.75rem'}}>{s.provincie}</p>
+                    <div className="svc-cta">Lekdetectie {s.naam} <span className="arrow">→</span></div>
+                  </a>
+                )
+              })}
+            </div>
           </div>
         </div>
       </section>
