@@ -345,6 +345,17 @@ export default function LekkageTypeStad({ type, stad }) {
         "telephone": PHONE,
         "openingHours": "Mo-Su 00:00-24:00",
         "priceRange": "€€",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": stad.naam,
+          "addressRegion": stad.provincie,
+          "addressCountry": "NL"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": stad.lat,
+          "longitude": stad.lon
+        },
         "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "2847", "bestRating": "5" },
         "review": localReviews.map(r => ({
           "@type": "Review",
@@ -359,6 +370,24 @@ export default function LekkageTypeStad({ type, stad }) {
         "provider": { "@id": "https://lekkagefix.nl/#business" },
         "areaServed": { "@type": "City", "name": stad.naam, "containedInPlace": { "@type": "AdministrativeArea", "name": stad.provincie } },
         "description": description,
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "EUR",
+          "priceRange": seoContent.prijzen?.[0]?.prijs || "Gratis inspectie",
+          "availability": "https://schema.org/InStock",
+          "validFrom": new Date().toISOString().split('T')[0]
+        }
+      },
+      {
+        "@type": "HowTo",
+        "name": `Hoe werkt ${type.naam.toLowerCase()} reparatie in ${stad.naam}?`,
+        "description": `Stap voor stap uitleg hoe LekkageFix een ${type.naam.toLowerCase()} aanpakt in ${stad.naam}.`,
+        "step": [
+          { "@type": "HowToStep", "position": 1, "name": "Melding", "text": `Bel of stuur een aanvraag. We bespreken het probleem en plannen een afspraak in ${stad.naam}.` },
+          { "@type": "HowToStep", "position": 2, "name": "Vakman onderweg", "text": `De dichtstbijzijnde monteur in ${stad.provincie} rijdt naar je toe. Gemiddeld binnen 30 minuten.` },
+          { "@type": "HowToStep", "position": 3, "name": "Inspectie & offerte", "text": "Grondige inspectie met moderne apparatuur. Transparante prijsopgave vooraf, geen verrassingen." },
+          { "@type": "HowToStep", "position": 4, "name": "Opgelost & gegarandeerd", "text": "Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten." }
+        ]
       },
       {
         "@type": "FAQPage",
