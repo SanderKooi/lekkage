@@ -397,7 +397,12 @@ export default function LekkageTypeStad({ type, stad }) {
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={`https://lekkagefix.nl/lekkage/${type.slug}/${stad.slug}`} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <style>{`
+          @media (max-width: 768px) {
+            .hero-inner { grid-template-columns: 1fr !important; }
+            .kaart-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }} />
       </Head>
@@ -474,50 +479,59 @@ export default function LekkageTypeStad({ type, stad }) {
         </div>
       </section>
 
-      {/* MONTEUR + KAART */}
+      {/* INFO + KAART */}
       <section className="section section-alt">
-        <div className="section-inner" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'3rem',alignItems:'start'}}>
-          <div>
-            <div className="eyebrow">Uw specialist in {stad.provincie}</div>
-            <h2 style={{marginBottom:'1.25rem'}}>{monteur.naam} staat <em>voor je klaar</em></h2>
-            <div style={{display:'flex',alignItems:'center',gap:'0.85rem',padding:'1rem',background:'white',borderRadius:'12px',border:'1.5px solid var(--border)',marginBottom:'1rem'}}>
-              <MonteurAvatar monteur={monteur} size={52} border="2.5px solid var(--green3)" bg="var(--green)" />
-              <div>
-                <div style={{fontWeight:700,fontSize:'0.9rem'}}>{monteur.naam}</div>
-                <div style={{fontSize:'0.75rem',opacity:0.8}}>{monteur.functie} · {stad.provincie}</div>
-                <div style={{fontSize:'0.72rem',opacity:0.7,marginTop:'0.1rem'}}>{monteur.ervaring} ervaring</div>
+        <div className="section-inner">
+          <div className="kaart-grid" style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:'3rem',alignItems:'start'}}>
+            <div>
+              <div className="eyebrow">Werkgebied</div>
+              <h2>{type.naam} in <em>{stad.naam}</em></h2>
+              <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:1.85,margin:'1rem 0'}}>
+                {stad.naam} telt {stad.inwoners} inwoners en bestaat voornamelijk uit {stad.woningtype}. {stad.fact}
+              </p>
+              <p style={{color:'var(--muted)',fontSize:'0.92rem',lineHeight:1.85,marginBottom:'1.5rem'}}>
+                Onze monteurs zijn dagelijks actief in {stad.naam} en de omliggende gemeenten in {stad.provincie}. Door onze lokale aanwezigheid zijn we gemiddeld binnen 30 minuten ter plaatse, ook voor spoedgevallen buiten kantooruren.
+              </p>
+              <div style={{display:'flex',alignItems:'center',gap:'0.85rem',padding:'0.85rem 1rem',background:'white',borderRadius:'10px',border:'1.5px solid var(--border)'}}>
+                {monteur.img ? (
+                  <img src={monteur.img} alt={monteur.naam} style={{width:'42px',height:'42px',borderRadius:'50%',objectFit:'cover',flexShrink:0}} />
+                ) : (
+                  <div style={{width:'42px',height:'42px',borderRadius:'50%',background:'var(--green)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.85rem',fontWeight:800,flexShrink:0}}>
+                    {monteur.foto}
+                  </div>
+                )}
+                <div>
+                  <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)'}}>{monteur.naam}</div>
+                  <div style={{fontSize:'0.72rem',color:'var(--muted)'}}>Specialist in {stad.provincie} · {monteur.ervaring} ervaring</div>
+                </div>
+                <a href={`tel:${PHONE}`} style={{marginLeft:'auto',background:'var(--orange)',color:'white',borderRadius:'8px',padding:'0.4rem 0.85rem',fontSize:'0.78rem',fontWeight:700,textDecoration:'none',whiteSpace:'nowrap'}}>Bel direct</a>
               </div>
             </div>
-            <p style={{fontSize:'0.82rem',lineHeight:1.7,marginBottom:'1rem',fontStyle:'italic',color:'var(--muted)'}}>"{monteur.quote}"</p>
-            <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',background:'var(--orange)',fontSize:'0.9rem'}}>📞 Bel {monteur.naam.split(' ')[0]}</a>
-          </div>
-
-          <div>
-            <div style={{borderRadius:'16px',overflow:'hidden',border:'2px solid var(--border)',boxShadow:'0 4px 20px rgba(0,0,0,0.08)',height:'300px',marginBottom:'1rem'}}>
-              <iframe
-                title={`Kaart ${stad.naam}`}
-                width="100%"
-                height="100%"
-                style={{border:0,display:'block'}}
-                loading="lazy"
-                src={`https://www.openstreetmap.org/export/embed.html?bbox=${stad.lon-0.08}%2C${stad.lat-0.05}%2C${stad.lon+0.08}%2C${stad.lat+0.05}&layer=mapnik&marker=${stad.lat}%2C${stad.lon}`}
-              />
-            </div>
-            {/* INTERNE LINKS ONDER KAART - max 8 + provincie link */}
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.4rem'}}>
-              {andereSteden.slice(0,8).map(s => (
-                <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}
-                  style={{fontSize:'0.8rem',color:'var(--green)',textDecoration:'none',padding:'0.35rem 0.5rem',borderRadius:'6px',background:'white',border:'1px solid var(--border)',transition:'all 0.15s'}}
-                  onMouseEnter={e => e.currentTarget.style.borderColor='var(--green)'}
-                  onMouseLeave={e => e.currentTarget.style.borderColor='var(--border)'}
-                >
-                  {type.naam} {s.naam}
+            <div>
+              <div style={{borderRadius:'16px',overflow:'hidden',border:'2px solid var(--border)',boxShadow:'0 4px 20px rgba(0,0,0,0.08)',height:'300px',marginBottom:'1rem'}}>
+                <iframe
+                  title={`Kaart ${stad.naam}`}
+                  width="100%" height="100%"
+                  style={{border:0,display:'block'}}
+                  loading="lazy"
+                  src={`https://www.openstreetmap.org/export/embed.html?bbox=${stad.lon-0.08}%2C${stad.lat-0.05}%2C${stad.lon+0.08}%2C${stad.lat+0.05}&layer=mapnik&marker=${stad.lat}%2C${stad.lon}`}
+                />
+              </div>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.4rem'}}>
+                {andereSteden.slice(0,8).map(s => (
+                  <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}
+                    style={{fontSize:'0.8rem',color:'var(--green)',textDecoration:'none',padding:'0.35rem 0.5rem',borderRadius:'6px',background:'white',border:'1px solid var(--border)'}}
+                    onMouseEnter={e => e.currentTarget.style.borderColor='var(--green)'}
+                    onMouseLeave={e => e.currentTarget.style.borderColor='var(--border)'}
+                  >
+                    {type.naam} {s.naam}
+                  </a>
+                ))}
+                <a href={`/lekkage/dienst/${type.slug}`}
+                  style={{fontSize:'0.8rem',color:'var(--muted)',textDecoration:'none',padding:'0.35rem 0.5rem',borderRadius:'6px',background:'white',border:'1px solid var(--border)',gridColumn:'1/-1'}}>
+                  Alle steden in {stad.provincie} bekijken →
                 </a>
-              ))}
-              <a href={`/lekkage/dienst/${type.slug}`}
-                style={{fontSize:'0.8rem',color:'var(--muted)',textDecoration:'none',padding:'0.35rem 0.5rem',borderRadius:'6px',background:'white',border:'1px solid var(--border)',gridColumn:'1/-1'}}>
-                Alle steden in {stad.provincie} bekijken →
-              </a>
+              </div>
             </div>
           </div>
         </div>
