@@ -373,7 +373,7 @@ export default function LekkageTypeStad({ type, stad }) {
         "offers": {
           "@type": "Offer",
           "priceCurrency": "EUR",
-          "priceRange": seoContent.prijzen?.[0]?.prijs || "Gratis inspectie",
+          "description": `Gratis inspectie, daarna transparante offerte voor ${type.naam.toLowerCase()} in ${stad.naam}`,
           "availability": "https://schema.org/InStock",
           "validFrom": new Date().toISOString().split('T')[0]
         }
@@ -410,8 +410,7 @@ export default function LekkageTypeStad({ type, stad }) {
         "@type": "Person",
         "name": monteur.naam,
         "jobTitle": monteur.functie,
-        "worksFor": { "@id": "https://lekkagefix.nl/#business" },
-        "areaServed": { "@type": "AdministrativeArea", "name": stad.provincie }
+        "worksFor": { "@id": "https://lekkagefix.nl/#business" }
       }
     ]
   }
