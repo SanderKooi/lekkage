@@ -9,22 +9,39 @@ const PHONE_DISPLAY = '0800-1234'
 const EMAIL = 'info@lekkagefix.nl'
 
 const monteurs = {
-  'Noord-Holland':  { naam: 'Henk van der Berg',  foto: 'HB', img: '/images/henk.png', functie: 'Lekkage specialist', ervaring: '14 jaar', quote: 'In Noord-Holland ken ik elk woningtype van binnen en buiten.' },
-  'Zuid-Holland':   { naam: 'Marco de Wit',        foto: 'MW', img: null, functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Van grachtenpand tot jaren-70 flat. ik los het op.' },
-  'Utrecht':        { naam: 'Jeroen Smit',          foto: 'JS', img: null, functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Utrecht kent zijn werfkelders, ik ken de lekkages.' },
-  'Noord-Brabant':  { naam: 'Kevin Janssen',        foto: 'KJ', img: null, functie: 'Lekkage specialist', ervaring: '12 jaar', quote: 'Van Eindhoven tot Bergen op Zoom, ik ben er snel bij.' },
-  'Gelderland':     { naam: 'Arjan Meijer',         foto: 'AM', img: null, functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'De Gelderse woningbouw heeft geen geheimen voor mij.' },
-  'Overijssel':     { naam: 'Thomas Bos',           foto: 'TB', img: null, functie: 'Lekkage specialist', ervaring: '8 jaar',  quote: 'Twente en Zwolle, ik ben altijd in de buurt.' },
-  'Groningen':      { naam: 'Sander Dijkstra',      foto: 'SD', img: null, functie: 'Lekkage specialist', ervaring: '7 jaar',  quote: 'Groningse studentenwoningen? Mijn specialiteit.' },
-  'Friesland':      { naam: 'Pieter Visser',        foto: 'PV', img: null, functie: 'Lekkage specialist', ervaring: '13 jaar', quote: 'De Friese wind tast daken aan. ik herstel ze.' },
-  'Drenthe':        { naam: 'Rob Hofstra',          foto: 'RH', img: null, functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Drentse woningen verdienen vakkundig onderhoud.' },
-  'Flevoland':      { naam: 'Danny Kramer',         foto: 'DK', img: null, functie: 'Lekkage specialist', ervaring: '6 jaar',  quote: 'Polderbouw heeft specifieke risicos. ik ken ze.' },
-  'Limburg':        { naam: 'Luc Hermans',          foto: 'LH', img: null, functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Mergelstenen huizen zijn mijn specialiteit.' },
-  'Zeeland':        { naam: 'Kees de Vos',          foto: 'KV', img: null, functie: 'Lekkage specialist', ervaring: '15 jaar', quote: 'Zeeuwse panden kennen hun eigen vochtproblemen.' },
+  'Noord-Holland':  { naam: 'Henk van der Berg',  foto: 'HB', img: '/images/henk.png',   functie: 'Lekkage specialist', ervaring: '14 jaar', quote: 'In Noord-Holland ken ik elk woningtype van binnen en buiten.' },
+  'Zuid-Holland':   { naam: 'Marco de Wit',        foto: 'MW', img: '/images/marco.png',  functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Van grachtenpand tot jaren-70 flat, ik los het op.' },
+  'Utrecht':        { naam: 'Jeroen Smit',          foto: 'JS', img: '/images/jeroen.png', functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Utrecht kent zijn werfkelders, ik ken de lekkages.' },
+  'Noord-Brabant':  { naam: 'Kevin Janssen',        foto: 'KJ', img: '/images/kevin.png',  functie: 'Lekkage specialist', ervaring: '12 jaar', quote: 'Van Eindhoven tot Bergen op Zoom, ik ben er snel bij.' },
+  'Gelderland':     { naam: 'Arjan Meijer',         foto: 'AM', img: '/images/arjan.png',  functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'De Gelderse woningbouw heeft geen geheimen voor mij.' },
+  'Overijssel':     { naam: 'Thomas Bos',           foto: 'TB', img: '/images/thomas.png', functie: 'Lekkage specialist', ervaring: '8 jaar',  quote: 'Twente en Zwolle, ik ben altijd in de buurt.' },
+  'Groningen':      { naam: 'Sander Dijkstra',      foto: 'SD', img: '/images/sander.png', functie: 'Lekkage specialist', ervaring: '7 jaar',  quote: 'Groningse studentenwoningen? Mijn specialiteit.' },
+  'Friesland':      { naam: 'Pieter Visser',        foto: 'PV', img: '/images/pieter.png', functie: 'Lekkage specialist', ervaring: '13 jaar', quote: 'De Friese wind tast daken aan, ik herstel ze.' },
+  'Drenthe':        { naam: 'Rob Hofstra',          foto: 'RH', img: '/images/rob.png',    functie: 'Lekkage specialist', ervaring: '9 jaar',  quote: 'Drentse woningen verdienen vakkundig onderhoud.' },
+  'Flevoland':      { naam: 'Danny Kramer',         foto: 'DK', img: '/images/danny.png',  functie: 'Lekkage specialist', ervaring: '6 jaar',  quote: "Polderbouw heeft specifieke risico's, ik ken ze." },
+  'Limburg':        { naam: 'Luc Hermans',          foto: 'LH', img: '/images/luc.png',    functie: 'Lekkage specialist', ervaring: '11 jaar', quote: 'Mergelstenen huizen zijn mijn specialiteit.' },
+  'Zeeland':        { naam: 'Kees de Vos',          foto: 'KV', img: '/images/kees.png',   functie: 'Lekkage specialist', ervaring: '15 jaar', quote: 'Zeeuwse panden kennen hun eigen vochtproblemen.' },
 }
 
 function getMonteur(provincie) {
   return monteurs[provincie] || { naam: 'Jan Peters', foto: 'JP', img: null, functie: 'Lekkage specialist', ervaring: '10 jaar', quote: 'Vakkundig en snel door heel Nederland.' }
+}
+
+function MonteurAvatar({ monteur, size = 52, border = '2px solid rgba(255,255,255,0.3)', bg = 'rgba(255,255,255,0.15)' }) {
+  if (monteur.img) {
+    return (
+      <img
+        src={monteur.img}
+        alt={monteur.naam}
+        style={{width:size,height:size,borderRadius:'50%',objectFit:'cover',flexShrink:0,border,boxShadow:'0 2px 8px rgba(26,122,74,0.25)'}}
+      />
+    )
+  }
+  return (
+    <div style={{width:size,height:size,borderRadius:'50%',background:bg,color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:size*0.32+'px',fontWeight:800,flexShrink:0,border}}>
+      {monteur.foto}
+    </div>
+  )
 }
 
 export async function getStaticPaths() {
@@ -397,9 +414,7 @@ export default function LekkageStadHub({ stad }) {
             <div className="seo-sticky">
               <div style={{background:'var(--green-dark)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem',color:'white'}}>
                 <div style={{display:'flex',alignItems:'center',gap:'0.85rem',marginBottom:'1rem'}}>
-                  <div style={{width:'48px',height:'48px',borderRadius:'50%',background:'rgba(255,255,255,0.15)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.95rem',fontWeight:800,flexShrink:0,border:'2px solid rgba(255,255,255,0.3)'}}>
-                    {monteur.foto}
-                  </div>
+                  <MonteurAvatar monteur={monteur} size={48} border="2px solid rgba(255,255,255,0.3)" bg="rgba(255,255,255,0.15)" />
                   <div>
                     <div style={{fontWeight:700,fontSize:'0.88rem'}}>{monteur.naam}</div>
                     <div style={{fontSize:'0.73rem',opacity:0.8}}>{monteur.functie} · {stad.provincie}</div>
