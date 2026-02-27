@@ -23,13 +23,13 @@ const faqs = [
 ]
 
 const diensten = [
-  { icon:'🏠', title:'Daklekkage', slug:'dak', desc:'Waterindringing via plat dak, schuin dak, pannendak of dakkapel. Direct inspecteren en repareren voordat de schade groter wordt.' },
-  { icon:'🔧', title:'Waterleiding', slug:'waterleiding', desc:'Gesprongen waterleiding, lekkende kraan, lage waterdruk of defecte boiler. Snel een ervaren loodgieter aan de deur.' },
-  { icon:'🚿', title:'Badkamerlekkage', slug:'badkamer', desc:'Lekkage rondom douche, bad of toilet. Voorkomen dat water in de vloer of wanden trekt. Snel en vakkundig.' },
-  { icon:'🚰', title:'Rioollekkage', slug:'riool', desc:'Verstopt of lekkend riool? Camera-inspectie zonder sloopwerk. We vinden de oorzaak en repareren duurzaam.' },
-  { icon:'💧', title:'Vochtproblemen', slug:'vocht', desc:'Schimmel, condensatie of optrekkend vocht? We zoeken de bron, niet alleen het symptoom. Blijvende oplossing.' },
-  { icon:'🧱', title:'Gevellekkage', slug:'gevel', desc:'Waterindringing via gevels, spouwmuur of kozijnen. Vochtschade aan de buitenkant stoppen voordat het verder gaat.' },
-  { icon:'🏚️', title:'Kelderwaterdichting', slug:'kelder', desc:'Grondwater of regenwater dat de kelder binnendringt. Structurele waterdichting voor een droge kelder.' },
+  { icon:'🏠', title:'Daklekkage', slug:'lekkage-dak', desc:'Waterindringing via plat dak, schuin dak, pannendak of dakkapel. Direct inspecteren en repareren voordat de schade groter wordt.' },
+  { icon:'🔧', title:'Waterleiding', slug:'lekkage-waterleiding', desc:'Gesprongen waterleiding, lekkende kraan, lage waterdruk of defecte boiler. Snel een ervaren loodgieter aan de deur.' },
+  { icon:'🚿', title:'Badkamerlekkage', slug:'lekkage-badkamer', desc:'Lekkage rondom douche, bad of toilet. Voorkomen dat water in de vloer of wanden trekt. Snel en vakkundig.' },
+  { icon:'🚰', title:'Rioollekkage', slug:'riool-lekkage', desc:'Verstopt of lekkend riool? Camera-inspectie zonder sloopwerk. We vinden de oorzaak en repareren duurzaam.' },
+  { icon:'💧', title:'Vochtproblemen', slug:'vochtprobleem', desc:'Schimmel, condensatie of optrekkend vocht? We zoeken de bron, niet alleen het symptoom. Blijvende oplossing.' },
+  { icon:'🧱', title:'Gevellekkage', slug:'lekkage-muur', desc:'Waterindringing via gevels, spouwmuur of kozijnen. Vochtschade aan de buitenkant stoppen voordat het verder gaat.' },
+  { icon:'🏚️', title:'Kelderwaterdichting', slug:'kelderafdichting', desc:'Grondwater of regenwater dat de kelder binnendringt. Structurele waterdichting voor een droge kelder.' },
 ]
 
 export default function Homepage() {
@@ -355,7 +355,7 @@ export default function Homepage() {
           </div>
           <div className="footer-col">
             <h4>Diensten</h4>
-            {diensten.map(d => <a key={d.slug} href={`/lekkage/${d.slug}`}>{d.title}</a>)}
+            {diensten.map(d => <a key={d.slug} href={`/lekkage/dienst/${d.slug}`}>{d.title}</a>)}
           </div>
           <div className="footer-col">
             <h4>Steden</h4>
