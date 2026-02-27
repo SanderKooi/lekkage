@@ -159,7 +159,7 @@ export default function Homepage() {
           <div className="carousel-wrap" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
             <div className="carousel-track" ref={trackRef} style={{transform:`translateX(-${offset}px)`}}>
               {diensten.map(s => (
-                <a key={s.slug} href={`/lekkage/${s.slug}`} className="svc carousel-card">
+                <a key={s.slug} href={`/lekkage/dienst/${s.slug}`} className="svc carousel-card">
                   <div className="svc-icon">{s.icon}</div>
                   <h3>{s.title}</h3>
                   <p>{s.desc}</p>
