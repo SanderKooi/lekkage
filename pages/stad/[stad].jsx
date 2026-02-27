@@ -349,6 +349,96 @@ export default function LekkageStadHub({ stad }) {
         </div>
       </section>
 
+      {/* SEO BLOK MET STICKY FORMULIER */}
+      <section className="section section-white">
+        <div className="section-inner">
+          <div className="seo-grid">
+            <div className="seo-block">
+              <div className="eyebrow">Lekkage {stad.naam} informatie</div>
+              <h2>Lekkage in {stad.naam}: <em>alles wat je moet weten</em></h2>
+
+              <h3>Waarom komt lekkage in {stad.naam} veel voor?</h3>
+              <p>{stad.naam} heeft voornamelijk {stad.woningtype}. {stad.fact} Water zoekt altijd de weg naar beneden en vindt zijn weg langs dakbalken, muren en vloerconstructies voordat het zichtbaar wordt. Hoe eerder je ingrijpt, hoe kleiner de schade en hoe lager de uiteindelijke reparatiekosten.</p>
+
+              <h3>Welke soorten lekkage komen voor in {stad.naam}?</h3>
+              <p>De meest voorkomende lekkages in {stad.naam} zijn daklekkages, badkamerlekkages en lekkages aan de waterleiding. Bij oudere woningen spelen ook vochtproblemen en gevellekkages een grote rol. Hieronder een overzicht van de meest gevraagde reparaties in {stad.naam} en de bijbehorende indicatieve kosten.</p>
+
+              <div className="price-table">
+                <table>
+                  <thead><tr><th scope="col">Type lekkage</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                  <tbody>
+                    {[
+                      { type: 'Daklekkage reparatie', prijs: '€ 75 – € 1.800', slug: 'lekkage-dak' },
+                      { type: 'Lekkage waterleiding', prijs: '€ 60 – € 1.800', slug: 'lekkage-waterleiding' },
+                      { type: 'Badkamerlekkage', prijs: '€ 80 – € 2.200', slug: 'lekkage-badkamer' },
+                      { type: 'Rioollekkage', prijs: '€ 150 – € 2.200', slug: 'riool-lekkage' },
+                      { type: 'Vochtproblemen', prijs: '€ 100 – € 2.200', slug: 'vochtprobleem' },
+                      { type: 'Gevellekkage', prijs: '€ 100 – € 2.800', slug: 'lekkage-muur' },
+                      { type: 'Kelderafdichting', prijs: '€ 200 – € 9.000', slug: 'kelderafdichting' },
+                    ].map((r, i) => (
+                      <tr key={i}>
+                        <td><a href={`/lekkage/${r.slug}/${stad.slug}`} style={{color:'var(--green)',textDecoration:'none',fontWeight:600}}>{r.type} {stad.naam}</a></td>
+                        <td>{r.prijs}</td>
+                        <td>30 min</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na gratis inspectie ter plaatse in {stad.naam}.</p>
+              </div>
+
+              <h3>Hoe werkt een lekkage reparatie in {stad.naam}?</h3>
+              <p>Wij werken altijd in vier stappen. Eerst bespreken we telefonisch het probleem. Daarna rijdt de dichtstbijzijnde monteur in {stad.provincie} naar je toe, gemiddeld binnen 30 minuten. Op locatie voeren we een grondige inspectie uit en geven we een transparante offerte. Na akkoord repareren we vakkundig en ruimen we alles netjes op. Op al ons werk geven we garantie.</p>
+
+              <h3>Lekkage in {stad.naam} en je verzekering</h3>
+              <p>Een plotselinge lekkage valt bij de meeste opstalverzekeringen onder de dekking. Schade door achterstallig onderhoud of slijtage wordt doorgaans niet vergoed. Wij zijn erkend door alle grote Nederlandse verzekeraars en stellen een gedetailleerd inspectierapport op dat je direct kunt gebruiken voor je schadeclaim in {stad.naam}.</p>
+            </div>
+
+            <div className="seo-sticky">
+              <div style={{background:'var(--green-dark)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem',color:'white'}}>
+                <div style={{display:'flex',alignItems:'center',gap:'0.85rem',marginBottom:'1rem'}}>
+                  <div style={{width:'48px',height:'48px',borderRadius:'50%',background:'rgba(255,255,255,0.15)',color:'white',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.95rem',fontWeight:800,flexShrink:0,border:'2px solid rgba(255,255,255,0.3)'}}>
+                    {monteur.foto}
+                  </div>
+                  <div>
+                    <div style={{fontWeight:700,fontSize:'0.88rem'}}>{monteur.naam}</div>
+                    <div style={{fontSize:'0.73rem',opacity:0.8}}>{monteur.functie} · {stad.provincie}</div>
+                    <div style={{fontSize:'0.7rem',opacity:0.7}}>{monteur.ervaring} ervaring</div>
+                  </div>
+                </div>
+                <p style={{fontSize:'0.8rem',opacity:0.85,lineHeight:1.7,marginBottom:'1rem',fontStyle:'italic'}}>"{monteur.quote}"</p>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',background:'var(--orange)',fontSize:'0.88rem'}}>📞 Bel {monteur.naam.split(' ')[0]}</a>
+              </div>
+
+              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
+                <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Gratis offerte aanvragen</div>
+                {!submitted ? (
+                  <div style={{display:'flex',flexDirection:'column',gap:'0.6rem'}}>
+                    <input type="text" placeholder="Uw naam" className="form-input" />
+                    <input type="tel" placeholder="Telefoonnummer" className="form-input" />
+                    <input type="text" placeholder={`Adres in ${stad.naam}`} className="form-input" />
+                    <select className="form-input">
+                      <option value="">Type lekkage</option>
+                      {lekkageTypes.map(t => <option key={t.slug} value={t.slug}>{t.naam}</option>)}
+                    </select>
+                    <textarea placeholder="Korte omschrijving" className="form-input" rows={2} style={{resize:'vertical'}} />
+                    <button onClick={() => setSubmitted(true)} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.88rem'}}>
+                      Offerte aanvragen →
+                    </button>
+                  </div>
+                ) : (
+                  <div style={{textAlign:'center',padding:'1rem 0'}}>
+                    <div style={{fontSize:'2rem',marginBottom:'0.5rem'}}>✅</div>
+                    <p style={{fontWeight:700,color:'var(--green)'}}>Aanvraag ontvangen!</p>
+                    <p style={{fontSize:'0.82rem',color:'var(--muted)'}}>We nemen binnen 15 minuten contact op.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="section" style={{background:'var(--green3)'}}>
         <div className="section-inner">
