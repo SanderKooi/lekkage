@@ -479,6 +479,23 @@ export default function LekkageTypeStad({ type, stad }) {
         </div>
       </section>
 
+      {/* WERKWIJZE */}
+      <section className="section section-white">
+        <div className="section-inner">
+          <div className="sec-head-center">
+            <div className="eyebrow">Werkwijze</div>
+            <h2>Van melding tot <em>oplossing</em> in {stad.naam}</h2>
+            <p className="sec-sub">Helder en transparant. Zo pakken we een {type.naam.toLowerCase()} aan in {stad.naam}.</p>
+          </div>
+          <div className="steps">
+            <div className="step"><div className="step-num">1</div><h3>Melding</h3><p>Bel of stuur een aanvraag. We bespreken het probleem en plannen een afspraak in {stad.naam}.</p></div>
+            <div className="step"><div className="step-num">2</div><h3>Vakman onderweg</h3><p>De dichtstbijzijnde monteur in {stad.provincie} rijdt naar je toe. Gemiddeld binnen 30 minuten.</p></div>
+            <div className="step"><div className="step-num">3</div><h3>Inspectie & offerte</h3><p>Grondige inspectie met moderne apparatuur. Transparante prijsopgave vooraf, geen verrassingen.</p></div>
+            <div className="step"><div className="step-num">4</div><h3>Opgelost & gegarandeerd</h3><p>Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten.</p></div>
+          </div>
+        </div>
+      </section>
+
       {/* INFO + KAART */}
       <section className="section section-alt">
         <div className="section-inner">
@@ -533,23 +550,6 @@ export default function LekkageTypeStad({ type, stad }) {
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* WERKWIJZE */}
-      <section className="section section-white">
-        <div className="section-inner">
-          <div className="sec-head-center">
-            <div className="eyebrow">Werkwijze</div>
-            <h2>Van melding tot <em>oplossing</em> in {stad.naam}</h2>
-            <p className="sec-sub">Helder en transparant. Zo pakken we een {type.naam.toLowerCase()} aan in {stad.naam}.</p>
-          </div>
-          <div className="steps">
-            <div className="step"><div className="step-num">1</div><h3>Melding</h3><p>Bel of stuur een aanvraag. We bespreken het probleem en plannen een afspraak in {stad.naam}.</p></div>
-            <div className="step"><div className="step-num">2</div><h3>Vakman onderweg</h3><p>De dichtstbijzijnde monteur in {stad.provincie} rijdt naar je toe. Gemiddeld binnen 30 minuten.</p></div>
-            <div className="step"><div className="step-num">3</div><h3>Inspectie & offerte</h3><p>Grondige inspectie met moderne apparatuur. Transparante prijsopgave vooraf, geen verrassingen.</p></div>
-            <div className="step"><div className="step-num">4</div><h3>Opgelost & gegarandeerd</h3><p>Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten.</p></div>
           </div>
         </div>
       </section>
