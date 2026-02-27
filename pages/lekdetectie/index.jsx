@@ -368,7 +368,7 @@ export default function LekdetectieIndex() {
           <div className="footer-col">
             <h4>Diensten</h4>
             <a href="/lekdetectie">Lekdetectie</a>
-            {lekkageTypes.slice(0,3).map(t => <a key={t.slug} href={`/lekkage/${t.slug}`}>{t.naam}</a>)}
+            {lekkageTypes.slice(0,3).map(t => <a key={t.slug} href={`/lekkage/dienst/${t.slug}`}>{t.naam}</a>)}
           </div>
           <div className="footer-col">
             <h4>Steden</h4>
