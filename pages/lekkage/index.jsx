@@ -192,7 +192,7 @@ export default function LekkageIndex() {
           </div>
           <div className="svc-grid">
             {lekkageTypes.map(t => (
-              <a key={t.slug} href={`/lekkage/${t.slug}`} className="svc">
+              <a key={t.slug} href={`/lekkage/dienst/${t.slug}`} className="svc">
                 <div className="svc-icon">{t.icon}</div>
                 <h3>{t.naam}</h3>
                 <p>{t.omschrijving}</p>
@@ -380,7 +380,7 @@ export default function LekkageIndex() {
                 <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Onze specialisaties</div>
                 <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
                   {lekkageTypes.map(t => (
-                    <a key={t.slug} href={`/lekkage/${t.slug}`} style={{display:'flex',alignItems:'center',gap:'0.5rem',color:'var(--muted)',textDecoration:'none',transition:'color 0.2s'}}
+                    <a key={t.slug} href={`/lekkage/dienst/${t.slug}`} style={{display:'flex',alignItems:'center',gap:'0.5rem',color:'var(--muted)',textDecoration:'none',transition:'color 0.2s'}}
                       onMouseEnter={e => e.currentTarget.style.color='var(--green)'}
                       onMouseLeave={e => e.currentTarget.style.color='var(--muted)'}
                     >
@@ -414,7 +414,7 @@ export default function LekkageIndex() {
           </div>
           <div className="footer-col">
             <h4>Diensten</h4>
-            {lekkageTypes.map(t => <a key={t.slug} href={`/lekkage/${t.slug}`}>{t.naam}</a>)}
+            {lekkageTypes.map(t => <a key={t.slug} href={`/lekkage/dienst/${t.slug}`}>{t.naam}</a>)}
           </div>
           <div className="footer-col">
             <h4>Steden</h4>
