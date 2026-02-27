@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://lekkagetest.vercel.app',
+  siteUrl: 'https://lekkagefix.nl',
   generateRobotsTxt: true,
   sitemapSize: 7000,
   changefreq: 'weekly',
