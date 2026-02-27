@@ -139,7 +139,7 @@ export default function LekkageType({ type }) {
               {filtered.length > 0 && (
                 <div style={{position:'absolute',top:'calc(100% + 8px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',boxShadow:'0 8px 24px rgba(0,0,0,0.12)',zIndex:100,overflow:'hidden'}}>
                   {filtered.slice(0,6).map(s => (
-                    <a key={s.slug} href={`/lekkage/${s.slug}/${type.slug}`}
+                    <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}
                       style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.75rem 1.25rem',textDecoration:'none',color:'var(--text)',borderBottom:'1px solid var(--border)',fontSize:'0.9rem',transition:'background 0.15s'}}
                       onMouseEnter={e => e.currentTarget.style.background='var(--green3)'}
                       onMouseLeave={e => e.currentTarget.style.background='white'}
@@ -225,7 +225,7 @@ export default function LekkageType({ type }) {
                   <h3 style={{fontSize:'0.82rem',fontWeight:700,color:'var(--green-dark)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:'0.85rem',paddingBottom:'0.5rem',borderBottom:'2px solid var(--green4)'}}>📍 {prov}</h3>
                   <div className="steden-grid">
                     {visible.map(s => (
-                      <a key={s.slug} href={`/lekkage/${s.slug}/${type.slug}`} className="stad-a">
+                      <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`} className="stad-a">
                         <span>{s.naam}</span><span className="stad-arrow">→</span>
                       </a>
                     ))}
@@ -274,19 +274,68 @@ export default function LekkageType({ type }) {
       </section>
 
       {/* SEO BLOK */}
-      <section className="section">
+      <section className="section section-white">
         <div className="section-inner">
-          <div style={{maxWidth:'820px'}}>
-            <div className="eyebrow">{type.naam} informatie</div>
-            <h2 style={{marginBottom:'1.5rem'}}>{type.naam}: <em>alles wat je moet weten</em></h2>
-            <h3>Wat is {type.naam.toLowerCase()} en wanneer handelen?</h3>
-            <p>{type.intro} Hoe eerder je ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
-            <h3>Oorzaken van {type.naam.toLowerCase()}</h3>
-            <p>De meest voorkomende oorzaken zijn {type.oorzaken?.slice(0,3).map(o => o.titel?.toLowerCase() || o).join(', ')}. Een vakkundige inspectie stelt snel de juiste diagnose.</p>
-            <h3>Kosten {type.naam.toLowerCase()} reparatie</h3>
-            <p>De kosten variëren afhankelijk van de omvang en oorzaak. Bij LekkageFix ontvang je altijd een transparante offerte vooraf, volledig vrijblijvend en zonder verborgen kosten.</p>
-            <h3>{type.naam} en je verzekering</h3>
-            <p>Plotselinge schade valt bij de meeste opstalverzekeringen onder de dekking. Wij zijn erkend door alle grote Nederlandse verzekeraars en stellen een gedetailleerd rapport op voor je claim.</p>
+          <div className="seo-grid">
+            <div className="seo-block">
+              <div className="eyebrow">{type.naam} informatie</div>
+              <h2 style={{marginBottom:'1.5rem'}}>{type.naam}: <em>alles wat je moet weten</em></h2>
+
+              <h3>Wat is {type.naam.toLowerCase()} en wanneer handelen?</h3>
+              <p>{type.intro} Hoe eerder je ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
+
+              <h3>Oorzaken van {type.naam.toLowerCase()}</h3>
+              <p>De meest voorkomende oorzaken zijn {type.oorzaken?.slice(0,3).map(o => o.titel?.toLowerCase() || o).join(', ')}. Een vakkundige inspectie stelt snel de juiste diagnose.</p>
+
+              <h3>Kosten {type.naam.toLowerCase()} reparatie</h3>
+              <p>De kosten variëren afhankelijk van de omvang en oorzaak. Bij LekkageFix ontvang je altijd een transparante offerte vooraf, volledig vrijblijvend en zonder verborgen kosten.</p>
+
+              <div className="price-table">
+                <table>
+                  <thead><tr><th scope="col">Type werkzaamheid</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                  <tbody>
+                    {(type.prijzen || [
+                      { werk: 'Inspectie & diagnose', prijs: 'Gratis', tijd: '30 min' },
+                      { werk: 'Kleine reparatie', prijs: '€ 75 – € 250', tijd: '30 min' },
+                      { werk: 'Middelgrote reparatie', prijs: '€ 250 – € 750', tijd: '30 min' },
+                      { werk: 'Grote reparatie', prijs: '€ 750 – € 2.500', tijd: '30 min' },
+                      { werk: 'Volledige vervanging', prijs: 'Op aanvraag', tijd: '30 min' },
+                    ]).map((r, i, arr) => (
+                      <tr key={i} className={i === 0 ? 'highlight-row' : ''}>
+                        <td>{i === 0 ? <strong>{r.werk}</strong> : r.werk}</td>
+                        <td>{r.prijs}</td>
+                        <td>{r.tijd}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="table-note">* Prijzen zijn indicatief en afhankelijk van type, omvang en locatie. Definitieve prijs na inspectie.</p>
+              </div>
+
+              <h3>{type.naam} en je verzekering</h3>
+              <p>Plotselinge schade valt bij de meeste opstalverzekeringen onder de dekking. Wij zijn erkend door alle grote Nederlandse verzekeraars en stellen een gedetailleerd rapport op voor je claim.</p>
+            </div>
+
+            <div className="seo-sticky">
+              <div style={{background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
+                <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Snel handelen?</div>
+                <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Bel direct voor spoedservice. Onze monteurs zijn gemiddeld binnen 30 minuten ter plaatse.</p>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 {PHONE_DISPLAY}</a>
+              </div>
+              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
+                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Andere diensten</div>
+                <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
+                  {lekkageTypes.filter(t => t.slug !== type.slug).map(t => (
+                    <a key={t.slug} href={`/lekkage/dienst/${t.slug}`} style={{display:'flex',alignItems:'center',gap:'0.5rem',color:'var(--muted)',textDecoration:'none',transition:'color 0.2s'}}
+                      onMouseEnter={e => e.currentTarget.style.color='var(--green)'}
+                      onMouseLeave={e => e.currentTarget.style.color='var(--muted)'}
+                    >
+                      <span>{t.icon}</span><span>{t.naam}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -335,7 +384,7 @@ export default function LekkageType({ type }) {
           </div>
           <div className="footer-col">
             <h4>Steden</h4>
-            {topSteden.slice(0,5).map(s => <a key={s.slug} href={`/lekkage/${s.slug}/${type.slug}`}>{s.naam}</a>)}
+            {topSteden.slice(0,5).map(s => <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}>{s.naam}</a>)}
             <a href="#steden">Alle steden →</a>
           </div>
           <div className="footer-col">
