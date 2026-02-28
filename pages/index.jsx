@@ -613,8 +613,6 @@ export default function Homepage() {
           <div className="cert-badges"><span className="cert">VCA ✓</span><span className="cert">ISO 9001</span><span className="cert">Erkend verzekeraar</span></div>
         </div>
       </footer>
-
-      <a href="tel:0800-1234" className="mobile-cta">📞 Bel nu: 0800-1234 (24/7 bereikbaar)</a>
     </>
   )
 }
