@@ -45,7 +45,6 @@ export default function StickyContact() {
           left: 0;
           right: 0;
           z-index: 800;
-          padding: 0.75rem 1rem;
           background: var(--green-dark);
           border-top: 2px solid rgba(255,255,255,0.1);
           box-shadow: 0 -4px 24px rgba(0,0,0,0.2);
@@ -55,8 +54,6 @@ export default function StickyContact() {
         }
         .sticky-mobile-inner {
           display: flex;
-          align-items: center;
-          gap: 0.6rem;
         }
         .sticky-bel {
           flex: 1;
@@ -67,29 +64,15 @@ export default function StickyContact() {
           background: var(--orange);
           color: white;
           text-decoration: none;
-          border-radius: 10px;
-          padding: 0.75rem 1rem;
+          border-radius: 0;
+          padding: 1rem 1.25rem;
           font-weight: 800;
-          font-size: 0.95rem;
-          box-shadow: 0 2px 12px rgba(255,107,0,0.35);
+          font-size: 1rem;
           transition: background 0.2s;
         }
         .sticky-bel:active { background: var(--orange2); }
+        .sticky-wa { display: none; }
         .sticky-bel svg { width: 18px; height: 18px; flex-shrink: 0; }
-        .sticky-wa {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 48px;
-          height: 48px;
-          background: #25D366;
-          color: white;
-          border-radius: 10px;
-          text-decoration: none;
-          flex-shrink: 0;
-          box-shadow: 0 2px 12px rgba(37,211,102,0.35);
-        }
-        .sticky-wa svg { width: 24px; height: 24px; }
         .sticky-pulse {
           display: inline-block;
           width: 8px; height: 8px;
@@ -223,16 +206,6 @@ export default function StickyContact() {
             </svg>
             <span className="sticky-pulse" />
             Bel nu: {PHONE_DISPLAY}
-          </a>
-          <a
-            href={`https://wa.me/31612345678?text=${encodeURIComponent('Hallo LekkageFix, ik heb een vraag.')}`}
-            target="_blank" rel="noopener noreferrer"
-            className="sticky-wa"
-            aria-label="WhatsApp"
-          >
-            <svg viewBox="0 0 32 32" fill="white">
-              <path d="M16 2C8.268 2 2 8.268 2 16c0 2.442.661 4.73 1.812 6.7L2 30l7.52-1.775A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.44 11.44 0 01-5.885-1.624l-.422-.25-4.463 1.053 1.08-4.34-.277-.446A11.46 11.46 0 014.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.538c-.343-.172-2.03-1.002-2.346-1.116-.315-.114-.545-.172-.774.172-.229.344-.887 1.116-1.087 1.345-.2.229-.4.258-.743.086-.343-.172-1.449-.534-2.76-1.704-1.02-.912-1.709-2.036-1.91-2.38-.2-.344-.021-.53.15-.701.154-.154.343-.4.515-.6.171-.2.228-.344.343-.573.114-.229.057-.43-.029-.601-.086-.172-.774-1.867-1.06-2.556-.28-.672-.563-.58-.774-.591l-.658-.011a1.26 1.26 0 00-.916.43c-.315.344-1.202 1.174-1.202 2.864s1.23 3.322 1.401 3.551c.172.229 2.42 3.693 5.863 5.18.82.354 1.46.565 1.959.723.823.261 1.572.224 2.164.136.66-.099 2.03-.83 2.317-1.633.286-.8.286-1.487.2-1.633-.085-.143-.314-.229-.657-.4z"/>
-            </svg>
           </a>
         </div>
       </div>
