@@ -24,17 +24,9 @@ export async function getStaticProps({ params }) {
 }
 
 export default function LekkageType({ type }) {
-  const [search, setSearch] = useState('')
   const [openProv, setOpenProv] = useState({})
   const [submitted, setSubmitted] = useState(false)
   const MAX_VISIBLE = 11
-
-  const filtered = search.trim().length > 1
-    ? steden.filter(s =>
-        s.naam.toLowerCase().includes(search.toLowerCase()) ||
-        s.provincie.toLowerCase().includes(search.toLowerCase())
-      )
-    : []
 
   function toggleProv(prov) {
     setOpenProv(p => ({ ...p, [prov]: !p[prov] }))
@@ -142,34 +134,8 @@ export default function LekkageType({ type }) {
             <div className="form-title">{type.naam} aanvragen</div>
             <div className="form-sub">Gratis & vrijblijvend · we nemen snel contact op</div>
             <div className="fg">
-              <label>Jouw stad</label>
-              <div style={{position:'relative'}}>
-                <input
-                  type="text"
-                  placeholder="Zoek jouw stad..."
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  style={{width:'100%',boxSizing:'border-box'}}
-                />
-                {filtered.length > 0 && (
-                  <div style={{position:'absolute',top:'calc(100% + 4px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'10px',boxShadow:'0 8px 24px rgba(0,0,0,0.12)',zIndex:100,overflow:'hidden'}}>
-                    {filtered.slice(0,5).map(s => (
-                      <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}
-                        style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.65rem 1rem',textDecoration:'none',color:'var(--text)',borderBottom:'1px solid var(--border)',fontSize:'0.85rem'}}
-                        onMouseEnter={e => e.currentTarget.style.background='var(--green3)'}
-                        onMouseLeave={e => e.currentTarget.style.background='white'}>
-                        <span>📍 {s.naam}</span>
-                        <span style={{fontSize:'0.75rem',color:'var(--muted)'}}>{s.provincie}</span>
-                      </a>
-                    ))}
-                  </div>
-                )}
-                {search.trim().length > 1 && filtered.length === 0 && (
-                  <div style={{position:'absolute',top:'calc(100% + 4px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'10px',padding:'0.75rem 1rem',fontSize:'0.85rem',color:'var(--muted)',boxShadow:'0 8px 24px rgba(0,0,0,0.12)',zIndex:100}}>
-                    Niet gevonden — bel ons op {PHONE_DISPLAY}
-                  </div>
-                )}
-              </div>
+              <label>Plaats</label>
+              <input type="text" placeholder="Jouw plaats" />
             </div>
             <div className="form-row">
               <div className="fg"><label>Naam</label><input type="text" placeholder="Jan de Vries" /></div>
