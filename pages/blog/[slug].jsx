@@ -302,8 +302,8 @@ export default function BlogArtikel({ artikel, slug }) {
 
       {/* HERO ARTIKEL */}
       <section style={{background:'var(--green-dark)',padding:'4rem 0 0',position:'relative',overflow:'hidden'}}>
-        <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(circle at 70% 50%, rgba(255,255,255,0.04) 0%, transparent 60%)'}} />
-        <div style={{maxWidth:'1400px',margin:'0 auto',padding:'0 clamp(2rem,6vw,6rem)'}}>
+        <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(circle at 70% 50%, rgba(255,255,255,0.04) 0%, transparent 60%)',pointerEvents:'none'}} />
+        <div style={{maxWidth:'1400px',margin:'0 auto',padding:'0 clamp(2rem,6vw,6rem)',position:'relative',zIndex:1}}>
           <div style={{marginBottom:'1.5rem',display:'flex',alignItems:'center',gap:'0.5rem',flexWrap:'wrap'}}>
             <a href="/" style={{color:'rgba(255,255,255,0.5)',fontSize:'0.82rem',textDecoration:'none',fontWeight:500,padding:'0.4rem 0',minHeight:'44px',display:'inline-flex',alignItems:'center'}}>Home</a>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
