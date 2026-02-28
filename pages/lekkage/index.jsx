@@ -13,6 +13,7 @@ const topSteden = steden.slice(0, 8)
 export default function LekkageIndex() {
   const [search, setSearch] = useState('')
   const [openProv, setOpenProv] = useState({})
+  const [submitted, setSubmitted] = useState(false)
   const MAX_VISIBLE = 11
 
   const filtered = search.trim().length > 1
@@ -120,53 +121,43 @@ export default function LekkageIndex() {
       {/* HERO */}
       <section className="hero">
         <div className="hero-dots" />
-        <div className="hero-inner" style={{gridTemplateColumns:'1fr',maxWidth:'820px',margin:'0 auto',textAlign:'center'}}>
+        <div className="hero-inner">
           <div>
             <div className="hero-badge"><span className="pulse" /> 24/7 bereikbaar · heel Nederland</div>
-            <h1>Lekkage reparatie. <em>snel, vakkundig & gegarandeerd</em></h1>
-            <p className="hero-sub" style={{margin:'0 auto 2rem',maxWidth:'620px'}}>Van daklekkage tot rioolprobleem. onze gecertificeerde vakmensen lossen elk type lekkage op. Gemiddeld binnen 30 minuten ter plaatse, dag en nacht.</p>
-
-            {/* ZOEKBALK */}
-            <div style={{position:'relative',maxWidth:'480px',margin:'0 auto 2rem'}}>
-              <input
-                type="text"
-                placeholder="Zoek op stad of postcode..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                style={{width:'100%',padding:'1rem 1.25rem 1rem 3rem',borderRadius:'50px',border:'2px solid var(--green4)',fontSize:'1rem',fontFamily:'inherit',outline:'none',boxSizing:'border-box',background:'white',boxShadow:'0 4px 16px rgba(0,0,0,0.08)'}}
-              />
-              <span style={{position:'absolute',left:'1.1rem',top:'50%',transform:'translateY(-50%)',fontSize:'1.1rem'}}>🔍</span>
-              {filtered.length > 0 && (
-                <div style={{position:'absolute',top:'calc(100% + 8px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',boxShadow:'0 8px 24px rgba(0,0,0,0.12)',zIndex:100,overflow:'hidden'}}>
-                  {filtered.slice(0,6).map(s => (
-                    <a key={s.slug} href={`/lekkage/${s.slug}`} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.75rem 1.25rem',textDecoration:'none',color:'var(--text)',borderBottom:'1px solid var(--border)',fontSize:'0.9rem',transition:'background 0.15s'}}
-                      onMouseEnter={e => e.currentTarget.style.background='var(--green3)'}
-                      onMouseLeave={e => e.currentTarget.style.background='white'}
-                    >
-                      <span>📍 {s.naam}</span>
-                      <span style={{fontSize:'0.78rem',color:'var(--muted)'}}>{s.provincie}</span>
-                    </a>
-                  ))}
-                  {filtered.length > 6 && <div style={{padding:'0.6rem 1.25rem',fontSize:'0.8rem',color:'var(--muted)',textAlign:'center'}}>{filtered.length - 6} meer resultaten</div>}
-                </div>
-              )}
-              {search.trim().length > 1 && filtered.length === 0 && (
-                <div style={{position:'absolute',top:'calc(100% + 8px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1rem 1.25rem',fontSize:'0.9rem',color:'var(--muted)',boxShadow:'0 8px 24px rgba(0,0,0,0.12)',zIndex:100}}>
-                  Geen resultaten gevonden. Bel ons op {PHONE_DISPLAY}.
-                </div>
-              )}
-            </div>
-
+            <h1>Lekkage reparatie —<br/><em>snel, vakkundig<br/>& gegarandeerd.</em></h1>
+            <p className="hero-sub">Van daklekkage tot rioolprobleem. Onze gecertificeerde vakmensen lossen elk type lekkage op. Gemiddeld binnen 30 minuten ter plaatse, dag en nacht.</p>
             <div className="hero-stats">
               <div className="stat-item"><div className="stat-val">30<sup>min</sup></div><div className="stat-key">Gem. reactie</div></div>
               <div className="stat-item"><div className="stat-val">4.9<sup>★</sup></div><div className="stat-key">Beoordeling</div></div>
               <div className="stat-item"><div className="stat-val">7</div><div className="stat-key">Specialisaties</div></div>
               <div className="stat-item"><div className="stat-val">24<sup>/7</sup></div><div className="stat-key">Bereikbaar</div></div>
             </div>
-            <div className="hero-actions" style={{justifyContent:'center'}}>
+            <div className="hero-actions">
               <a href={`tel:${PHONE}`} className="btn-call">📞 Bel direct: {PHONE_DISPLAY}</a>
               <a href="#diensten" className="btn-ghost">Kies jouw type →</a>
             </div>
+          </div>
+
+          <div className="form-card" id="offerte">
+            <div className="form-title">Vakman aanvragen</div>
+            <div className="form-sub">Gratis & vrijblijvend · we nemen snel contact op</div>
+            <div className="fg">
+              <label>Type lekkage</label>
+              <select>
+                {lekkageTypes.map(t => <option key={t.slug}>{t.naam}</option>)}
+                <option>Weet ik niet zeker</option>
+              </select>
+            </div>
+            <div className="fg"><label>Plaats</label><input type="text" placeholder="Jouw plaats" /></div>
+            <div className="form-row">
+              <div className="fg"><label>Naam</label><input type="text" placeholder="Jan de Vries" /></div>
+              <div className="fg"><label>Telefoon</label><input type="tel" placeholder="06-12345678" /></div>
+            </div>
+            <div className="fg"><label>Omschrijving (optioneel)</label><textarea placeholder="Beschrijf kort het probleem..." /></div>
+            <button className={`btn-form${submitted ? ' ok' : ''}`} onClick={() => setSubmitted(true)}>
+              {submitted ? '✓ Aanvraag ontvangen!' : 'Stuur aanvraag →'}
+            </button>
+            <div className="form-trust"><span>🔒 Veilig</span><span>✓ Geen spam</span><span>⚡ Snelle reactie</span></div>
           </div>
         </div>
       </section>
