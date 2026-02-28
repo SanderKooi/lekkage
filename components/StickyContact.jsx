@@ -15,22 +15,28 @@ export default function StickyContact() {
       if (localStorage.getItem('lf_exit_dismissed')) return
     } catch(e) {}
 
-    // Exit intent: muis verlaat viewport bovenaan (desktop)
-    function handleMouseLeave(e) {
-      if (e.clientY <= 10 && !exitShown.current) {
-        exitShown.current = true
-        setExitVisible(true)
+    // Wacht 10 seconden voordat exit intent actief wordt
+    const activateTimer = setTimeout(() => {
+      function handleMouseLeave(e) {
+        if (e.clientY <= 10 && !exitShown.current) {
+          exitShown.current = true
+          setExitVisible(true)
+        }
       }
-    }
-    document.addEventListener('mouseleave', handleMouseLeave)
+      document.addEventListener('mouseleave', handleMouseLeave)
+      // Cleanup wordt gedaan bij component unmount via de outer return
+      window._lfExitHandler = handleMouseLeave
+    }, 10000)
 
-    // Sluit exit intent na 12s automatisch
     let timer
     if (exitVisible) timer = setTimeout(() => setExitVisible(false), 12000)
 
     return () => {
-      document.removeEventListener('mouseleave', handleMouseLeave)
+      clearTimeout(activateTimer)
       clearTimeout(timer)
+      if (window._lfExitHandler) {
+        document.removeEventListener('mouseleave', window._lfExitHandler)
+      }
     }
   }, [exitVisible])
 
