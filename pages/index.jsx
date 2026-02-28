@@ -130,6 +130,8 @@ export default function Homepage() {
   const [slideLekdetectie, setSlideLekdetectie] = useState(0)
   const trackLekkageRef = useRef(null)
   const trackLekdetectieRef = useRef(null)
+  const touchLekkageX = useRef(0)
+  const touchLekdetectieX = useRef(0)
 
   function goCarousel(slugs, slide, setSlide, trackRef2) {
     const vis = getVisible()
@@ -139,6 +141,17 @@ export default function Homepage() {
     const cardWidth = (wrapWidth - (vis - 1) * GAP) / vis
     trackRef2.current.style.transform = `translateX(-${next * (cardWidth + GAP)}px)`
     setSlide(next)
+  }
+
+  function handleTouchStartLekkage(e) { touchLekkageX.current = e.touches[0].clientX }
+  function handleTouchEndLekkage(e) {
+    const diff = touchLekkageX.current - e.changedTouches[0].clientX
+    if (Math.abs(diff) > 50) goCarousel(lekkageSteden, slideLekkage + (diff > 0 ? 1 : -1), setSlideLekkage, trackLekkageRef)
+  }
+  function handleTouchStartLekdetectie(e) { touchLekdetectieX.current = e.touches[0].clientX }
+  function handleTouchEndLekdetectie(e) {
+    const diff = touchLekdetectieX.current - e.changedTouches[0].clientX
+    if (Math.abs(diff) > 50) goCarousel(lekdetectieSteden, slideLekdetectie + (diff > 0 ? 1 : -1), setSlideLekdetectie, trackLekdetectieRef)
   }
 
   function getVisible() {
@@ -387,7 +400,7 @@ export default function Homepage() {
               </button>
             </div>
           </div>
-          <div className="carousel-wrap">
+          <div className="carousel-wrap" onTouchStart={handleTouchStartLekkage} onTouchEnd={handleTouchEndLekkage}>
             <div className="carousel-track" ref={trackLekkageRef} style={{transform:'translateX(0)'}}>
               {lekkageSteden.map(slug => {
                 const s = alleSteden.find(x => x.slug === slug)
@@ -402,6 +415,11 @@ export default function Homepage() {
                 )
               })}
             </div>
+          </div>
+          <div className="carousel-footer">
+            {lekkageSteden.map((_, i) => (
+              <button key={i} className={`carousel-dot${slideLekkage === i ? ' active' : ''}`} onClick={() => goCarousel(lekkageSteden, i, setSlideLekkage, trackLekkageRef)} aria-label={`Stad ${i + 1}`} />
+            ))}
           </div>
         </div>
       </section>
@@ -423,7 +441,7 @@ export default function Homepage() {
               </button>
             </div>
           </div>
-          <div className="carousel-wrap">
+          <div className="carousel-wrap" onTouchStart={handleTouchStartLekdetectie} onTouchEnd={handleTouchEndLekdetectie}>
             <div className="carousel-track" ref={trackLekdetectieRef} style={{transform:'translateX(0)'}}>
               {lekdetectieSteden.map(slug => {
                 const s = alleSteden.find(x => x.slug === slug)
@@ -438,6 +456,11 @@ export default function Homepage() {
                 )
               })}
             </div>
+          </div>
+          <div className="carousel-footer">
+            {lekdetectieSteden.map((_, i) => (
+              <button key={i} className={`carousel-dot${slideLekdetectie === i ? ' active' : ''}`} onClick={() => goCarousel(lekdetectieSteden, i, setSlideLekdetectie, trackLekdetectieRef)} aria-label={`Stad ${i + 1}`} />
+            ))}
           </div>
         </div>
       </section>
