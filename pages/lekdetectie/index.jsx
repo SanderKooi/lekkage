@@ -10,9 +10,10 @@ const EMAIL = 'info@lekkagefix.nl'
 const provincies = [...new Set(steden.map(s => s.provincie))].sort()
 const topSteden = steden.slice(0, 8)
 
-export default function LekdetectieIndex() {
+export default function LekkageIndex() {
   const [search, setSearch] = useState('')
   const [openProv, setOpenProv] = useState({})
+  const [submitted, setSubmitted] = useState(false)
   const MAX_VISIBLE = 11
 
   const filtered = search.trim().length > 1
@@ -30,15 +31,16 @@ export default function LekdetectieIndex() {
   return (
     <>
       <Head>
-        <title>Lekdetectie Nederland – Lek Opsporen Zonder Sloopwerk | LekkageFix</title>
-        <meta name="description" content="Professionele lekdetectie door heel Nederland. Wij vinden de exacte locatie van jouw lekkage met thermische camera, akoestische detectie en tracergas. zonder sloopwerk. 24/7 bereikbaar." />
+        <title>Lekkage Reparatie Nederland – Alle Diensten & Steden | LekkageFix</title>
+        <meta name="description" content="Lekkage reparatie in heel Nederland. Daklekkage, waterleiding, badkamer, riool, vocht, gevel of kelder. gecertificeerde vakmensen, gemiddeld 30 min ter plaatse. Gratis offerte." />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href="https://lekkagefix.nl/lekdetectie" />
-        <meta property="og:title" content="Lekdetectie Nederland – Lek Opsporen Zonder Sloopwerk | LekkageFix" />
-        <meta property="og:description" content="Professionele lekdetectie in heel Nederland. 95% zonder sloopwerk. 24/7 bereikbaar." />
-        <meta property="og:url" content="https://lekkagefix.nl/lekdetectie" />
+        <link rel="canonical" href="https://lekkagefix.nl/lekkage" />
+        <meta property="og:title" content="Lekkage Reparatie Nederland – Alle Diensten | LekkageFix" />
+        <meta property="og:description" content="Lekkage reparatie in heel Nederland. 7 specialisaties, 130 steden, 24/7 bereikbaar." />
+        <meta property="og:url" content="https://lekkagefix.nl/lekkage" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <style>{`[id] { scroll-margin-top: 90px; }`}</style>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@graph": [
@@ -52,101 +54,110 @@ export default function LekdetectieIndex() {
               "openingHours": "Mo-Su 00:00-24:00",
               "priceRange": "€€",
               "areaServed": { "@type": "Country", "name": "Netherlands" },
-              "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "2847", "bestRating": "5" },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "2847",
+                "bestRating": "5"
+              },
               "review": [
-                { "@type": "Review", "author": { "@type": "Person", "name": "Joost H." }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "reviewBody": "Waterleiding lek in de muur. LekkageFix vond het met tracergas zonder ook maar één tegel te breken. Professioneel en snel.", "datePublished": "2025-02-14" },
-                { "@type": "Review", "author": { "@type": "Person", "name": "Petra L." }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "reviewBody": "Lekdetectie via thermische camera. binnen 30 minuten wisten we exact waar het lek zat. Andere bedrijven wilden direct slopen.", "datePublished": "2025-02-03" },
-                { "@type": "Review", "author": { "@type": "Person", "name": "Frank D." }, "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }, "reviewBody": "Camera-inspectie van het riool gaf direct duidelijkheid. Helder rapport, eerlijke offerte. Aanrader voor iedereen met lekkageproblemen.", "datePublished": "2025-01-28" }
+                {
+                  "@type": "Review",
+                  "author": { "@type": "Person", "name": "Martijn V." },
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                  "reviewBody": "Al maanden last van een druipend plafond na regen. LekkageFix vond het lek binnen 20 minuten. een losse dakpan én gescheurde nokbedekking. Dezelfde dag gerepareerd.",
+                  "datePublished": "2025-02-10"
+                },
+                {
+                  "@type": "Review",
+                  "author": { "@type": "Person", "name": "Sandra K." },
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                  "reviewBody": "Plat dak van onze uitbouw lekte al twee winters. Twee andere bedrijven hadden het niet gevonden. LekkageFix traceerde het naar een verkeerd afgedichte dakdoorvoer. Eindelijk droog!",
+                  "datePublished": "2025-01-24"
+                },
+                {
+                  "@type": "Review",
+                  "author": { "@type": "Person", "name": "Karin M." },
+                  "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                  "reviewBody": "Gesprongen leiding in de muur. LekkageFix vond de oorzaak snel zonder onnodig sloopwerk. Netjes afgedicht en opgeruimd. Aanrader!",
+                  "datePublished": "2025-02-17"
+                }
               ]
             },
             {
               "@type": "BreadcrumbList",
               "itemListElement": [
                 { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lekkagefix.nl" },
-                { "@type": "ListItem", "position": 2, "name": "Lekdetectie", "item": "https://lekkagefix.nl/lekdetectie" }
+                { "@type": "ListItem", "position": 2, "name": "Lekkage reparatie", "item": "https://lekkagefix.nl/lekkage" }
               ]
             },
             {
               "@type": "Service",
-              "name": "Lekdetectie Nederland",
+              "name": "Lekkage reparatie Nederland",
               "provider": { "@id": "https://lekkagefix.nl/#business" },
               "areaServed": { "@type": "Country", "name": "Netherlands" },
-              "description": "Professionele lekdetectie met thermische camera, akoestische detectie en tracergas. zonder sloopwerk.",
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
-                "name": "Lekdetectie methoden",
-                "itemListElement": [
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Thermische camera detectie" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Akoestische lekdetectie" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tracergas detectie" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Camera-inspectie riool" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Druktest leidingen" } }
-                ]
+                "name": "Lekkage reparatie diensten",
+                "itemListElement": lekkageTypes.map(t => ({
+                  "@type": "Offer",
+                  "itemOffered": { "@type": "Service", "name": t.naam, "description": t.omschrijving }
+                }))
               }
             }
           ]
         }) }} />
       </Head>
-      <Nav activePath="/lekdetectie" />
+      <Nav activePath="/lekkage" />
 
       {/* BREADCRUMB */}
       <div className="breadcrumb-bar">
         <div className="breadcrumb">
           <a href="/">Home</a><span className="breadcrumb-sep">›</span>
-          <span>Lekdetectie</span>
+          <span>Lekkage reparatie</span>
         </div>
       </div>
 
       {/* HERO */}
       <section className="hero">
         <div className="hero-dots" />
-        <div className="hero-inner" style={{gridTemplateColumns:'1fr',maxWidth:'820px',margin:'0 auto',textAlign:'center'}}>
+        <div className="hero-inner">
           <div>
-            <div className="hero-badge"><span className="pulse" /> Zonder sloopwerk · heel Nederland</div>
-            <h1>Lekdetectie. <em>lek opsporen zonder hak- en breekwerk</em></h1>
-            <p className="hero-sub" style={{margin:'0 auto 2rem',maxWidth:'620px'}}>Wij vinden de exacte locatie van jouw lekkage met geavanceerde detectieapparatuur. Thermische camera, akoestische detectie en tracergas. 95% van alle lekken opgespoord zonder ook maar één tegel te breken.</p>
-
-            {/* ZOEKBALK */}
-            <div style={{position:'relative',maxWidth:'480px',margin:'0 auto 2rem'}}>
-              <input
-                type="text"
-                placeholder="Zoek op stad of postcode..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                style={{width:'100%',padding:'1rem 1.25rem 1rem 3rem',borderRadius:'50px',border:'2px solid var(--green4)',fontSize:'1rem',fontFamily:'inherit',outline:'none',boxSizing:'border-box',background:'white',boxShadow:'0 4px 16px rgba(0,0,0,0.08)'}}
-              />
-              <span style={{position:'absolute',left:'1.1rem',top:'50%',transform:'translateY(-50%)',fontSize:'1.1rem'}}>🔍</span>
-              {filtered.length > 0 && (
-                <div style={{position:'absolute',top:'calc(100% + 8px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',boxShadow:'0 8px 24px rgba(0,0,0,0.12)',zIndex:100,overflow:'hidden'}}>
-                  {filtered.slice(0,6).map(s => (
-                    <a key={s.slug} href={`/lekdetectie/${s.slug}`} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0.75rem 1.25rem',textDecoration:'none',color:'var(--text)',borderBottom:'1px solid var(--border)',fontSize:'0.9rem',transition:'background 0.15s'}}
-                      onMouseEnter={e => e.currentTarget.style.background='var(--green3)'}
-                      onMouseLeave={e => e.currentTarget.style.background='white'}
-                    >
-                      <span>📍 {s.naam}</span>
-                      <span style={{fontSize:'0.78rem',color:'var(--muted)'}}>{s.provincie}</span>
-                    </a>
-                  ))}
-                  {filtered.length > 6 && <div style={{padding:'0.6rem 1.25rem',fontSize:'0.8rem',color:'var(--muted)',textAlign:'center'}}>{filtered.length - 6} meer resultaten</div>}
-                </div>
-              )}
-              {search.trim().length > 1 && filtered.length === 0 && (
-                <div style={{position:'absolute',top:'calc(100% + 8px)',left:0,right:0,background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1rem 1.25rem',fontSize:'0.9rem',color:'var(--muted)',boxShadow:'0 8px 24px rgba(0,0,0,0.12)',zIndex:100}}>
-                  Geen resultaten gevonden. Bel ons op {PHONE_DISPLAY}.
-                </div>
-              )}
-            </div>
-
+            <div className="hero-badge"><span className="pulse" /> 24/7 bereikbaar · heel Nederland</div>
+            <h1>Lekkage reparatie —<br/><em>snel, vakkundig<br/>& gegarandeerd.</em></h1>
+            <p className="hero-sub">Van daklekkage tot rioolprobleem. Onze gecertificeerde vakmensen lossen elk type lekkage op. Gemiddeld binnen 30 minuten ter plaatse, dag en nacht.</p>
             <div className="hero-stats">
-              <div className="stat-item"><div className="stat-val">95<sup>%</sup></div><div className="stat-key">Zonder sloop</div></div>
+              <div className="stat-item"><div className="stat-val">30<sup>min</sup></div><div className="stat-key">Gem. reactie</div></div>
               <div className="stat-item"><div className="stat-val">4.9<sup>★</sup></div><div className="stat-key">Beoordeling</div></div>
-              <div className="stat-item"><div className="stat-val">130<sup>+</sup></div><div className="stat-key">Steden</div></div>
+              <div className="stat-item"><div className="stat-val">7</div><div className="stat-key">Specialisaties</div></div>
               <div className="stat-item"><div className="stat-val">24<sup>/7</sup></div><div className="stat-key">Bereikbaar</div></div>
             </div>
-            <div className="hero-actions" style={{justifyContent:'center'}}>
+            <div className="hero-actions">
               <a href={`tel:${PHONE}`} className="btn-call">📞 Bel direct: {PHONE_DISPLAY}</a>
-              <a href="#steden" className="btn-ghost">Kies jouw stad →</a>
+              <a href="#diensten" className="btn-ghost">Kies jouw type →</a>
             </div>
+          </div>
+
+          <div className="form-card" id="offerte">
+            <div className="form-title">Vakman aanvragen</div>
+            <div className="form-sub">Gratis & vrijblijvend · we nemen snel contact op</div>
+            <div className="fg">
+              <label>Type lekkage</label>
+              <select>
+                {lekkageTypes.map(t => <option key={t.slug}>{t.naam}</option>)}
+                <option>Weet ik niet zeker</option>
+              </select>
+            </div>
+            <div className="fg"><label>Plaats</label><input type="text" placeholder="Jouw plaats" /></div>
+            <div className="form-row">
+              <div className="fg"><label>Naam</label><input type="text" placeholder="Jan de Vries" /></div>
+              <div className="fg"><label>Telefoon</label><input type="tel" placeholder="06-12345678" /></div>
+            </div>
+            <div className="fg"><label>Omschrijving (optioneel)</label><textarea placeholder="Beschrijf kort het probleem..." /></div>
+            <button className={`btn-form${submitted ? ' ok' : ''}`} onClick={() => setSubmitted(true)}>
+              {submitted ? '✓ Aanvraag ontvangen!' : 'Stuur aanvraag →'}
+            </button>
+            <div className="form-trust"><span>🔒 Veilig</span><span>✓ Geen spam</span><span>⚡ Snelle reactie</span></div>
           </div>
         </div>
       </section>
@@ -155,35 +166,29 @@ export default function LekdetectieIndex() {
       <div className="trust-bar">
         <div className="trust-inner">
           <div className="ti-item"><span className="ti-check">✓</span><span>Gemiddeld <strong>30 min</strong> ter plaatse</span></div>
-          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Geen</strong> sloopwerk nodig</span></div>
+          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Garantie</strong> op al het werk</span></div>
           <div className="ti-item"><span className="ti-check">✓</span><span><strong>Erkend</strong> door verzekeraars</span></div>
-          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Gedetailleerde</strong> rapportage</span></div>
+          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Transparante</strong> prijzen</span></div>
           <div className="ti-item"><span className="ti-check">✓</span><span><strong>24/7</strong> bereikbaar</span></div>
         </div>
       </div>
 
-      {/* METHODEN */}
-      <section className="section" id="methoden">
+      {/* DIENSTEN */}
+      <section className="section" id="diensten">
         <div className="section-inner">
           <div className="sec-head-center">
-            <div className="eyebrow">Detectiemethoden</div>
-            <h2>Lekdetectie <em>zonder sloopwerk</em></h2>
-            <p className="sec-sub">Met drie geavanceerde methoden vinden we 95% van alle lekken zonder ook maar één tegel te breken.</p>
+            <div className="eyebrow">Specialisaties</div>
+            <h2>Elk type lekkage <em>opgelost</em></h2>
+            <p className="sec-sub">Kies jouw type lekkage voor gedetailleerde informatie, prijzen en een overzicht van steden waar wij actief zijn.</p>
           </div>
           <div className="svc-grid">
-            {[
-              { icon:'🌡️', naam:'Thermische camera', omschrijving:'Warmtebeeldcamera\'s detecteren temperatuurverschillen door vocht achter muren en vloeren. volledig non-destructief en direct zichtbaar.' },
-              { icon:'🔊', naam:'Akoestische detectie', omschrijving:'Geavanceerde luisterapparatuur vangt het geluid van stromend water op, zelfs diep in de muur of onder de vloer.' },
-              { icon:'🧪', naam:'Tracergas detectie', omschrijving:'Een onschadelijk gas in de leiding ontsnapt op de lekplek. een detector vindt exact de positie aan de oppervlakte.' },
-              { icon:'📋', naam:'Lekrapportage', omschrijving:'Na elke detectie ontvangt je een gedetailleerd rapport met foto\'s en bevindingen. direct bruikbaar voor de verzekering.' },
-              { icon:'💧', naam:'Druktest leidingen', omschrijving:'Met een druktest bepalen we snel of er een lekkage in jouw leidingnet aanwezig is en hoe groot die is.' },
-              { icon:'📷', naam:'Camera-inspectie riool', omschrijving:'Een HD-camera rijdt door jouw riolering en toont live de staat van de leidingen. verzakking, wortelindringing en scheuren.' },
-            ].map(m => (
-              <div key={m.naam} className="svc" style={{cursor:'default'}}>
-                <div className="svc-icon">{m.icon}</div>
-                <h3>{m.naam}</h3>
-                <p>{m.omschrijving}</p>
-              </div>
+            {lekkageTypes.map(t => (
+              <a key={t.slug} href={`/lekkage/dienst/${t.slug}`} className="svc">
+                <div className="svc-icon">{t.icon}</div>
+                <h3>{t.naam}</h3>
+                <p>{t.omschrijving}</p>
+                <div className="svc-cta">Meer over {t.naam.toLowerCase()} →</div>
+              </a>
             ))}
           </div>
         </div>
@@ -194,30 +199,22 @@ export default function LekdetectieIndex() {
         <div className="section-inner">
           <div className="sec-head-center">
             <div className="eyebrow">Werkwijze</div>
-            <h2>Van melding tot <em>rapport</em> in 4 stappen</h2>
-            <p className="sec-sub">Helder en transparant. zo pakt LekkageFix een lekdetectie aan.</p>
+            <h2>Van melding tot <em>oplossing</em></h2>
+            <p className="sec-sub">Helder en transparant. zo lossen we elk lekkageprobleem op.</p>
           </div>
           <div className="steps">
-            <div className="step">
-              <div className="step-num">1</div>
-              <h3>Melding</h3>
-              <p>Bel of stuur een aanvraag. We bespreken jouw situatie en plannen een afspraak in op een tijdstip dat jou uitkomt.</p>
-            </div>
-            <div className="step">
-              <div className="step-num">2</div>
-              <h3>Specialist ter plaatse</h3>
-              <p>Een gecertificeerde lekdetectie-specialist komt naar je toe met professionele apparatuur. Gemiddeld binnen 30 minuten.</p>
-            </div>
-            <div className="step">
-              <div className="step-num">3</div>
-              <h3>Detectie zonder sloopwerk</h3>
-              <p>Met thermische camera, akoestische detectie of tracergas vinden we 95% van alle lekken zonder één tegel te breken.</p>
-            </div>
-            <div className="step">
-              <div className="step-num">4</div>
-              <h3>Rapport & advies</h3>
-              <p>Je ontvangt een gedetailleerd inspectierapport met foto's, exacte locatie en aanbeveling. Direct bruikbaar voor de verzekering.</p>
-            </div>
+            {[
+              {n:'1',t:'Melding',p:'Bel of stuur een aanvraag. We bespreken het probleem en plannen direct een afspraak in.'},
+              {n:'2',t:'Vakman onderweg',p:'De dichtstbijzijnde gecertificeerde monteur rijdt naar je toe. Gemiddeld binnen 30 minuten.'},
+              {n:'3',t:'Inspectie & offerte',p:'Grondige inspectie met moderne detectieapparatuur. Transparante prijsopgave vooraf. geen verrassingen.'},
+              {n:'4',t:'Opgelost & gegarandeerd',p:'Vakkundige reparatie met garantie op het werk. Netjes opgeruimd achtergelaten.'},
+            ].map(s => (
+              <div key={s.n} className="step">
+                <div className="step-num">{s.n}</div>
+                <h3>{s.t}</h3>
+                <p>{s.p}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -227,7 +224,7 @@ export default function LekdetectieIndex() {
         <div className="section-inner">
           <div className="sec-head-center">
             <div className="eyebrow">Klantervaringen</div>
-            <h2>Wat klanten zeggen over <em>lekdetectie</em></h2>
+            <h2>Wat klanten zeggen over <em>LekkageFix</em></h2>
           </div>
           <div className="reviews-summary" style={{marginBottom:'2rem'}}>
             <div className="rating-big">
@@ -247,9 +244,9 @@ export default function LekdetectieIndex() {
           </div>
           <div className="reviews-grid">
             {[
-              { naam:'Joost H.', stad:'Utrecht', tekst:'Waterleiding lek in de muur. LekkageFix vond het met tracergas zonder ook maar één tegel te breken. Professioneel en snel.', datum:'2 weken geleden' },
-              { naam:'Petra L.', stad:'Haarlem', tekst:'Lekdetectie via thermische camera. binnen 30 minuten wisten we exact waar het lek zat. Andere bedrijven wilden direct slopen.', datum:'3 weken geleden' },
-              { naam:'Frank D.', stad:'Rotterdam', tekst:'Camera-inspectie van het riool gaf direct duidelijkheid. Helder rapport, eerlijke offerte. Aanrader voor iedereen met lekkageproblemen.', datum:'1 maand geleden' },
+              { naam:'Martijn V.', stad:'Amsterdam', tekst:'Al maanden last van een druipend plafond na regen. LekkageFix vond het lek binnen 20 minuten. een losse dakpan én gescheurde nokbedekking. Dezelfde dag gerepareerd.', datum:'2 weken geleden' },
+              { naam:'Sandra K.', stad:'Rotterdam', tekst:'Plat dak van onze uitbouw lekte al twee winters. Twee andere bedrijven hadden het niet gevonden. LekkageFix traceerde het naar een verkeerd afgedichte dakdoorvoer. Eindelijk droog!', datum:'1 maand geleden' },
+              { naam:'Karin M.', stad:'Den Haag', tekst:'Gesprongen leiding in de muur. LekkageFix vond de oorzaak snel zonder onnodig sloopwerk. Netjes afgedicht en opgeruimd. Aanrader!', datum:'1 week geleden' },
             ].map((r, i) => (
               <div key={i} className="review">
                 <div className="review-top"><div className="stars">★★★★★</div><div className="review-date">{r.datum}</div></div>
@@ -269,8 +266,8 @@ export default function LekdetectieIndex() {
         <div className="section-inner">
           <div className="sec-head-center">
             <div className="eyebrow">Werkgebied</div>
-            <h2>Lekdetectie per <em>stad</em></h2>
-            <p className="sec-sub">Klik op jouw stad voor specifieke informatie en een directe aanvraag.</p>
+            <h2>Lekkage reparatie in <em>jouw stad</em></h2>
+            <p className="sec-sub">Wij zijn actief in 130+ steden door heel Nederland. Selecteer jouw stad voor lokale informatie en direct een vakman aanvragen.</p>
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:'2rem'}}>
             {provincies.map(prov => {
@@ -279,23 +276,29 @@ export default function LekdetectieIndex() {
               const visible = isOpen ? provSteden : provSteden.slice(0, MAX_VISIBLE)
               const hasMore = !isOpen && provSteden.length > MAX_VISIBLE
               return (
-                <div key={prov}>
+                <div key={prov} id={prov.toLowerCase().replace(/\s+/g, '-')}>
                   <h3 style={{fontSize:'0.82rem',fontWeight:700,color:'var(--green-dark)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:'0.85rem',paddingBottom:'0.5rem',borderBottom:'2px solid var(--green4)'}}>📍 {prov}</h3>
                   <div className="steden-grid">
                     {visible.map(s => (
-                      <a key={s.slug} href={`/lekdetectie/${s.slug}`} className="stad-a">
+                      <a key={s.slug} href={`/lekkage/${s.slug}`} className="stad-a">
                         <span>{s.naam}</span><span className="stad-arrow">→</span>
                       </a>
                     ))}
                     {hasMore && (
-                      <button onClick={() => toggleProv(prov)} className="stad-a"
-                        style={{background:'var(--green4)',border:'1.5px solid var(--green)',cursor:'pointer',fontFamily:'inherit',fontWeight:600,color:'var(--green-dark)',justifyContent:'center',gap:'0.4rem'}}>
+                      <button
+                        onClick={() => toggleProv(prov)}
+                        className="stad-a"
+                        style={{background:'var(--green4)',border:'1.5px solid var(--green)',cursor:'pointer',fontFamily:'inherit',fontWeight:600,color:'var(--green-dark)',justifyContent:'center',gap:'0.4rem'}}
+                      >
                         <span>+{provSteden.length - MAX_VISIBLE} meer</span><span className="stad-arrow">▼</span>
                       </button>
                     )}
                     {isOpen && provSteden.length > MAX_VISIBLE && (
-                      <button onClick={() => toggleProv(prov)} className="stad-a"
-                        style={{background:'var(--green4)',border:'1.5px solid var(--green)',cursor:'pointer',fontFamily:'inherit',fontWeight:600,color:'var(--green-dark)',justifyContent:'center',gap:'0.4rem'}}>
+                      <button
+                        onClick={() => toggleProv(prov)}
+                        className="stad-a"
+                        style={{background:'var(--green4)',border:'1.5px solid var(--green)',cursor:'pointer',fontFamily:'inherit',fontWeight:600,color:'var(--green-dark)',justifyContent:'center',gap:'0.4rem'}}
+                      >
                         <span>Minder tonen</span><span className="stad-arrow">▲</span>
                       </button>
                     )}
@@ -312,33 +315,68 @@ export default function LekdetectieIndex() {
         <div className="section-inner">
           <div className="seo-grid">
             <div className="seo-block">
-              <div className="eyebrow">Lekdetectie informatie</div>
-              <h2 style={{marginBottom:'1.5rem'}}>Lekdetectie: <em>alles wat je moet weten</em></h2>
+              <div className="eyebrow">Lekkage informatie</div>
+              <h2 style={{marginBottom:'1.5rem'}}>Lekkage reparatie: <em>alles wat je moet weten</em></h2>
 
-              <h3>Wat is lekdetectie en wanneer heeft je het nodig?</h3>
-              <p>Lekdetectie is het professioneel opsporen van de exacte locatie van een lekkage met behulp van geavanceerde apparatuur. Je heeft lekdetectie nodig als de oorzaak van jouw lekkage niet zichtbaar is. water reist namelijk langs constructies en wordt zichtbaar op een plek die soms meters verwijderd is van het werkelijke lek. Zonder detectie wordt er onnodig gesloopt of wordt de verkeerde plek gerepareerd.</p>
+              <h3>Wat is een lekkage en wanneer moet je handelen?</h3>
+              <p>Een lekkage is ongecontroleerde waterindringing in jouw woning of gebouw. Van een klein druppeltje op het plafond tot een ondergelopen kelder. elke lekkage vraagt om snelle actie. Water richt in korte tijd aanzienlijke schade aan: houtrot, schimmelvorming, verzwakking van constructies en schade aan interieur. Hoe eerder je ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
 
-              <h3>Lekdetectie zonder sloopwerk: hoe werkt het?</h3>
-              <p>Moderne lekdetectie is volledig non-destructief. Met een thermische camera meten we temperatuurverschillen in muren en vloeren. vochtige plekken zijn koeler en direct zichtbaar op het scherm. Akoestische detectieapparatuur 'hoort' het geluid van stromend water door muren heen. Bij leidinglekkages gebruiken we tracergas: een onschadelijke gasmix die via het leidingnet ontsnapt op de lekplek en door een detector aan de oppervlakte wordt gevonden. In 95% van de gevallen vinden we het lek zonder ook maar één tegel te verwijderen.</p>
+              <h3>De 7 meest voorkomende typen lekkages in Nederland</h3>
+              <p>In Nederland komen zeven typen lekkages het meest voor, elk met een eigen oorzaak en aanpak:</p>
+              <ul>
+                {lekkageTypes.map(t => <li key={t.slug}><strong>{t.naam}</strong>. {t.omschrijving}</li>)}
+              </ul>
 
-              <h3>Lekdetectie kosten en verzekering</h3>
-              <p>De kosten voor lekdetectie variëren van € 150 tot € 450 afhankelijk van de methode en de complexiteit. Bij LekkageFix ontvangt je altijd een transparante offerte vooraf. Veel verzekeringen vergoeden de detectiekosten als onderdeel van de waterschadeclaim. wij stellen een gedetailleerd rapport op dat je direct kunt indienen bij jouw verzekeraar. We zijn erkend door alle grote Nederlandse verzekeraars.</p>
+              <h3>Lekkage reparatie kosten: wat kunt je verwachten?</h3>
+              <p>De kosten van lekkage reparatie variëren sterk per type en omvang. Een eenvoudige kitrand vervangen kost tussen de € 80 en € 200. Een daklekkage reparatie begint vanaf € 75 voor een losse dakpan tot € 1.500 of meer voor gedeeltelijke dakbedekking. Rioollekken en kelderwaterdichting zijn de meest kostbare reparaties. Bij LekkageFix ontvangt je altijd een transparante offerte vooraf. volledig vrijblijvend en zonder verborgen kosten.</p>
 
-              <h3>Lekdetectie in jouw regio</h3>
-              <p>LekkageFix is actief in meer dan 130 steden door heel Nederland. Onze specialisten zijn gelijkmatig verspreid over het land zodat we gemiddeld binnen 30 minuten bij je zijn. Van Groningen tot Zeeland, van Utrecht tot de Randstad. er is altijd een gecertificeerde lekdetectie specialist in jouw buurt beschikbaar.</p>
+              <div className="price-table">
+                <table>
+                  <thead><tr><th scope="col">Type lekkage</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                  <tbody>
+                    {[
+                      ['Daklekkage reparatie','€ 75 – € 1.500','30 min'],
+                      ['Waterleiding reparatie','€ 60 – € 1.200','30 min'],
+                      ['Badkamer dichting','€ 80 – € 2.500','30 min'],
+                      ['Riool inspectie & reparatie','€ 150 – € 4.000','30 min'],
+                      ['Vochtbehandeling','€ 100 – € 2.000','30 min'],
+                      ['Gevel reparatie','€ 100 – € 3.000','30 min'],
+                      ['Kelderwaterdichting','€ 200 – € 12.000','30 min'],
+                      ['Volledige inspectie + offerte','Gratis','30 min'],
+                    ].map(([r,p,t], i, arr) => (
+                      <tr key={i} className={i === arr.length-1 ? 'highlight-row' : ''}>
+                        <td>{i === arr.length-1 ? <strong>{r}</strong> : r}</td>
+                        <td>{p}</td><td>{t}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="table-note">* Prijzen zijn indicatief en afhankelijk van type, omvang en locatie. Definitieve prijs na inspectie.</p>
+              </div>
+
+              <h3>Lekkage en jouw verzekering</h3>
+              <p>Of jouw verzekering de schade vergoedt hangt af van de oorzaak en jouw polisvoorwaarden. Plotselinge schade door storm, extreme neerslag of gesprongen leidingen valt doorgaans onder de opstalverzekering. Slijtage, achterstallig onderhoud of geleidelijke lekkages worden vrijwel nooit vergoed. LekkageFix is erkend door alle grote Nederlandse verzekeraars en stelt gedetailleerde rapporten op die je direct kunt gebruiken voor jouw schadeclaim.</p>
+
+              <h3>Waarom kiezen voor LekkageFix?</h3>
+              <p>Met meer dan 12.000 opgeloste lekkages en een gemiddelde beoordeling van 4.9 sterren is LekkageFix de meest gekozen lekkage specialist van Nederland. Onze monteurs zijn VCA-gecertificeerd, werken met de nieuwste detectieapparatuur en geven garantie op al het uitgevoerde werk. Dag en nacht bereikbaar, gemiddeld binnen 30 minuten ter plaatse.</p>
             </div>
 
             <div className="seo-sticky">
               <div style={{background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
                 <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Snel handelen?</div>
-                <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Bel direct voor spoedservice. Onze specialisten zijn gemiddeld binnen 30 minuten ter plaatse.</p>
+                <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Bel direct voor spoedservice. Onze monteurs zijn gemiddeld binnen 30 minuten ter plaatse.</p>
                 <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 {PHONE_DISPLAY}</a>
               </div>
               <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
-                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Onze detectiemethoden</div>
+                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Onze specialisaties</div>
                 <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
-                  {['🌡️ Thermische camera','🔊 Akoestische detectie','🧪 Tracergas','📷 Camera-inspectie riool','💧 Druktest leidingen','📋 Lekrapportage'].map((m,i) => (
-                    <span key={i}>✓ {m}</span>
+                  {lekkageTypes.map(t => (
+                    <a key={t.slug} href={`/lekkage/dienst/${t.slug}`} style={{display:'flex',alignItems:'center',gap:'0.5rem',color:'var(--muted)',textDecoration:'none',transition:'color 0.2s'}}
+                      onMouseEnter={e => e.currentTarget.style.color='var(--green)'}
+                      onMouseLeave={e => e.currentTarget.style.color='var(--muted)'}
+                    >
+                      <span>{t.icon}</span><span>{t.naam}</span>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -350,11 +388,11 @@ export default function LekdetectieIndex() {
       {/* BOTTOM CTA */}
       <div className="bottom-cta">
         <div className="eyebrow" style={{color:'#a8e6c0'}}>Direct geholpen</div>
-        <h2 style={{color:'white'}}>Lek opsporen? Wacht niet te lang.</h2>
-        <p>Hoe eerder we het lek vinden, hoe kleiner de schade. Onze specialisten staan voor je klaar.</p>
+        <h2 style={{color:'white'}}>Lekkage? Wacht niet te lang.</h2>
+        <p>Hoe eerder je belt, hoe kleiner de schade. Onze vakmensen staan dag en nacht voor je klaar.</p>
         <div className="cta-btns">
           <a href={`tel:${PHONE}`} className="btn-call">📞 Bel nu: {PHONE_DISPLAY}</a>
-          <a href="#steden" className="btn-white-ghost">Kies jouw stad</a>
+          <a href="#diensten" className="btn-white-ghost">Gratis offerte aanvragen</a>
         </div>
       </div>
 
@@ -363,16 +401,15 @@ export default function LekdetectieIndex() {
         <div className="footer-top">
           <div>
             <div className="footer-logo">Lekkage<b>Fix</b></div>
-            <p className="footer-desc">Vakkundige lekdetectie door heel Nederland. Gecertificeerde specialisten, transparante prijzen, garantie op werk.</p>
+            <p className="footer-desc">Vakkundige lekkage reparaties door heel Nederland. Gecertificeerde vakmensen, transparante prijzen, garantie op werk.</p>
           </div>
           <div className="footer-col">
             <h4>Diensten</h4>
-            <a href="/lekdetectie">Lekdetectie</a>
-            {lekkageTypes.slice(0,3).map(t => <a key={t.slug} href={`/lekkage/dienst/${t.slug}`}>{t.naam}</a>)}
+            {lekkageTypes.map(t => <a key={t.slug} href={`/lekkage/dienst/${t.slug}`}>{t.naam}</a>)}
           </div>
           <div className="footer-col">
             <h4>Steden</h4>
-            {topSteden.slice(0,5).map(s => <a key={s.slug} href={`/lekdetectie/${s.slug}`}>{s.naam}</a>)}
+            {topSteden.slice(0,5).map(s => <a key={s.slug} href={`/lekkage/${s.slug}`}>{s.naam}</a>)}
             <a href="#steden">Alle steden →</a>
           </div>
           <div className="footer-col">
