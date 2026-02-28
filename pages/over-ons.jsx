@@ -68,6 +68,13 @@ export default function OverOns() {
         <meta property="og:url" content="https://lekkagefix.nl/over-ons" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <style>{`
+          @media (max-width: 900px) {
+            .hero-inner { grid-template-columns: 1fr !important; }
+            .verhaal-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+            .stats-grid  { grid-template-columns: 1fr 1fr !important; }
+          }
+        `}</style>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }} />
       </Head>
 
@@ -108,7 +115,7 @@ export default function OverOns() {
 
       {/* VERHAAL */}
       <section className="section section-white">
-        <div className="section-inner" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'4rem',alignItems:'center'}}>
+        <div className="section-inner verhaal-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'4rem',alignItems:'center'}}>
           <div>
             <div className="eyebrow">Ons verhaal</div>
             <h2>Vakmanschap dat <em>je kunt vertrouwen</em></h2>
@@ -122,7 +129,7 @@ export default function OverOns() {
               Inmiddels helpen we meer dan 12.000 klanten per jaar — van spoedgevallen midden in de nacht tot geplande inspecties voor woningverkoop. Maar de aanpak is altijd hetzelfde: snel, transparant en met garantie.
             </p>
           </div>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
+          <div className="stats-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
             {[
               { num: '2010', label: 'Opgericht' },
               { num: '12+', label: 'Specialisten' },
