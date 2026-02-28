@@ -8,9 +8,11 @@ export default function WhatsAppButton() {
   const [tooltip, setTooltip] = useState(true)
 
   useEffect(() => {
-    // Toon pas na 1.5s zodat het niet meteen op de pagina verschijnt
     const t = setTimeout(() => setVisible(true), 1500)
-    // Verberg tooltip na 5s automatisch
+    // Check of tooltip al eerder weggeklikt is
+    try {
+      if (localStorage.getItem('lf_wa_tooltip_dismissed')) setTooltip(false)
+    } catch(e) {}
     const t2 = setTimeout(() => setTooltip(false), 6000)
     return () => { clearTimeout(t); clearTimeout(t2) }
   }, [])
@@ -126,7 +128,10 @@ export default function WhatsAppButton() {
 
         {tooltip && (
           <div className="wa-tooltip" style={{position:'relative'}}>
-            <button className="wa-close" onClick={() => setTooltip(false)}>✕</button>
+            <button className="wa-close" onClick={() => {
+          setTooltip(false)
+          try { localStorage.setItem('lf_wa_tooltip_dismissed', '1') } catch(e) {}
+        }}>✕</button>
             <strong>Chat via WhatsApp</strong>
             <span>Snel antwoord op je vraag</span>
           </div>
