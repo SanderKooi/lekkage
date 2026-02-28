@@ -174,9 +174,7 @@ export default function StickyContact() {
           gap: 0.25rem;
         }
 
-        @media (max-width: 768px) {
-          .exit-overlay { display: none; }
-        }
+        
 
         @keyframes s-ping {
           0%, 100% { opacity: 1; transform: scale(1); }
