@@ -209,7 +209,7 @@ export default function StickyContact() {
             <button className="exit-close" onClick={dismissExit} aria-label="Sluiten">✕</button>
             <span className="exit-icon">💧</span>
             <h2>Nog een lekkage<br/><em>vraag?</em></h2>
-            <p>Onze specialisten staan direct klaar. Bel ons en we zijn gemiddeld binnen 30 minuten ter plaatse, dag en nacht.</p>
+            <p>Onze specialisten staan direct klaar. Bel ons en we zijn gemiddeld binnen 30 minuten ter plaatse.</p>
             <div className="exit-btns">
               <a href={`tel:${PHONE}`} className="exit-btn-call" onClick={dismissExit}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.92a16 16 0 0 0 5.61 5.61l1.27-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16z"/></svg>
