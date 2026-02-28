@@ -10,9 +10,14 @@ export default function StickyContact() {
   const exitShown = useRef(false)
 
   useEffect(() => {
+    // Check of popup al eerder weggeklikt is
+    try {
+      if (localStorage.getItem('lf_exit_dismissed')) return
+    } catch(e) {}
+
     // Exit intent: muis verlaat viewport bovenaan (desktop)
     function handleMouseLeave(e) {
-      if (e.clientY <= 10 && !exitShown.current && !dismissed) {
+      if (e.clientY <= 10 && !exitShown.current) {
         exitShown.current = true
         setExitVisible(true)
       }
@@ -27,11 +32,12 @@ export default function StickyContact() {
       document.removeEventListener('mouseleave', handleMouseLeave)
       clearTimeout(timer)
     }
-  }, [exitVisible, dismissed])
+  }, [exitVisible])
 
   function dismissExit() {
     setExitVisible(false)
     setDismissed(true)
+    try { localStorage.setItem('lf_exit_dismissed', '1') } catch(e) {}
   }
 
   return (
