@@ -304,11 +304,12 @@ export default function BlogArtikel({ artikel, slug }) {
       <section style={{background:'var(--green-dark)',padding:'4rem 0 0',position:'relative',overflow:'hidden'}}>
         <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(circle at 70% 50%, rgba(255,255,255,0.04) 0%, transparent 60%)'}} />
         <div style={{maxWidth:'1400px',margin:'0 auto',padding:'0 clamp(2rem,6vw,6rem)'}}>
-          <div style={{marginBottom:'1.5rem'}}>
-            <a href="/blog" style={{color:'rgba(255,255,255,0.6)',fontSize:'0.82rem',textDecoration:'none',fontWeight:500,display:'inline-flex',alignItems:'center',gap:'0.4rem'}}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-              Terug naar blog
-            </a>
+          <div style={{marginBottom:'1.5rem',display:'flex',alignItems:'center',gap:'0.5rem',flexWrap:'wrap'}}>
+            <a href="/" style={{color:'rgba(255,255,255,0.5)',fontSize:'0.82rem',textDecoration:'none',fontWeight:500,padding:'0.4rem 0',minHeight:'44px',display:'inline-flex',alignItems:'center'}}>Home</a>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <a href="/blog" style={{color:'rgba(255,255,255,0.7)',fontSize:'0.82rem',textDecoration:'none',fontWeight:600,padding:'0.4rem 0',minHeight:'44px',display:'inline-flex',alignItems:'center'}}>Blog</a>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <span style={{color:'rgba(255,255,255,0.9)',fontSize:'0.82rem',fontWeight:600,maxWidth:'200px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{artikel.categorie}</span>
           </div>
           <span style={{background:'rgba(255,255,255,0.12)',color:'white',fontSize:'0.72rem',fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',padding:'0.3rem 0.75rem',borderRadius:'20px',display:'inline-block',marginBottom:'1rem'}}>{artikel.categorie}</span>
           <h1 style={{color:'white',fontSize:'clamp(1.75rem,4vw,2.75rem)',fontWeight:800,lineHeight:1.2,maxWidth:'760px',marginBottom:'1.25rem'}}>{artikel.titel}</h1>
