@@ -9,6 +9,7 @@ const EMAIL = 'info@lekkagefix.nl'
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
   const [form, setForm] = useState({ naam: '', telefoon: '', email: '', onderwerp: '', bericht: '' })
+  const [openFaq, setOpenFaq] = useState(null)
 
   function handleChange(e) {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }))
@@ -162,12 +163,14 @@ export default function Contact() {
           <div className="faq-grid">
             {[
               { v: 'Hoe snel reageren jullie op een bericht?', a: 'Op werkdagen reageren we binnen 2 uur. Voor spoed raden we aan te bellen — we zijn 24/7 bereikbaar.' },
-              { v: 'Kan ik ook \'s nachts bellen?', a: 'Ja. Ons noodnummer is dag en nacht bereikbaar, ook in het weekend en op feestdagen.' },
+              { v: "Kan ik ook 's nachts bellen?", a: 'Ja. Ons noodnummer is dag en nacht bereikbaar, ook in het weekend en op feestdagen.' },
               { v: 'Hoe vraag ik een offerte aan?', a: 'Vul het contactformulier in of bel ons direct. We sturen een transparante offerte, altijd voordat we beginnen.' },
-              { v: 'In welke regio\'s zijn jullie actief?', a: 'We zijn actief door heel Nederland. Met specialisten in elke provincie zijn we snel bij je in de buurt.' },
+              { v: "In welke regio's zijn jullie actief?", a: 'We zijn actief door heel Nederland. Met specialisten in elke provincie zijn we snel bij je in de buurt.' },
             ].map((f, i) => (
-              <div key={i} className="faq-item open">
-                <div className="faq-q">{f.v}</div>
+              <div key={i} className={`faq-item${openFaq === i ? ' open' : ''}`}>
+                <div className="faq-q" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                  {f.v} <span className="faq-arrow">▼</span>
+                </div>
                 <div className="faq-a">{f.a}</div>
               </div>
             ))}
