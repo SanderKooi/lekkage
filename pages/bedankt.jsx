@@ -41,8 +41,6 @@ export default function Bedankt() {
           <p>© 2025 LekkageFix · <a href="#">Privacy</a> · <a href="#">Voorwaarden</a></p>
         </div>
       </footer>
-
-      <a href={`tel:${PHONE}`} className="mobile-cta">📞 Bel nu: {PHONE_DISPLAY} (24/7 bereikbaar)</a>
     </>
   )
 }
