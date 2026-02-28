@@ -341,7 +341,7 @@ export default function Nav({ activePath }) {
                   href={item.href}
                   className={`nav-item-link${
                     item.key === 'lekkage'
-                      ? activePath === '/lekkage' || activePath?.startsWith('/lekkage/') && !activePath?.startsWith('/lekdetectie')
+                      ? (activePath === '/lekkage' || (activePath?.startsWith('/lekkage/') && !activePath?.startsWith('/lekdetectie')))
                         ? ' active' : ''
                       : activePath?.startsWith(item.href) ? ' active' : ''
                   }${openMenu === item.key ? ' open' : ''}`}
