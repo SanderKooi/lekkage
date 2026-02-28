@@ -339,7 +339,12 @@ export default function Nav({ activePath }) {
               >
                 <a
                   href={item.href}
-                  className={`nav-item-link${activePath?.startsWith(item.href) ? ' active' : ''}${openMenu === item.key ? ' open' : ''}`}
+                  className={`nav-item-link${
+                    item.key === 'lekkage'
+                      ? activePath === '/lekkage' || activePath?.startsWith('/lekkage/') && !activePath?.startsWith('/lekdetectie')
+                        ? ' active' : ''
+                      : activePath?.startsWith(item.href) ? ' active' : ''
+                  }${openMenu === item.key ? ' open' : ''}`}
                   onMouseEnter={() => item.dropdown && cancelClose()}
                 >
                   {item.label}
