@@ -45,6 +45,7 @@ export default function StickyContact() {
           left: 0;
           right: 0;
           z-index: 800;
+          padding: 0.6rem 0.75rem;
           background: var(--green-dark);
           border-top: 2px solid rgba(255,255,255,0.1);
           box-shadow: 0 -4px 24px rgba(0,0,0,0.2);
@@ -61,16 +62,16 @@ export default function StickyContact() {
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          background: var(--green-dark);
+          background: var(--orange);
           color: white;
           text-decoration: none;
-          border-radius: 0;
-          padding: 1rem 1.25rem;
+          border-radius: 10px;
+          padding: 0.75rem 1rem;
           font-weight: 800;
           font-size: 1rem;
           transition: background 0.2s;
         }
-        .sticky-bel:active { background: var(--green); }
+        .sticky-bel:active { background: var(--orange2); }
         .sticky-wa { display: none; }
         .sticky-bel svg { width: 18px; height: 18px; flex-shrink: 0; }
         .sticky-pulse {
