@@ -1,4 +1,4 @@
-export const steden = [ 
+export const steden = [
   // Noord-Holland
   { naam: 'Amsterdam', slug: 'amsterdam', provincie: 'Noord-Holland', lat: 52.3676, lon: 4.9041, woningtype: 'grachtenpanden en jaren-30 woningen', inwoners: '921.000', fact: 'Door de hoge grondwaterstand en oude bebouwing komen lekkages in Amsterdam vaker voor dan gemiddeld.' },
   { naam: 'Haarlem', slug: 'haarlem', provincie: 'Noord-Holland', lat: 52.3874, lon: 4.6462, woningtype: 'historische binnenstad en jaren-20 rijtjeswoningen', inwoners: '163.000', fact: 'Veel woningen in Haarlem hebben oude loden leidingen die gevoelig zijn voor lekkage.' },
