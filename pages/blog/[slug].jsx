@@ -305,14 +305,26 @@ export default function BlogArtikel({ artikel, slug }) {
         <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(circle at 70% 50%, rgba(255,255,255,0.04) 0%, transparent 60%)'}} />
         <div style={{maxWidth:'1400px',margin:'0 auto',padding:'0 clamp(2rem,6vw,6rem)'}}>
           <div style={{marginBottom:'1.5rem'}}>
-            <a href="/blog" style={{color:'rgba(255,255,255,0.6)',fontSize:'0.82rem',textDecoration:'none',fontWeight:500}}>← Terug naar blog</a>
+            <a href="/blog" style={{color:'rgba(255,255,255,0.6)',fontSize:'0.82rem',textDecoration:'none',fontWeight:500,display:'inline-flex',alignItems:'center',gap:'0.4rem'}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              Terug naar blog
+            </a>
           </div>
           <span style={{background:'rgba(255,255,255,0.12)',color:'white',fontSize:'0.72rem',fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',padding:'0.3rem 0.75rem',borderRadius:'20px',display:'inline-block',marginBottom:'1rem'}}>{artikel.categorie}</span>
           <h1 style={{color:'white',fontSize:'clamp(1.75rem,4vw,2.75rem)',fontWeight:800,lineHeight:1.2,maxWidth:'760px',marginBottom:'1.25rem'}}>{artikel.titel}</h1>
           <div style={{display:'flex',alignItems:'center',gap:'1.5rem',marginBottom:'2.5rem',flexWrap:'wrap'}}>
-            <span style={{color:'rgba(255,255,255,0.7)',fontSize:'0.82rem'}}>✍️ {artikel.auteur}</span>
-            <span style={{color:'rgba(255,255,255,0.7)',fontSize:'0.82rem'}}>📅 {artikel.datum}</span>
-            <span style={{color:'rgba(255,255,255,0.7)',fontSize:'0.82rem'}}>⏱ {artikel.leestijd} lezen</span>
+            <span style={{color:'rgba(255,255,255,0.7)',fontSize:'0.82rem',display:'flex',alignItems:'center',gap:'0.4rem'}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              {artikel.auteur}
+            </span>
+            <span style={{color:'rgba(255,255,255,0.7)',fontSize:'0.82rem',display:'flex',alignItems:'center',gap:'0.4rem'}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              {artikel.datum}
+            </span>
+            <span style={{color:'rgba(255,255,255,0.7)',fontSize:'0.82rem',display:'flex',alignItems:'center',gap:'0.4rem'}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              {artikel.leestijd} lezen
+            </span>
           </div>
         </div>
         <div style={{maxWidth:'1400px',margin:'0 auto',padding:'0 clamp(2rem,6vw,6rem)'}}>
@@ -356,7 +368,7 @@ export default function BlogArtikel({ artikel, slug }) {
                 <div style={{color:'#a8e6c0',fontSize:'0.8rem',fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:'0.5rem'}}>Direct geholpen</div>
                 <h3 style={{color:'white',fontSize:'1.25rem',marginBottom:'0.75rem'}}>Heb je een lekkage?</h3>
                 <p style={{color:'rgba(255,255,255,0.75)',fontSize:'0.88rem',marginBottom:'1.25rem'}}>Onze specialisten staan klaar. Gemiddeld binnen 30 minuten ter plaatse.</p>
-                <a href={`tel:${PHONE}`} className="btn-call" style={{justifyContent:'center'}}>📞 Bel direct: {PHONE_DISPLAY}</a>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{justifyContent:'center'}}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:"0.4rem"}}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.92a16 16 0 0 0 5.61 5.61l1.27-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>Bel direct: {PHONE_DISPLAY}</a>
               </div>
             </div>
 
@@ -378,7 +390,7 @@ export default function BlogArtikel({ artikel, slug }) {
               <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.25rem',marginTop:'1rem'}}>
                 <div style={{fontWeight:700,fontSize:'0.85rem',marginBottom:'0.4rem'}}>Spoed nodig?</div>
                 <p style={{fontSize:'0.78rem',color:'var(--muted)',marginBottom:'0.85rem',lineHeight:1.6}}>Gemiddeld binnen 30 min ter plaatse. 24/7 bereikbaar.</p>
-                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.82rem',background:'var(--orange)'}}>📞 {PHONE_DISPLAY}</a>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.82rem',background:'var(--orange)'}}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:'0.4rem'}}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.92a16 16 0 0 0 5.61 5.61l1.27-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>{PHONE_DISPLAY}</a>
               </div>
 
               {/* GERELATEERDE ARTIKELEN */}
@@ -402,7 +414,7 @@ export default function BlogArtikel({ artikel, slug }) {
         <h2 style={{color:'white'}}>Lekkage? Wacht niet te lang.</h2>
         <p>Hoe eerder je belt, hoe kleiner de schade.</p>
         <div className="cta-btns">
-          <a href={`tel:${PHONE}`} className="btn-call">📞 Bel nu: {PHONE_DISPLAY}</a>
+          <a href={`tel:${PHONE}`} className="btn-call"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:"0.4rem"}}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.92a16 16 0 0 0 5.61 5.61l1.27-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>Bel nu: {PHONE_DISPLAY}</a>
           <a href="/contact" className="btn-white-ghost">Gratis offerte aanvragen</a>
         </div>
       </div>
@@ -436,7 +448,7 @@ export default function BlogArtikel({ artikel, slug }) {
         </div>
       </footer>
 
-      <a href={`tel:${PHONE}`} className="mobile-cta">📞 Bel nu: {PHONE_DISPLAY} (24/7 bereikbaar)</a>
+      <a href={`tel:${PHONE}`} className="mobile-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:"0.4rem"}}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.92a16 16 0 0 0 5.61 5.61l1.27-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>Bel nu: {PHONE_DISPLAY} (24/7 bereikbaar)</a>
     </>
   )
 }
