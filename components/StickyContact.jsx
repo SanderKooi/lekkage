@@ -61,7 +61,7 @@ export default function StickyContact() {
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          background: var(--orange);
+          background: var(--green-dark);
           color: white;
           text-decoration: none;
           border-radius: 0;
@@ -70,7 +70,7 @@ export default function StickyContact() {
           font-size: 1rem;
           transition: background 0.2s;
         }
-        .sticky-bel:active { background: var(--orange2); }
+        .sticky-bel:active { background: var(--green); }
         .sticky-wa { display: none; }
         .sticky-bel svg { width: 18px; height: 18px; flex-shrink: 0; }
         .sticky-pulse {
