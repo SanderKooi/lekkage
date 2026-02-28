@@ -46,8 +46,16 @@ export default function LekdetectieStad({ stad }) {
         <title>{title}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={`https://lekkagefix.nl/lekdetectie/${stad.slug}`} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <style>{`
+          .ld-intro-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3.5rem; align-items: start; }
+          @media (max-width: 900px) {
+            .ld-intro-grid { grid-template-columns: 1fr !important; gap: 2rem; }
+            .kaart-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@graph": [
@@ -114,7 +122,7 @@ export default function LekdetectieStad({ stad }) {
 
       <section className="section">
         <div className="section-inner">
-          <div style={{display:'grid',gridTemplateColumns:'1.2fr 1fr',gap:'3.5rem',alignItems:'start'}}>
+          <div className="ld-intro-grid">
             <div>
               <div className="eyebrow">Lekdetectie in {stad.naam}</div>
               <h2>Lek opsporen in {stad.naam} — <em>zonder sloopwerk</em></h2>
