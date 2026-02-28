@@ -108,7 +108,7 @@ export default function LekkageIndex() {
           ]
         }) }} />
       </Head>
-      <Nav activePath="/lekkage" />
+      <Nav activePath="/lekdetectie" />
 
       {/* BREADCRUMB */}
       <div className="breadcrumb-bar">
