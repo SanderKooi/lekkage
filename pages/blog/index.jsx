@@ -74,24 +74,12 @@ export default function BlogArchief() {
       <Nav activePath="/blog" />
 
       {/* HERO */}
-      <section className="hero" style={{paddingBottom:'3rem'}}>
-        <div className="hero-dots" />
-        <div className="hero-inner" style={{gridTemplateColumns:'1fr',maxWidth:'720px',margin:'0 auto',textAlign:'center'}}>
-          <div>
-            <div className="hero-badge">Kennisbank</div>
-            <h1>Tips & uitleg over <em>lekkages</em></h1>
-            <p className="hero-sub" style={{maxWidth:'540px',margin:'0 auto'}}>Alles wat je wilt weten over lekkages — van eerste hulp bij wateroverlast tot het herkennen van vochtproblemen en je verzekering.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* TRUST BAR */}
-      <div className="trust-bar">
-        <div className="trust-inner">
-          <div className="ti-item"><span className="ti-check">✓</span><span>Geschreven door <strong>specialisten</strong></span></div>
-          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Praktische</strong> tips</span></div>
-          <div className="ti-item"><span className="ti-check">✓</span><span>Altijd <strong>actueel</strong></span></div>
-          <div className="ti-item"><span className="ti-check">✓</span><span>Gratis <strong>advies</strong> bij vragen</span></div>
+      <div style={{background:'var(--green-dark)',padding:'4rem 0 3rem',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(circle at 70% 50%, rgba(255,255,255,0.04) 0%, transparent 60%)'}} />
+        <div style={{maxWidth:'1400px',margin:'0 auto',padding:'0 clamp(2rem,6vw,6rem)',position:'relative'}}>
+          <span style={{background:'rgba(255,255,255,0.12)',color:'white',fontSize:'0.72rem',fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',padding:'0.3rem 0.75rem',borderRadius:'20px',display:'inline-block',marginBottom:'1.25rem'}}>Kennisbank</span>
+          <h1 style={{color:'white',fontSize:'clamp(2rem,5vw,3.25rem)',fontWeight:800,lineHeight:1.15,maxWidth:'640px',marginBottom:'1rem'}}>Tips & uitleg over <em style={{color:'#a8e6c0'}}>lekkages</em></h1>
+          <p style={{color:'rgba(255,255,255,0.72)',fontSize:'1rem',lineHeight:1.75,maxWidth:'520px',margin:0}}>Alles wat je wilt weten over lekkages — van eerste hulp bij wateroverlast tot het herkennen van vochtproblemen en je verzekering.</p>
         </div>
       </div>
 
