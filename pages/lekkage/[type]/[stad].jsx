@@ -735,8 +735,6 @@ export default function LekkageTypeStad({ type, stad }) {
           <div className="cert-badges"><span className="cert">VCA ✓</span><span className="cert">ISO 9001</span><span className="cert">Erkend verzekeraar</span></div>
         </div>
       </footer>
-
-      <a href={`tel:${PHONE}`} className="mobile-cta">📞 Bel nu: {PHONE_DISPLAY} (24/7 bereikbaar)</a>
     </>
   )
 }
