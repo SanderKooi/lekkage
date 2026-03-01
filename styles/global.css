@@ -1,382 +1,668 @@
-/* ============================================
-   LekkageFix – Global Stylesheet
-   Importeer in elke pagina via:
-   import '../styles/global.css'
-   (of '../../styles/global.css' voor subpagina's)
-   ============================================ */
+import Head from 'next/head'
+import Nav from '../../../components/Nav'
+import { useState } from 'react'
+import { steden, lekkageTypes, getType } from '../../../data'
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+const PHONE = '0800-1234'
+const PHONE_DISPLAY = '0800-1234'
+const EMAIL = 'info@lekkagefix.nl'
 
-:root{
-  --bg:#f4f7f4;
-  --bg2:#ffffff;
-  --green:#1a7a4a;
-  --green2:#22924f;
-  --green3:#e8f5ee;
-  --green4:#d0ebda;
-  --green-dark:#145c38;
-  --orange:#e8520a;
-  --orange2:#d4480a;
-  --text:#1a2e1a;
-  --muted:#4a6352;
-  --muted2:#7a9482;
-  --border:#ddeae2;
-  --font:'Outfit',sans-serif;
-  --radius:10px;
+const provincies = [...new Set(steden.map(s => s.provincie))].sort()
+const topSteden = steden.slice(0, 8)
+
+export async function getStaticPaths() {
+  return {
+    paths: lekkageTypes.map(t => ({ params: { type: t.slug } })),
+    fallback: false
+  }
 }
 
-html{scroll-behavior:smooth}
-body{font-family:var(--font);background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.5}
-
-/* ── NAVIGATIE ── */
-nav{position:sticky;top:0;z-index:100;background:var(--green-dark);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem);height:66px;box-shadow:0 2px 16px rgba(20,92,56,0.3)}
-.logo{font-size:1.4rem;font-weight:800;letter-spacing:-0.03em;color:white;text-decoration:none;display:flex;align-items:center;gap:0.4rem}
-.logo-icon{background:white;color:var(--green-dark);width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.9rem}
-.logo b{color:#a8e6c0}
-.nav-right{display:flex;align-items:center;gap:2rem}
-.nav-link{color:rgba(255,255,255,0.75);font-size:0.88rem;font-weight:500;text-decoration:none;transition:color 0.2s}
-.nav-link:hover{color:white}
-.nav-phone{display:flex;align-items:center;gap:0.5rem;background:var(--orange);color:white;padding:0.5rem 1.3rem;border-radius:var(--radius);font-weight:700;font-size:0.9rem;text-decoration:none;transition:background 0.2s}
-.nav-phone:hover{background:var(--orange2)}
-
-/* ── BREADCRUMB ── */
-.breadcrumb-bar{background:var(--green3);border-bottom:1px solid var(--green4)}
-.breadcrumb{max-width:1200px;margin:0 auto;padding:0.7rem clamp(1rem,4vw,3rem);font-size:0.78rem;color:var(--muted);display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap}
-.breadcrumb a{color:var(--green);text-decoration:none;font-weight:500}
-.breadcrumb a:hover{text-decoration:underline}
-.breadcrumb-sep{color:var(--muted2)}
-
-/* ── HERO BASIS ── */
-.hero{background:linear-gradient(150deg,var(--green-dark) 0%,var(--green) 60%,#2a9e60 100%);padding:clamp(3rem,6vw,5rem) clamp(1rem,5vw,3rem);position:relative;overflow:hidden}
-.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:60px;background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%)}
-.hero-dots{position:absolute;top:0;right:0;bottom:0;width:50%;background-image:radial-gradient(rgba(255,255,255,0.06) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
-.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:4rem;align-items:start;position:relative;z-index:1}
-
-/* Hero badge varianten */
-.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:white;padding:0.4rem 1rem;border-radius:100px;font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:1.25rem}
-.hero-badge-urgency{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(232,82,10,0.2);border:1px solid rgba(232,82,10,0.4);color:#ffb494;padding:0.4rem 1rem;border-radius:100px;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:1.1rem}
-
-/* Pulse animatie */
-.pulse{width:7px;height:7px;background:#a8e6c0;border-radius:50%;animation:pulse 1.6s infinite;display:inline-block}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.4)}}
-
-/* Hero tekst */
-h1{font-size:clamp(2.4rem,4.5vw,3.8rem);font-weight:900;line-height:1.07;letter-spacing:-0.04em;color:white;margin-bottom:1.2rem}
-h1 em{font-style:normal;color:#a8e6c0}
-.hero-sub{color:rgba(255,255,255,0.8);font-size:1.05rem;line-height:1.75;margin-bottom:2.25rem;max-width:500px}
-.hero-icon{font-size:3.5rem;margin-bottom:0.75rem;display:block}
-
-/* Hero stats balk */
-.hero-stats{display:flex;gap:0;margin-bottom:2.5rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:12px;overflow:hidden}
-.stat-item{flex:1;padding:1.1rem 1rem;text-align:center;border-right:1px solid rgba(255,255,255,0.1)}
-.stat-item:last-child{border-right:none}
-.stat-val{font-size:1.8rem;font-weight:800;color:white;line-height:1}
-.stat-val sup{font-size:0.85rem;color:#a8e6c0;font-weight:700}
-.stat-key{font-size:0.65rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.07em;margin-top:0.2rem}
-
-/* Hero knoppen */
-.hero-actions{display:flex;gap:0.9rem;flex-wrap:wrap}
-.btn-call{display:inline-flex;align-items:center;gap:0.6rem;background:var(--orange);color:white;padding:0.9rem 1.8rem;border-radius:var(--radius);font-weight:700;font-size:1rem;text-decoration:none;transition:all 0.2s;box-shadow:0 4px 20px rgba(232,82,10,0.4);border:none;cursor:pointer;font-family:var(--font)}
-.btn-call:hover{background:var(--orange2);transform:translateY(-2px)}
-.btn-ghost{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.12);color:white;padding:0.9rem 1.8rem;border-radius:var(--radius);font-weight:600;font-size:1rem;border:1px solid rgba(255,255,255,0.25);cursor:pointer;text-decoration:none;transition:all 0.2s;font-family:var(--font)}
-.btn-ghost:hover{background:rgba(255,255,255,0.2)}
-
-/* ── FORMULIER ── */
-.form-card{background:white;border-radius:16px;padding:2rem;box-shadow:0 24px 60px rgba(0,0,0,0.2);position:relative;overflow:hidden}
-.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--orange))}
-.form-title{font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:0.2rem}
-.form-sub{font-size:0.82rem;color:var(--muted);margin-bottom:1.25rem}
-.fg{margin-bottom:0.8rem}
-.fg label{display:block;font-size:0.75rem;color:var(--muted);margin-bottom:0.3rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
-.fg input,.fg select,.fg textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;color:var(--text);font-family:var(--font);font-size:0.9rem;outline:none;transition:border-color 0.2s}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green);background:white}
-.fg textarea{resize:vertical;min-height:60px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
-.btn-form{width:100%;background:var(--green);color:white;padding:0.9rem;border-radius:var(--radius);font-weight:700;font-size:0.95rem;border:none;cursor:pointer;font-family:var(--font);margin-top:0.25rem;transition:all 0.2s;box-shadow:0 4px 16px rgba(26,122,74,0.25)}
-.btn-form:hover{background:var(--green2);transform:translateY(-1px)}
-.btn-form.ok{background:#15803d}
-.form-trust{display:flex;justify-content:center;gap:1.25rem;margin-top:0.85rem;flex-wrap:wrap}
-.form-trust span{font-size:0.72rem;color:var(--muted);display:flex;align-items:center;gap:0.3rem}
-
-/* ── TRUST BAR ── */
-.trust-bar{background:var(--green3);border-bottom:2px solid var(--green4);padding:1rem clamp(1rem,5vw,3rem)}
-.trust-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:center;gap:clamp(1rem,3vw,3rem);flex-wrap:wrap}
-.ti-item{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;font-weight:500;color:var(--muted)}
-.ti-item strong{color:var(--green-dark)}
-.ti-check{width:20px;height:20px;background:var(--green);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;flex-shrink:0}
-
-/* ── SECTIES ── */
-.section{padding:5rem clamp(1rem,5vw,3rem)}
-.section-inner{max-width:1200px;margin:0 auto}
-.section-alt{background:var(--green3);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.section-white{background:white;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.eyebrow{font-size:0.72rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem}
-h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;letter-spacing:-0.03em;line-height:1.15;color:var(--text)}
-h2 em{font-style:normal;color:var(--green)}
-.sec-sub{color:var(--muted);margin-top:0.65rem;font-size:0.95rem;max-width:560px;line-height:1.7}
-.sec-head{margin-bottom:2.75rem}
-.sec-head-center{text-align:center;margin-bottom:2.75rem}
-.sec-head-center .sec-sub{margin-left:auto;margin-right:auto}
-
-/* ── WERKWIJZE STAPPEN ── */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;position:relative}
-.steps::before{content:'';position:absolute;top:24px;left:calc(12.5% + 12px);right:calc(12.5% + 12px);height:2px;background:linear-gradient(90deg,var(--green),var(--orange));z-index:0}
-.step{text-align:center;position:relative;z-index:1}
-.step-num{width:48px;height:48px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;margin:0 auto 1rem;border:3px solid var(--bg);box-shadow:0 0 0 3px var(--green)}
-.step h3{font-weight:700;font-size:0.95rem;margin-bottom:0.5rem;color:var(--text)}
-.step p{color:var(--muted);font-size:0.82rem;line-height:1.65}
-
-/* ── CARROUSEL ── */
-.carousel-wrap{overflow:hidden;margin:2rem 0 1.25rem;touch-action:pan-y;cursor:grab;user-select:none}
-.carousel-wrap:active{cursor:grabbing}
-.carousel-track{display:flex;gap:1.25rem;transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);will-change:transform}
-.carousel-card{flex:0 0 calc((100% - 2 * 1.25rem) / 3);min-width:0;text-decoration:none;color:inherit;display:flex;flex-direction:column;background:white;border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;transition:all 0.2s}
-.carousel-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,122,74,0.1)}
-.carousel-card h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
-.carousel-card p{font-size:0.85rem;color:var(--muted);line-height:1.6;flex:1}
-.carousel-nav-top{display:flex;gap:0.5rem;flex-shrink:0;align-items:center}
-.carousel-controls{display:flex;align-items:center;justify-content:center;gap:1rem}
-.carousel-btn{width:46px;height:46px;border-radius:50%;border:2px solid var(--green4);background:var(--green3);color:var(--green-dark);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;box-shadow:0 2px 8px rgba(26,122,74,0.12);padding:0}
-.carousel-btn:hover:not(:disabled){background:var(--green4);border-color:var(--green);transform:scale(1.08)}
-.carousel-btn:disabled{opacity:0.25;cursor:default;box-shadow:none}
-.carousel-footer{display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:1.5rem}
-.carousel-dots{display:flex;gap:0.5rem}
-.carousel-dot{width:8px;height:8px;border-radius:50%;border:none;background:var(--border);cursor:pointer;padding:0;transition:all 0.25s}
-.carousel-dot.active{background:var(--green);width:24px;border-radius:4px}
-@media(max-width:900px){
-  .carousel-card{flex:0 0 calc((100% - 1.25rem) / 2)}
-  .carousel-nav-top{display:none}
-}
-@media(max-width:580px){
-  .carousel-card{flex:0 0 100%}
-}
-.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-.review{background:white;border:1.5px solid var(--border);border-radius:14px;padding:1.75rem;transition:all 0.25s}
-.review:hover{border-color:var(--green);box-shadow:0 8px 32px rgba(26,122,74,0.12)}
-.review-top{display:flex;justify-content:space-between;align-items:start;margin-bottom:0.9rem}
-.stars{color:#f59e0b;font-size:0.9rem}
-.review-date{font-size:0.72rem;color:var(--muted2)}
-.review-text{color:var(--muted);font-size:0.87rem;line-height:1.75;margin-bottom:1.25rem}
-.reviewer{display:flex;align-items:center;gap:0.75rem}
-.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--green-dark),var(--green2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;color:white;flex-shrink:0}
-.rev-name{font-weight:600;font-size:0.87rem;color:var(--text)}
-.rev-meta{font-size:0.72rem;color:var(--muted2)}
-.verified{color:var(--green);font-size:0.7rem;font-weight:600}
-
-/* ── FAQ ── */
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;max-width:1000px;margin:0 auto}
-.faq-item{background:white;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.2s}
-.faq-item.open{border-color:var(--green)}
-.faq-q{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.1rem 1.3rem;cursor:pointer;font-weight:600;font-size:0.9rem;color:var(--text);transition:color 0.2s;list-style:none}
-.faq-q:hover,.faq-item.open .faq-q{color:var(--green)}
-.faq-arrow{font-size:0.75rem;transition:transform 0.2s;color:var(--muted);flex-shrink:0}
-.faq-item.open .faq-arrow{transform:rotate(180deg)}
-.faq-a{display:none;padding:0 1.3rem 1.1rem;color:var(--muted);font-size:0.85rem;line-height:1.75;border-top:1px solid var(--border)}
-.faq-item.open .faq-a{display:block}
-
-/* ── STEDEN CARDS (homepage) ── */
-.cities-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-.city-card{background:white;border:1.5px solid var(--border);border-radius:14px;padding:1.5rem 1.25rem;text-decoration:none;color:var(--text);transition:all 0.25s;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:0.4rem}
-.city-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--green2));transform:scaleX(0);transform-origin:left;transition:transform 0.25s}
-.city-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 32px rgba(26,122,74,0.12)}
-.city-card:hover::before{transform:scaleX(1)}
-.city-name{font-size:1rem;font-weight:700}
-.city-prov{font-size:0.75rem;color:var(--muted)}
-.city-tags{display:flex;gap:0.35rem;flex-wrap:wrap;margin-top:0.2rem}
-.city-tag{background:var(--green3);color:var(--green-dark);font-size:0.67rem;font-weight:600;padding:0.2rem 0.55rem;border-radius:100px}
-.city-arrow{margin-top:auto;padding-top:0.75rem;color:var(--green);font-size:0.78rem;font-weight:700}
-
-/* ── STEDEN LINKS (type/stad pagina's) ── */
-.steden-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.7rem}
-.stad-a{display:flex;align-items:center;justify-content:space-between;background:white;border:1.5px solid var(--border);border-radius:10px;padding:0.8rem 1rem;color:var(--text);text-decoration:none;font-size:0.83rem;font-weight:500;transition:all 0.2s}
-.stad-a:hover{border-color:var(--green);color:var(--green-dark);background:var(--green3);transform:translateY(-1px)}
-.stad-arrow{color:var(--green);font-size:0.75rem}
-
-/* ── DIENSTEN CARDS ── */
-.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1.25rem}
-.svc{background:white;border:1.5px solid var(--border);border-radius:16px;padding:1.75rem;transition:all 0.25s;cursor:pointer;text-decoration:none;color:var(--text);display:flex;flex-direction:column;position:relative;overflow:hidden}
-.svc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--green2));transform:scaleX(0);transform-origin:left;transition:transform 0.25s}
-.svc:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:0 12px 40px rgba(26,122,74,0.13)}
-.svc:hover::before{transform:scaleX(1)}
-.svc-icon{font-size:2rem;margin-bottom:1rem;width:52px;height:52px;background:var(--green3);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.svc h3{font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:var(--text)}
-.svc p{color:var(--muted);font-size:0.83rem;line-height:1.7;margin-bottom:auto;padding-bottom:1.25rem}
-.svc-cta{color:var(--green);font-size:0.82rem;font-weight:700;display:flex;align-items:center;gap:0.35rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--border)}
-.carousel-card:hover .svc-cta{color:var(--green-dark)}
-
-/* ── USP CARDS ── */
-.usp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-.usp{background:white;border:1.5px solid var(--border);border-radius:14px;padding:1.75rem;text-align:center}
-.usp-icon{font-size:2.25rem;margin-bottom:1rem}
-.usp h3{font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:0.5rem}
-.usp p{color:var(--muted);font-size:0.82rem;line-height:1.65}
-
-/* ── BLOG CARDS ── */
-.blog-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:1.5rem}
-.blog-card{background:white;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;text-decoration:none;color:var(--text);transition:all 0.25s;display:flex;flex-direction:column}
-.blog-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 32px rgba(26,122,74,0.12)}
-.blog-img{height:180px;position:relative;overflow:hidden}
-.blog-img-main{height:220px}
-.blog-img img{width:100%;height:100%;object-fit:cover;display:block}
-.blog-cat{position:absolute;top:1rem;left:1rem;background:var(--green);color:white;font-size:0.68rem;font-weight:700;padding:0.25rem 0.65rem;border-radius:100px;text-transform:uppercase;letter-spacing:0.05em}
-.blog-body{padding:1.25rem;display:flex;flex-direction:column;flex:1;gap:0.5rem}
-.blog-meta{font-size:0.72rem;color:var(--muted2);display:flex;gap:0.75rem}
-.blog-card h3{font-size:1rem;font-weight:700;color:var(--text);line-height:1.35}
-.blog-excerpt{color:var(--muted);font-size:0.82rem;line-height:1.65;flex:1}
-.blog-link{color:var(--green);font-size:0.8rem;font-weight:700;margin-top:auto;padding-top:0.75rem}
-
-/* ── KNOPPEN ── */
-.btn-all{display:inline-flex;align-items:center;gap:0.6rem;background:var(--green);color:white;padding:0.8rem 1.75rem;border-radius:var(--radius);font-weight:700;font-size:0.9rem;text-decoration:none;transition:all 0.2s;box-shadow:0 4px 16px rgba(26,122,74,0.2)}
-.btn-all:hover{background:var(--green2);transform:translateY(-1px)}
-.cities-cta{display:flex;align-items:center;gap:2rem;background:var(--green3);border:1.5px solid var(--green4);border-radius:14px;padding:1.5rem 2rem;margin-top:1.5rem;flex-wrap:wrap}
-.cities-cta-left{flex:1;min-width:200px}
-.cities-cta-left h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.25rem}
-.cities-cta-left p{font-size:0.85rem;color:var(--muted)}
-.cities-counts{display:flex;gap:1.5rem;flex-wrap:wrap}
-.count-item{text-align:center}
-.count-num{font-size:1.6rem;font-weight:900;color:var(--green-dark);line-height:1}
-.count-num sup{font-size:0.75rem}
-.count-label{font-size:0.65rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.2rem}
-.btn-blog{display:inline-flex;align-items:center;gap:0.5rem;background:transparent;color:var(--green);padding:0.75rem 1.75rem;border-radius:var(--radius);font-weight:700;font-size:0.9rem;border:1.5px solid var(--green);text-decoration:none;transition:all 0.2s}
-.btn-blog:hover{background:var(--green);color:white}
-.btn-white-ghost{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.12);color:white;padding:0.9rem 1.8rem;border-radius:var(--radius);font-weight:600;font-size:1rem;border:1px solid rgba(255,255,255,0.3);text-decoration:none;transition:all 0.2s;font-family:var(--font)}
-.btn-white-ghost:hover{background:rgba(255,255,255,0.22)}
-
-/* ── BOTTOM CTA ── */
-.bottom-cta{background:linear-gradient(135deg,var(--green-dark),var(--green));padding:5rem clamp(1rem,5vw,3rem);text-align:center;position:relative;overflow:hidden}
-.bottom-cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);background-size:24px 24px}
-.bottom-cta>*{position:relative;z-index:1}
-.bottom-cta h2{color:white;margin-bottom:0.75rem}
-.bottom-cta p{color:rgba(255,255,255,0.75);margin-bottom:2.5rem}
-.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-
-/* ── FOOTER ── */
-footer{background:var(--green-dark);padding:3.5rem clamp(1rem,5vw,3rem) 2rem}
-.footer-top{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,0.1)}
-.footer-logo{font-size:1.4rem;font-weight:800;letter-spacing:-0.03em;color:white;margin-bottom:0.75rem}
-.footer-logo b{color:#a8e6c0}
-.footer-desc{color:rgba(255,255,255,0.5);font-size:0.83rem;line-height:1.7}
-.footer-col h4{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-bottom:1.1rem}
-.footer-col a{display:block;color:rgba(255,255,255,0.6);font-size:0.83rem;text-decoration:none;margin-bottom:0.5rem;transition:color 0.2s}
-.footer-col a:hover{color:white}
-.footer-bottom{max-width:1200px;margin:1.75rem auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-.footer-bottom p{color:rgba(255,255,255,0.3);font-size:0.75rem}
-.footer-bottom a{color:rgba(255,255,255,0.3);text-decoration:none}
-.cert-badges{display:flex;gap:0.5rem}
-.cert{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:0.3rem 0.7rem;font-size:0.72rem;color:rgba(255,255,255,0.5);font-weight:600}
-
-/* ── MOBIELE CTA BALK ── */
-.mobile-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:99;background:var(--orange);padding:1rem 1.5rem;align-items:center;justify-content:center;font-weight:700;color:white;text-decoration:none;font-size:0.95rem;box-shadow:0 -4px 20px rgba(232,82,10,0.3)}
-
-/* ── RESPONSIVE ── */
-@media(max-width:1024px){
-  .cities-grid{grid-template-columns:repeat(2,1fr)}
-  .usp-grid{grid-template-columns:repeat(2,1fr)}
-  .blog-grid{grid-template-columns:1fr 1fr}
-  .footer-top{grid-template-columns:1fr 1fr}
-}
-@media(max-width:900px){
-  .hero-inner{grid-template-columns:1fr}
-  .steps{grid-template-columns:1fr 1fr}
-  .steps::before{display:none}
-  .reviews-grid{grid-template-columns:1fr 1fr}
-  .faq-grid{grid-template-columns:1fr}
-  .nav-link{display:none}
-  .carousel-card{flex:0 0 calc(50% - 0.625rem)}
-  .carousel-nav-top{display:none}
-  .form-card{max-width:100%}
-}
-@media(max-width:600px){
-  .form-row{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr}
-  .mobile-cta{display:flex}
-  body{padding-bottom:58px}
-  .steps{grid-template-columns:1fr}
-  .cities-grid{grid-template-columns:1fr 1fr}
-  .usp-grid{grid-template-columns:1fr 1fr}
-  .blog-grid{grid-template-columns:1fr}
-  .reviews-grid{grid-template-columns:1fr}
-  .carousel-card{flex:0 0 calc(100% - 0px)}
-  h1{font-size:2.2rem}
-  .hero-stats{gap:0}
-  .stat-item{padding:0.65rem 0.5rem}
-  .stat-val{font-size:1.3rem}
-  .hero-sub{font-size:0.9rem}
-  .hero{padding:2rem 1rem 3rem}
-  .trust-inner{gap:0.5rem;flex-wrap:wrap;justify-content:center}
-  .ti-item{font-size:0.72rem}
-  .section-inner{padding:0}
+export async function getStaticProps({ params }) {
+  const type = getType(params.type)
+  if (!type) return { notFound: true }
+  return { props: { type } }
 }
 
-/* ── SEO GRID ── */
-.seo-grid{display:grid;grid-template-columns:2fr 1fr;gap:4rem;align-items:start}
-.seo-sticky{position:sticky;top:86px}
-.seo-block h3{font-size:1.1rem;font-weight:700;color:var(--text);margin:1.75rem 0 0.6rem}
-.seo-block h3:first-of-type{margin-top:0}
-.seo-block p{font-size:0.92rem;color:var(--muted);line-height:1.9;margin-bottom:0.75rem}
-.seo-block ul{padding-left:1.5rem;margin-bottom:0.75rem}
-.seo-block ul li{font-size:0.92rem;color:var(--muted);line-height:1.9;margin-bottom:0.25rem}
+export default function LekkageType({ type }) {
+  const [openProv, setOpenProv] = useState({})
+  const [submitted, setSubmitted] = useState(false)
+  const MAX_VISIBLE = 11
 
-/* ── OORZAKEN NUMMERS ── */
-.oorzaak-num{width:36px;height:36px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.95rem;margin:0 auto 0.75rem;flex-shrink:0}
+  function toggleProv(prov) {
+    setOpenProv(p => ({ ...p, [prov]: !p[prov] }))
+  }
 
-/* ── PRIJSTABEL ── */
-.price-table{margin:1.25rem 0 1.75rem;border-radius:12px;overflow:hidden;border:1.5px solid var(--border)}
-.price-table table{width:100%;border-collapse:collapse;font-size:0.85rem}
-.price-table thead{background:var(--green-dark);color:white}
-.price-table thead th{padding:0.75rem 1rem;text-align:left;font-size:0.75rem;font-weight:700;letter-spacing:0.04em}
-.price-table tbody tr{border-bottom:1px solid var(--border);background:white;transition:background 0.15s}
-.price-table tbody tr:hover{background:var(--green3)}
-.price-table tbody tr:last-child{border-bottom:none}
-.price-table td{padding:0.75rem 1rem;color:var(--muted)}
-.price-table td:first-child{color:var(--text);font-weight:500}
-.price-table td:nth-child(2){color:var(--green);font-weight:700}
-.form-input{width:100%;padding:0.7rem 1rem;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;font-family:inherit;color:var(--text);background:white;outline:none;transition:border-color 0.15s;box-sizing:border-box}
-.form-input:focus{border-color:var(--green)}
-.form-input::placeholder{color:var(--muted)}
-.highlight-row td{background:var(--green3)!important}
-.highlight-row td:nth-child(2){color:var(--green)!important;font-weight:700}
-.table-note{font-size:0.72rem;color:var(--muted);margin-top:0.5rem;font-style:italic}
+  const andereTypes = lekkageTypes.filter(t => t.slug !== type.slug)
 
-/* ── BLOG ── */
-.blog-img-main{height:220px!important}
-.blog-excerpt{font-size:0.8rem;color:var(--muted);line-height:1.65}
-.blog-link{color:var(--green);font-size:0.8rem;font-weight:700;margin-top:auto}
+  const title = `${type.naam} – Snel & Vakkundig in Heel Nederland | LekkageFix`
+  const description = `${type.naam} in jouw stad? LekkageFix is er snel bij. ${type.omschrijving} Gecertificeerde vakmensen, gemiddeld 30 min ter plaatse. Gratis offerte.`
 
-/* ── RESPONSIVE AANVULLINGEN ── */
-@media(max-width:900px){
-  .seo-grid{grid-template-columns:1fr}
-  .seo-sticky{display:none}
-}
-@media(max-width:600px){
-  .seo-grid{grid-template-columns:1fr}
-  .price-table{overflow-x:auto}
-}
+  const faqs = [
+    { v: `Hoe snel komen jullie bij een ${type.naam.toLowerCase()}?`, a: `Gemiddeld zijn we binnen 30 minuten ter plaatse, door heel Nederland. We zijn 24/7 bereikbaar, ook in het weekend.` },
+    { v: `Wat zijn veelvoorkomende oorzaken van ${type.naam.toLowerCase()}?`, a: `De meest voorkomende oorzaken zijn: ${type.oorzaken?.slice(0,3).map(o => o.titel || o).join(', ')}.` },
+    { v: `Wat kost ${type.naam.toLowerCase()} reparatie?`, a: `De kosten hangen af van de omvang en oorzaak. Je ontvangt altijd een transparante offerte vooraf. Gratis inspectie, geen verrassingen.` },
+    { v: `Vergoedt mijn verzekering ${type.naam.toLowerCase()}?`, a: `Plotselinge schade valt bij de meeste opstalverzekeringen onder de dekking. Wij stellen een rapport op dat je direct kunt indienen bij je verzekeraar.` },
+    { v: `In welke steden zijn jullie actief voor ${type.naam.toLowerCase()}?`, a: `We zijn actief in meer dan 130 steden door heel Nederland. Selecteer jouw stad hierboven voor lokale informatie en een directe aanvraag.` },
+  ]
 
-/* ── OORZAKEN GRID (canvas stijl) ── */
-.oorzaken-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-.oorzaak{background:white;border:1.5px solid var(--border);border-radius:14px;padding:1.5rem 1.25rem;text-align:center;transition:all 0.2s}
-.oorzaak:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,122,74,0.1)}
-.oorzaak-icon{font-size:2rem;margin-bottom:0.75rem}
-.oorzaak h3{font-size:0.88rem;font-weight:700;margin-bottom:0.4rem;color:var(--text)}
-.oorzaak p{font-size:0.78rem;color:var(--muted);line-height:1.6}
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://lekkagefix.nl/#business",
+        "name": "LekkageFix",
+        "url": "https://lekkagefix.nl",
+        "telephone": PHONE,
+        "openingHours": "Mo-Su 00:00-24:00",
+        "priceRange": "€€",
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "2847", "bestRating": "5" }
+      },
+      {
+        "@type": "Service",
+        "name": type.naam,
+        "provider": { "@id": "https://lekkagefix.nl/#business" },
+        "areaServed": { "@type": "Country", "name": "Netherlands" },
+        "description": description,
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(f => ({
+          "@type": "Question",
+          "name": f.v,
+          "acceptedAnswer": { "@type": "Answer", "text": f.a }
+        }))
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lekkagefix.nl" },
+          { "@type": "ListItem", "position": 2, "name": "Lekkage", "item": "https://lekkagefix.nl/lekkage" },
+          { "@type": "ListItem", "position": 3, "name": type.naam, "item": `https://lekkagefix.nl/lekkage/dienst/${type.slug}` },
+        ]
+      }
+    ]
+  }
 
-/* ── REVIEWS SUMMARY MET RATING BARS ── */
-.reviews-summary{display:flex;align-items:center;gap:2rem;background:var(--green3);border:1.5px solid var(--green4);border-radius:14px;padding:1.5rem 2rem;margin-bottom:1.5rem;flex-wrap:wrap}
-.rating-big{text-align:center;flex-shrink:0}
-.rating-num{font-size:3rem;font-weight:900;color:var(--green-dark);line-height:1}
-.rating-stars{color:#f59e0b;font-size:1.1rem;letter-spacing:2px;margin:0.2rem 0}
-.rating-count{font-size:0.72rem;color:var(--muted)}
-.rating-bars{flex:1;min-width:200px}
-.bar-row{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.35rem;font-size:0.75rem;color:var(--muted)}
-.bar-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.bar-fill{height:100%;background:var(--green);border-radius:3px}
+  return (
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href={`https://lekkagefix.nl/lekkage/dienst/${type.slug}`} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={`https://lekkagefix.nl/lekkage/dienst/${type.slug}`} />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }} />
+      </Head>
+      <Nav activePath="/lekkage" />
 
-/* ── RESPONSIVE AANVULLINGEN ── */
-@media(max-width:900px){
-  .oorzaken-row{grid-template-columns:repeat(2,1fr)}
-  .reviews-summary{flex-direction:column;align-items:flex-start}
-}
-@media(max-width:600px){
-  .oorzaken-row{grid-template-columns:repeat(2,1fr)}
+      {/* BREADCRUMB */}
+      <div className="breadcrumb-bar">
+        <div className="breadcrumb">
+          <a href="/">Home</a><span className="breadcrumb-sep">›</span>
+          <a href="/lekkage">Lekkage</a><span className="breadcrumb-sep">›</span>
+          <span>{type.naam}</span>
+        </div>
+      </div>
+
+      {/* HERO */}
+      <section className="hero">
+        <div className="hero-dots" />
+        <div className="hero-inner">
+          <div>
+            <div className="hero-badge"><span className="pulse" /> 24/7 bereikbaar · heel Nederland</div>
+            <span style={{fontSize:'2.5rem',display:'block',marginBottom:'0.5rem'}}>{type.icon}</span>
+            <h1><em>{type.naam}</em> — snel,<br/>vakkundig &<br/>gegarandeerd.</h1>
+            <p className="hero-sub">{type.omschrijving} Onze gecertificeerde vakmensen lossen het op, gemiddeld binnen 30 minuten ter plaatse.</p>
+            <div className="hero-stats">
+              <div className="stat-item"><div className="stat-val">30<sup>min</sup></div><div className="stat-key">Gem. reactie</div></div>
+              <div className="stat-item"><div className="stat-val">4.9<sup>★</sup></div><div className="stat-key">Beoordeling</div></div>
+              <div className="stat-item"><div className="stat-val">130<sup>+</sup></div><div className="stat-key">Steden</div></div>
+              <div className="stat-item"><div className="stat-val">24<sup>/7</sup></div><div className="stat-key">Bereikbaar</div></div>
+            </div>
+            <div className="hero-actions">
+              <a href={`tel:${PHONE}`} className="btn-call">📞 Bel direct: {PHONE_DISPLAY}</a>
+              <a href="#steden" className="btn-ghost">Kies jouw stad →</a>
+            </div>
+          </div>
+
+          <div className="form-card" id="offerte">
+            <div className="form-title">{type.naam} aanvragen</div>
+            <div className="form-sub">Gratis & vrijblijvend · we nemen snel contact op</div>
+            <div className="fg">
+              <label>Plaats</label>
+              <input type="text" placeholder="Jouw plaats" />
+            </div>
+            <div className="form-row">
+              <div className="fg"><label>Naam</label><input type="text" placeholder="Jan de Vries" /></div>
+              <div className="fg"><label>Telefoon</label><input type="tel" placeholder="06-12345678" /></div>
+            </div>
+            <div className="fg"><label>Omschrijving (optioneel)</label><textarea placeholder={`Beschrijf kort het ${type.naam.toLowerCase()} probleem...`} /></div>
+            <button className={`btn-form${submitted ? ' ok' : ''}`} onClick={() => setSubmitted(true)}>
+              {submitted ? '✓ Aanvraag ontvangen!' : 'Stuur aanvraag →'}
+            </button>
+            <div className="form-trust"><span>🔒 Veilig</span><span>✓ Geen spam</span><span>⚡ Snelle reactie</span></div>
+          </div>
+        </div>
+      </section>
+
+      {/* TRUST BAR */}
+      <div className="trust-bar">
+        <div className="trust-inner">
+          <div className="ti-item"><span className="ti-check">✓</span><span>Gemiddeld <strong>30 min</strong> ter plaatse</span></div>
+          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Garantie</strong> op al het werk</span></div>
+          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Erkend</strong> door verzekeraars</span></div>
+          <div className="ti-item"><span className="ti-check">✓</span><span><strong>Transparante</strong> prijzen</span></div>
+          <div className="ti-item"><span className="ti-check">✓</span><span><strong>24/7</strong> bereikbaar</span></div>
+        </div>
+      </div>
+
+      {/* OORZAKEN */}
+      {type.oorzaken && (
+        <section className="section">
+          <div className="section-inner">
+            <div className="sec-head-center">
+              <div className="eyebrow">Oorzaken</div>
+              <h2>Veelvoorkomende oorzaken van <em>{type.naam.toLowerCase()}</em></h2>
+              <p className="sec-sub">{type.intro}</p>
+            </div>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))',gap:'1rem',marginTop:'1rem'}}>
+              {type.oorzaken.map((o, i) => (
+                <div key={i} style={{display:'flex',alignItems:'flex-start',gap:'0.85rem',background:'white',border:'1.5px solid var(--border)',borderRadius:'12px',padding:'1.1rem'}}>
+                  <div style={{width:'30px',height:'30px',background:'var(--green3)',color:'var(--green-dark)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.75rem',fontWeight:800,flexShrink:0}}>{i+1}</div>
+                  <div>
+                    <div style={{fontWeight:600,fontSize:'0.87rem',marginBottom:'0.2rem'}}>{o.icon} {o.titel}</div>
+                    <p style={{fontSize:'0.8rem',color:'var(--muted)',lineHeight:1.5}}>{o.tekst}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* STEDEN PER PROVINCIE */}
+      <section className="section section-alt" id="steden">
+        <div className="section-inner">
+          <div className="sec-head-center">
+            <div className="eyebrow">Werkgebied</div>
+            <h2><em>{type.naam}</em> in jouw stad</h2>
+            <p className="sec-sub">Actief in 130+ steden. Klik op jouw stad voor lokale informatie en een directe aanvraag.</p>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:'2rem'}}>
+            {provincies.map(prov => {
+              const provSteden = steden.filter(s => s.provincie === prov)
+              const isOpen = openProv[prov]
+              const visible = isOpen ? provSteden : provSteden.slice(0, MAX_VISIBLE)
+              return (
+                <div key={prov} id={prov.toLowerCase().replace(/\s+/g, '-')} style={{scrollMarginTop:'90px'}}>
+                  <h3 style={{fontSize:'0.82rem',fontWeight:700,color:'var(--green-dark)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:'0.85rem',paddingBottom:'0.5rem',borderBottom:'2px solid var(--green4)'}}>📍 {prov}</h3>
+                  <div className="steden-grid">
+                    {visible.map(s => (
+                      <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`} className="stad-a">
+                        <span>{s.naam}</span><span className="stad-arrow">→</span>
+                      </a>
+                    ))}
+                    {provSteden.length > MAX_VISIBLE && (
+                      <button
+                        onClick={() => toggleProv(prov)}
+                        style={{display:'flex',alignItems:'center',justifyContent:'center',background:'none',border:'1.5px solid var(--green4)',borderRadius:'10px',padding:'0.8rem 1rem',fontSize:'0.83rem',fontWeight:600,color:'var(--green-dark)',cursor:'pointer',fontFamily:'inherit',transition:'all 0.2s',width:'100%'}}
+                        onMouseEnter={e => e.currentTarget.style.background='var(--green3)'}
+                        onMouseLeave={e => e.currentTarget.style.background='none'}
+                      >
+                        {isOpen ? `▲ Minder steden` : `▼ Nog ${provSteden.length - MAX_VISIBLE} steden in ${prov}`}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ANDERE DIENSTEN */}
+      <section className="section section-white">
+        <div className="section-inner">
+          <div className="sec-head-center">
+            <div className="eyebrow">Andere diensten</div>
+            <h2>Meer <em>lekkage specialisaties</em></h2>
+            <p className="sec-sub">Naast {type.naam.toLowerCase()} lossen we ook andere lekkageproblemen op.</p>
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(240px,1fr))',gap:'0.75rem',marginTop:'1rem'}}>
+            {andereTypes.map(t => (
+              <a key={t.slug} href={`/lekkage/dienst/${t.slug}`}
+                style={{display:'flex',alignItems:'center',gap:'0.85rem',padding:'1rem',background:'white',border:'1.5px solid var(--border)',borderRadius:'12px',textDecoration:'none',color:'var(--text)',transition:'all 0.2s'}}
+                onMouseEnter={e => { e.currentTarget.style.borderColor='var(--green)'; e.currentTarget.style.transform='translateY(-2px)' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor='var(--border)'; e.currentTarget.style.transform='translateY(0)' }}
+              >
+                <div style={{width:'40px',height:'40px',background:'var(--green3)',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.2rem',flexShrink:0}}>{t.icon}</div>
+                <div>
+                  <div style={{fontWeight:700,fontSize:'0.88rem'}}>{t.naam}</div>
+                  <div style={{fontSize:'0.75rem',color:'var(--muted)',marginTop:'0.1rem'}}>{t.omschrijving?.slice(0,45)}...</div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO BLOK */}
+      <section className="section section-white">
+        <div className="section-inner">
+          <div className="seo-grid">
+            <div className="seo-block">
+              <div className="eyebrow">{type.naam} informatie</div>
+              <h2 style={{marginBottom:'1.5rem'}}>{type.naam}: <em>alles wat je moet weten</em></h2>
+
+              {/* PER-DIENST SEO CONTENT */}
+              {type.slug === 'lekkage-dak' && <>
+                <h3>Wat is een daklekkage?</h3>
+                <p>Een daklekkage ontstaat wanneer water door je dak naar binnen komt. Dit kan via een beschadigde dakpan, een scheur in de dakbedekking of een slecht afgedichte dakdoorvoer (een plek waar iets door het dak heen gaat, zoals een schoorsteen of ventilatiebuis). Water zoekt altijd de weg naar beneden, waardoor een daklekkage zich vaak pas laat zien op een plek ver van de werkelijke oorzaak. Je ziet dan een natte vlek op het plafond, terwijl het lek eigenlijk meters verderop zit.</p>
+
+                <h3>Wanneer moet je actie ondernemen?</h3>
+                <p>Handel direct als je een natte plek op het plafond ziet, als dakpannen zijn verschoven of gebroken, als er na regen water binnenkwam, of als je schimmel ruikt op zolder. Een daklekkage lost zichzelf nooit op. Hout dat lang vochtig blijft begint te rotten en schimmel verspreidt zich razendsnel. Hoe langer je wacht, hoe duurder de reparatie.</p>
+
+                <h3>De meest voorkomende oorzaken van een daklekkage</h3>
+                <p>Veruit de meeste daklekkages in Nederland worden veroorzaakt door verouderde of beschadigde dakbedekking op platte daken. Bitumen (een zwart, rubberachtig materiaal dat op platte daken wordt geplakt) wordt na 15 tot 20 jaar brokkelig en gaat scheuren. Bij schuin dak zijn verschoven of gebroken dakpannen de meest voorkomende oorzaak. Andere veelvoorkomende oorzaken zijn kapot voegwerk rondom de schoorsteen, verouderd kit rondom dakramen en dakkapellen, verstopte of lekkende dakgoten waardoor water terugstroomt onder de dakbedekking, en stormschade waarbij dakpannen zijn opgetild.</p>
+
+                <h3>Hoe repareren wij een daklekkage?</h3>
+                <p>Onze monteur begint altijd met een grondige inspectie van het dak. We zoeken systematisch naar de oorzaak, want de zichtbare waterschade binnen zegt niet altijd waar het lek zit. Na de diagnose volgt een heldere offerte. Kleine reparaties zoals het terugleggen van een dakpan of het opnieuw kitten van een aansluiting zijn vaak binnen een uur klaar. Grotere werkzaamheden zoals het gedeeltelijk vernieuwen van dakbedekking plannen we zorgvuldig in. Op al ons werk geven we garantie.</p>
+
+                <h3>Kosten daklekkage reparatie</h3>
+                <p>Wat een daklekkage reparatie kost hangt af van de oorzaak en de omvang. Een losse dakpan terugleggen kost weinig. Het vervangen van een groot stuk dakbedekking op een plat dak is een groter werk. Hieronder zie je een overzicht van indicatieve prijzen. Je ontvangt altijd eerst een gratis offerte, zodat je nooit voor verrassingen komt te staan.</p>
+
+                <div className="price-table">
+                  <table>
+                    <thead><tr><th scope="col">Type werkzaamheid</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                    <tbody>
+                      {[
+                        { werk: 'Inspectie & diagnose', prijs: 'Gratis', tijd: '30 min' },
+                        { werk: 'Dakpan terugleggen of vervangen', prijs: '€ 75 – € 200', tijd: '30 min' },
+                        { werk: 'Kit vervangen rondom dakraam of schoorsteen', prijs: '€ 100 – € 300', tijd: '30 min' },
+                        { werk: 'Gedeeltelijke vernieuwing plat dak', prijs: '€ 300 – € 1.500', tijd: '30 min' },
+                        { werk: 'Volledige dakbedekking vernieuwen', prijs: 'Op aanvraag', tijd: '30 min' },
+                      ].map((r, i) => (
+                        <tr key={i} className={i === 0 ? 'highlight-row' : ''}>
+                          <td>{i === 0 ? <strong>{r.werk}</strong> : r.werk}</td>
+                          <td>{r.prijs}</td><td>{r.tijd}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie.</p>
+                </div>
+
+                <h3>Daklekkage en je verzekering</h3>
+                <p>Een daklekkage door plotselinge stormschade of een gebroken dakpan valt bij de meeste opstalverzekeringen onder de dekking. Een lekkage door achterstallig onderhoud (wanneer je het dak al jaren niet hebt laten nakijken) wordt meestal niet vergoed. Twijfel je? Wij stellen een gedetailleerd inspectierapport op dat je direct kunt insturen bij je verzekeraar. We zijn erkend door alle grote Nederlandse verzekeraars.</p>
+              </>}
+
+              {type.slug === 'lekkage-waterleiding' && <>
+                <h3>Wat is een lekkage waterleiding?</h3>
+                <p>Een lekkage aan de waterleiding betekent dat er ergens in je leidingnet water ontsnapt. Dit kan zichtbaar zijn, zoals water dat langs de muur loopt, maar ook onzichtbaar, zoals een leiding die achter de muur of onder de vloer langzaam lekt. Een lekkende waterleiding is een van de meest voorkomende oorzaken van waterschade in Nederlandse woningen. Het vervelende is dat je het soms pas merkt als de schade al groot is.</p>
+
+                <h3>Hoe herken je een lekkende waterleiding?</h3>
+                <p>Let op de volgende signalen: een onverklaarbaar hoge waterrekening (meer water verbruik dan normaal zonder duidelijke reden), een voortdurend zacht ruisend of druppelend geluid in de muren, natte of verkleurde plekken op muren of vloeren, schimmelvorming op plekken waar het normaal droog hoort te zijn, of een waterdruk die steeds lager wordt. Als de watermeter doorloopt terwijl alle kranen dicht zijn, heb je vrijwel zeker een lekkage.</p>
+
+                <h3>Veelvoorkomende oorzaken</h3>
+                <p>Leidingen gaan kapot door ouderdom en roest, dit geldt met name voor oudere koperen of ijzeren leidingen die na 30 tot 40 jaar slijten. Vorstschade is een andere veelvoorkomende oorzaak: water zet uit als het bevriest en kan de leiding letterlijk splijten. Verder kunnen slechte verbindingen of aansluitingen na verloop van tijd gaan lekken, en kan een te hoge waterdruk (overdruk is een waterdruk van meer dan 3 bar) de leidingen beschadigen.</p>
+
+                <h3>Hoe repareren wij een lekkage waterleiding?</h3>
+                <p>Wij beginnen met het opsporen van het lek. Met moderne detectieapparatuur, zoals een akoestische lekzoekmethode waarbij we het geluid van stromend water opvangen, kunnen we in 95% van de gevallen het lek vinden zonder sloopwerk. Na het vinden van het lek repareren we de leiding op de minst invasieve manier. Soms volstaat een koppelstuk, soms is een groter stuk leiding vervangen. We werken netjes en ruimen altijd alles op.</p>
+
+                <h3>Kosten lekkage waterleiding reparatie</h3>
+                <p>De kosten zijn sterk afhankelijk van waar het lek zit. Een zichtbare lekkage bij een koppeling is snel en goedkoop te repareren. Een lek diep in de muur vraagt meer werk. Zie hieronder de indicatieve prijzen.</p>
+
+                <div className="price-table">
+                  <table>
+                    <thead><tr><th scope="col">Type werkzaamheid</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                    <tbody>
+                      {[
+                        { werk: 'Inspectie & lekdetectie', prijs: 'Gratis', tijd: '30 min' },
+                        { werk: 'Reparatie zichtbare leiding', prijs: '€ 60 – € 200', tijd: '30 min' },
+                        { werk: 'Reparatie leiding in muur of vloer', prijs: '€ 200 – € 800', tijd: '30 min' },
+                        { werk: 'Gedeeltelijke leidingvervanging', prijs: '€ 400 – € 1.500', tijd: '30 min' },
+                        { werk: 'Volledige leidingvernieuwing', prijs: 'Op aanvraag', tijd: '30 min' },
+                      ].map((r, i) => (
+                        <tr key={i} className={i === 0 ? 'highlight-row' : ''}>
+                          <td>{i === 0 ? <strong>{r.werk}</strong> : r.werk}</td>
+                          <td>{r.prijs}</td><td>{r.tijd}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie.</p>
+                </div>
+
+                <h3>Lekkage waterleiding en je verzekering</h3>
+                <p>Plotselinge schade door een gesprongen waterleiding valt bij de meeste opstalverzekeringen onder de dekking. Geleidelijke lekkages door ouderdom worden meestal niet vergoed. Wij stellen een gedetailleerd rapport op dat je kunt gebruiken voor je schadeclaim.</p>
+              </>}
+
+              {type.slug === 'lekkage-badkamer' && <>
+                <h3>Wat is een badkamerlekkage?</h3>
+                <p>Een badkamerlekkage is een lekkage die vanuit de badkamer ontstaat en water doorlaat naar de verdieping eronder of naar aangrenzende muren. Dit klinkt eenvoudig, maar een badkamerlekkage is vaak lastig te vinden. Water kan via een haarfijne scheur in de tegels, langs een versleten kitrand of door een beschadigde waterdichte laag (ook wel waterbarende laag of badkamerisolatie genoemd) de vloer of muur ingaan. Je buurman op de verdieping eronder merkt het vaak eerder dan jijzelf.</p>
+
+                <h3>Hoe herken je een badkamerlekkage?</h3>
+                <p>Signalen zijn: een natte of verkleurde plek op het plafond van de ruimte onder de badkamer, loslating van tegels of zwellende vloerdelen rondom de douche of het bad, schimmelvorming op plaatsen die niet direct contact hebben met water, een doordringende vochtgeur in de badkamer of eronder, of zichtbaar verouderd of gebarsten kitwerk rondom de douche of het bad.</p>
+
+                <h3>Veelvoorkomende oorzaken van badkamerlekkage</h3>
+                <p>De meest voorkomende oorzaak is versleten of gebarsten kit. Kit (het flexibele afdichtingsmateriaal rondom de douche of het bad) gaat na vijf tot tien jaar scheuren en laat dan water door. Een andere veelvoorkomende oorzaak is een beschadigde waterdichte laag onder de tegels. Deze laag, die aangebracht wordt voor het tegelen, kan door verzakking of beweging van de vloer scheuren. Ook een lekke afvoer of een beschadigd sifon (het waterslot onder de douche dat geur tegenhoudt) zorgt regelmatig voor lekkages.</p>
+
+                <h3>Hoe repareren wij een badkamerlekkage?</h3>
+                <p>We beginnen met een grondige visuele inspectie en vochtmeting. Met een vochtmeter stellen we precies vast hoe vochtig de vloer en wanden zijn en waar het vocht vandaan komt. In veel gevallen is het vernieuwen van de kit al voldoende. Als de waterdichte laag beschadigd is, brengen we een nieuwe laag aan zonder per se alle tegels te hoeven verwijderen. Alleen als de schade groot is, is een gedeeltelijke of volledige verbouwing nodig.</p>
+
+                <h3>Kosten badkamerlekkage reparatie</h3>
+                <p>Een kitbehandeling is relatief goedkoop. Een beschadigde waterdichte laag herstellen is een groter werk. Zie de indicatieve prijzen hieronder.</p>
+
+                <div className="price-table">
+                  <table>
+                    <thead><tr><th scope="col">Type werkzaamheid</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                    <tbody>
+                      {[
+                        { werk: 'Inspectie & vochtmeting', prijs: 'Gratis', tijd: '30 min' },
+                        { werk: 'Kit vernieuwen rondom douche of bad', prijs: '€ 80 – € 250', tijd: '30 min' },
+                        { werk: 'Afvoer of sifon repareren', prijs: '€ 100 – € 300', tijd: '30 min' },
+                        { werk: 'Waterdichte laag herstellen', prijs: '€ 400 – € 2.000', tijd: '30 min' },
+                        { werk: 'Gedeeltelijke badkamerrenovatie', prijs: 'Op aanvraag', tijd: '30 min' },
+                      ].map((r, i) => (
+                        <tr key={i} className={i === 0 ? 'highlight-row' : ''}>
+                          <td>{i === 0 ? <strong>{r.werk}</strong> : r.werk}</td>
+                          <td>{r.prijs}</td><td>{r.tijd}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie.</p>
+                </div>
+
+                <h3>Badkamerlekkage en je verzekering</h3>
+                <p>Plotselinge schade door een gesprongen afvoer of een plotseling kapotte aansluiting kan vergoed worden door je opstalverzekering. Slijtage aan kit of verouderde tegels valt buiten de dekking. Wij stellen altijd een inspectierapport op zodat je weet wat er is en wat vergoed kan worden.</p>
+              </>}
+
+              {type.slug === 'riool-lekkage' && <>
+                <h3>Wat is een rioollekkage?</h3>
+                <p>Een rioollekkage is een lekkage in de riolering van je woning, het leidingnet dat al het afvalwater afvoert naar het gemeentelijk riool. Dit kan gaan om de leidingen onder de vloer, in de muren of buiten in de grond. Een rioollekkage is niet alleen vervelend door de vochtigheid, maar ook door de geur die erbij komt kijken. Rioolgas bevat bacterien en is ongezond om in te ademen, dus snel handelen is belangrijk.</p>
+
+                <h3>Hoe herken je een rioollekkage?</h3>
+                <p>De meest duidelijke signalen zijn een aanhoudende rioollucht in huis terwijl alle afvoeren schoon zijn, water dat terugstroomt uit het toilet of de douche, een traag afvoerende wasbak of douche (wat kan duiden op een verstopping of een beschadigde leiding), natte plekken op de vloer rondom het toilet of de douche zonder duidelijke oorzaak, of insecten (zoals fruitvliegjes of kakkerlakken) die via de riolering binnenkomen.</p>
+
+                <h3>Veelvoorkomende oorzaken</h3>
+                <p>Rioollekkages ontstaan vaak door ouderdom van de leidingen. PVC-leidingen (kunststof leidingen die sinds de jaren 70 worden gebruikt) gaan lang mee, maar kunnen na decennia gaan scheuren of verzakken. Wortelindringing is een andere veelvoorkomende oorzaak: boomwortels groeien naar de warmte en vochtigheid van rioolbuizen toe en kunnen deze beschadigen. Verstoppingen door vet, doekjes of andere materialen die niet in het toilet thuishoren, kunnen ook leiden tot drukopbouw en uiteindelijk lekkage.</p>
+
+                <h3>Hoe repareren wij een rioollekkage?</h3>
+                <p>We beginnen vrijwel altijd met een camera-inspectie. We rijden een kleine HD-camera door de rioolleiding en zien live op een scherm precies waar en wat het probleem is. Dit voorkomt onnodig sloopwerk. Afhankelijk van de bevindingen reinigen we de leiding met een hogedrukspuit, repareren we een specifieke beschadiging, of brengen we een inliner aan. Een inliner is een nieuwe buis die van binnenuit in de bestaande leiding wordt geplaatst, zodat we de grond niet hoeven op te graven.</p>
+
+                <h3>Kosten rioollekkage reparatie</h3>
+                <p>De kosten hangen sterk af van waar het probleem zit en hoe groot het is. Zie hieronder de indicatieve prijzen.</p>
+
+                <div className="price-table">
+                  <table>
+                    <thead><tr><th scope="col">Type werkzaamheid</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                    <tbody>
+                      {[
+                        { werk: 'Camera-inspectie riolering', prijs: 'Gratis', tijd: '30 min' },
+                        { werk: 'Reiniging met hogedrukspuit', prijs: '€ 150 – € 400', tijd: '30 min' },
+                        { werk: 'Reparatie kleine beschadiging', prijs: '€ 200 – € 600', tijd: '30 min' },
+                        { werk: 'Inliner plaatsen (geen opgraving)', prijs: '€ 500 – € 2.000', tijd: '30 min' },
+                        { werk: 'Vervanging rioolleiding', prijs: 'Op aanvraag', tijd: '30 min' },
+                      ].map((r, i) => (
+                        <tr key={i} className={i === 0 ? 'highlight-row' : ''}>
+                          <td>{i === 0 ? <strong>{r.werk}</strong> : r.werk}</td>
+                          <td>{r.prijs}</td><td>{r.tijd}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie.</p>
+                </div>
+
+                <h3>Rioollekkage en je verzekering</h3>
+                <p>Schade door een plotseling brekende rioolleiding kan in sommige gevallen vergoed worden door je opstalverzekering. Schade door verstopping of wortelindringing valt doorgaans niet onder de dekking. Vraag ons altijd om een inspectierapport, dit geeft je verzekeraar de informatie die nodig is om de claim te beoordelen.</p>
+              </>}
+
+              {type.slug === 'vochtprobleem' && <>
+                <h3>Wat is een vochtprobleem?</h3>
+                <p>Een vochtprobleem betekent dat er meer vocht in je woning aanwezig is dan gezond is. Dit vocht kan van buiten komen, via de muur, de vloer of het dak, maar kan ook van binnenuit ontstaan door condensatie. Condensatie is het verschijnsel waarbij warme, vochtige lucht in contact komt met een koude muur of raam en dan vloeibaar water wordt, vergelijkbaar met een koud glas water dat aan de buitenkant nat wordt op een warme dag. Een vochtprobleem los je niet op met een verflaag. Je moet de bron aanpakken.</p>
+
+                <h3>Hoe herken je een vochtprobleem?</h3>
+                <p>Signalen zijn: schimmelplekken op muren of plafonds, met name in hoeken en achter meubels, verf of behang dat loslaat of bobbelt, een muffe of aardse geur in huis, witte kalkuitslag op bakstenen muren (dit heet uitbloei en ontstaat doordat water zouten mee naar buiten trekt), vochtige of natte muurvlakken, en condensatie op ramen die ook aanwezig is als de ramen goed geventileerd zijn.</p>
+
+                <h3>Veelvoorkomende oorzaken van vochtproblemen</h3>
+                <p>Optrekkend vocht is een klassiek probleem in oudere woningen: grondvocht trekt via de fundering omhoog in de muren. Slaand vocht is regenwater dat via de gevel naar binnen dringt, vaak bij oudere woningen met poreuze stenen of versleten voegwerk (de mortel tussen de stenen). Condensatie ontstaat door een combinatie van weinig ventilatie en een groot temperatuurverschil tussen binnen en buiten. Lekkages vanuit het dak of de waterleiding kunnen ook leiden tot vochtopbouw in muren.</p>
+
+                <h3>Hoe lossen wij een vochtprobleem op?</h3>
+                <p>We beginnen met een vochtmeting en een grondige inspectie om de exacte bron te vinden. Dit is het belangrijkste onderdeel: zonder de bron te kennen is elke reparatie tijdelijk. Afhankelijk van de oorzaak brengen we een waterdichte injectie aan in de muur tegen optrekkend vocht, behandelen we de gevel met een waterafstotende coating, verbeteren we de ventilatie, of repareren we de lekkage die het vocht veroorzaakt.</p>
+
+                <h3>Kosten vochtprobleem oplossen</h3>
+                <p>Wat het kost hangt volledig af van de oorzaak en de omvang. Een ventilatie-advies is goedkoop. Een volledige gevelbehandeling of muurinjectie is een grotere investering. Hieronder de indicatieve prijzen.</p>
+
+                <div className="price-table">
+                  <table>
+                    <thead><tr><th scope="col">Type werkzaamheid</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                    <tbody>
+                      {[
+                        { werk: 'Vochtinspectie & meting', prijs: 'Gratis', tijd: '30 min' },
+                        { werk: 'Ventilatie-advies en kleine aanpassingen', prijs: '€ 100 – € 300', tijd: '30 min' },
+                        { werk: 'Schimmelbehandeling', prijs: '€ 150 – € 500', tijd: '30 min' },
+                        { werk: 'Muurinjectie tegen optrekkend vocht', prijs: '€ 500 – € 2.000', tijd: '30 min' },
+                        { werk: 'Gevelbehandeling of isolatie', prijs: 'Op aanvraag', tijd: '30 min' },
+                      ].map((r, i) => (
+                        <tr key={i} className={i === 0 ? 'highlight-row' : ''}>
+                          <td>{i === 0 ? <strong>{r.werk}</strong> : r.werk}</td>
+                          <td>{r.prijs}</td><td>{r.tijd}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie.</p>
+                </div>
+
+                <h3>Vochtprobleem en je verzekering</h3>
+                <p>Een vochtprobleem door achterstallig onderhoud of slijtage wordt zelden vergoed. Als het vocht het gevolg is van een plotselinge lekkage, zoals een gesprongen leiding of stormschade aan het dak, kan de schade wel onder je opstalverzekering vallen. Wij helpen je met het opstellen van een inspectierapport.</p>
+              </>}
+
+              {type.slug === 'lekkage-muur' && <>
+                <h3>Wat is een lekkage muur of gevellekkage?</h3>
+                <p>Een lekkage muur, ook wel gevellekkage of gevellekkage genoemd, is een lekkage waarbij regenwater via de buitenmuur naar binnen dringt. Dit is een veelvoorkomend probleem in Nederland, met name bij oudere woningen. De buitenmuur van een woning moet regen, wind en kou tegenhouden. Als de muur dat niet meer doet, krijg je natte plekken aan de binnenkant van de muur, schimmelvorming en op den duur ernstige constructieschade.</p>
+
+                <h3>Hoe herken je een lekkage muur?</h3>
+                <p>De signalen zijn natte of donkere plekken op de binnenmuur, met name na hevige regen of bij aanhoudende westelijke wind, schimmel of witte kalkuitslag op de muur, loslating van verf of behang, en een koude of tochtige binnenmuur. Het verschil met condensatie is dat een gevellekkage altijd samenvalt met neerslag of hoge luchtvochtigheid buiten, terwijl condensatie ook optreedt zonder regen.</p>
+
+                <h3>Veelvoorkomende oorzaken van gevellekkage</h3>
+                <p>Versleten voegwerk is de meest voorkomende oorzaak. De mortel tussen de bakstenen wordt na 20 tot 30 jaar poreus en laat dan water door. Beschadigd of ontbrekend kit rondom kozijnen (de houten of kunststof omlijsting van ramen en deuren) is een andere veelvoorkomende oorzaak. Scheuren in de gevel door verzakking van de fundering, een beschadigde windveer (de afwerking bovenaan de gevel onder het dak), en een spouwmuur die niet goed geventileerd is (de spouw is de smalle luchtruimte tussen de binnenmuur en de buitenmuur) zorgen ook regelmatig voor lekkages.</p>
+
+                <h3>Hoe repareren wij een lekkage muur?</h3>
+                <p>Wij voeren eerst een uitgebreide buitenInspectie uit. Met een vochtmeter meten we hoe diep het vocht in de muur zit. Afhankelijk van de bevindingen vernieuwen we het voegwerk, brengen we nieuw kit aan rondom kozijnen, dichten we scheuren, of behandelen we de gehele gevel met een waterafstotende coating. Een coating maakt de gevel waterafstotend zonder de uitstraling te veranderen.</p>
+
+                <h3>Kosten lekkage muur reparatie</h3>
+                <p>Het opnieuw voegen van een gedeelte van de gevel is relatief betaalbaar. Een volledige gevelbehandeling is een groter werk. Zie de indicatieve prijzen hieronder.</p>
+
+                <div className="price-table">
+                  <table>
+                    <thead><tr><th scope="col">Type werkzaamheid</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                    <tbody>
+                      {[
+                        { werk: 'Inspectie & vochtmeting gevel', prijs: 'Gratis', tijd: '30 min' },
+                        { werk: 'Kit vernieuwen rondom kozijnen', prijs: '€ 100 – € 350', tijd: '30 min' },
+                        { werk: 'Gedeeltelijk opnieuw voegen', prijs: '€ 200 – € 800', tijd: '30 min' },
+                        { werk: 'Gevelcoating aanbrengen', prijs: '€ 500 – € 2.500', tijd: '30 min' },
+                        { werk: 'Volledig gevelonderhoud', prijs: 'Op aanvraag', tijd: '30 min' },
+                      ].map((r, i) => (
+                        <tr key={i} className={i === 0 ? 'highlight-row' : ''}>
+                          <td>{i === 0 ? <strong>{r.werk}</strong> : r.werk}</td>
+                          <td>{r.prijs}</td><td>{r.tijd}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie.</p>
+                </div>
+
+                <h3>Gevellekkage en je verzekering</h3>
+                <p>Plotselinge schade door stormschade aan de gevel kan vergoed worden. Lekkage door verouderd voegwerk of achterstallig onderhoud valt buiten de dekking. Wij stellen een rapport op dat je kunt gebruiken bij je verzekering.</p>
+              </>}
+
+              {type.slug === 'kelderafdichting' && <>
+                <h3>Wat is kelderafdichting?</h3>
+                <p>Kelderafdichting is het waterdicht maken van een kelder of souterrain. Een kelder ligt geheel of gedeeltelijk onder de grond en heeft constant te maken met grondwater. Grondwater is het water dat in de bodem aanwezig is en onder druk staat. Als de afdichting van de kelderwanden en -vloer niet meer goed is, dringt dit grondwater naar binnen. Dit noemen we waterindringing door hydrostatische druk, wat simpelweg betekent: water dat onder druk door de wand of vloer wordt gedrukt.</p>
+
+                <h3>Hoe herken je een probleem met kelderafdichting?</h3>
+                <p>Signalen zijn: een natte of vochtige keldervloer, water dat langs de kelderwanden omlaag loopt, witte kalkuitslag op de kelderwanden, schimmel of een muffe geur in de kelder, en puddels water op de keldervloer na zware regenval of in het voorjaar wanneer het grondwater hoog staat. In sommige gevallen staat er zelfs water op de keldervloer als het buiten lang geregend heeft.</p>
+
+                <h3>Veelvoorkomende oorzaken</h3>
+                <p>De meest voorkomende oorzaak is het wegvallen van de originele buitenafdichting. Huizen die gebouwd zijn voor 1970 hebben vaak een kelderwand van beton of baksteen die aan de buitenkant is afgedicht met bitumen. Dit bitumen (een zwart, rubberachtig afdichtingsmateriaal) veroudert en gaat barsten. Ook scheuren in de kelderwand door verzakking van de fundering of beweging van de bodem zijn een veelvoorkomende oorzaak. In sommige gevallen is er een probleem met de drainage, het systeem van buizen rondom de fundering dat grondwater afvoert.</p>
+
+                <h3>Hoe repareren wij kelderafdichting?</h3>
+                <p>We werken altijd van binnenuit, zodat we niet hoeven te graven rondom het huis. We brengen een speciale minerale afdichtingsmortel aan op de kelderwanden en -vloer. Deze mortel dringt diep in het beton of de steen en kristalliseert, waardoor het materiaal zelf waterdicht wordt. Dit heet kristallisatie-afdichting. Aanvullend kunnen we een drainagesysteem aan de binnenkant aanbrengen dat optredend grondwater gecontroleerd afvoert naar een pompput.</p>
+
+                <h3>Kosten kelderafdichting</h3>
+                <p>Kelderafdichting is een specialistisch werk en de kosten zijn navenant. De grootte van de kelder, de ernst van de lekkage en het gekozen systeem bepalen de uiteindelijke prijs. Zie hieronder de indicatieve prijzen.</p>
+
+                <div className="price-table">
+                  <table>
+                    <thead><tr><th scope="col">Type werkzaamheid</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                    <tbody>
+                      {[
+                        { werk: 'Inspectie & vochtmeting kelder', prijs: 'Gratis', tijd: '30 min' },
+                        { werk: 'Kleine scheurreparatie kelderwand', prijs: '€ 200 – € 600', tijd: '30 min' },
+                        { werk: 'Afdichting gedeelte kelderwand', prijs: '€ 500 – € 2.000', tijd: '30 min' },
+                        { werk: 'Volledige kelderafdichting met kristallisatie', prijs: '€ 2.000 – € 8.000', tijd: '30 min' },
+                        { werk: 'Drainagesysteem binnenzijde', prijs: 'Op aanvraag', tijd: '30 min' },
+                      ].map((r, i) => (
+                        <tr key={i} className={i === 0 ? 'highlight-row' : ''}>
+                          <td>{i === 0 ? <strong>{r.werk}</strong> : r.werk}</td>
+                          <td>{r.prijs}</td><td>{r.tijd}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie.</p>
+                </div>
+
+                <h3>Kelderafdichting en je verzekering</h3>
+                <p>Schade door grondwater wordt door de meeste verzekeraars gezien als een geleidelijk proces en valt daardoor vaak buiten de dekking. Plotselinge instroming door een extreme grondwaterstand of een gesprongen waterleiding kan soms wel vergoed worden. Wij stellen altijd een gedetailleerd rapport op zodat je een goed onderbouwde claim kunt indienen.</p>
+              </>}
+
+              {/* FALLBACK voor onbekende types */}
+              {!['lekkage-dak','lekkage-waterleiding','lekkage-badkamer','riool-lekkage','vochtprobleem','lekkage-muur','kelderafdichting'].includes(type.slug) && <>
+                <h3>Wat is {type.naam.toLowerCase()} en wanneer handelen?</h3>
+                <p>{type.intro} Hoe eerder je ingrijpt, hoe beperkter de schade en hoe lager de kosten.</p>
+                <h3>Oorzaken van {type.naam.toLowerCase()}</h3>
+                <p>De meest voorkomende oorzaken zijn {type.oorzaken?.slice(0,3).map(o => o.titel?.toLowerCase() || o).join(', ')}. Een vakkundige inspectie stelt snel de juiste diagnose.</p>
+                <h3>Kosten {type.naam.toLowerCase()} reparatie</h3>
+                <p>De kosten variëren afhankelijk van de omvang en oorzaak. Bij LekkageFix ontvang je altijd een transparante offerte vooraf, volledig vrijblijvend en zonder verborgen kosten.</p>
+                <div className="price-table">
+                  <table>
+                    <thead><tr><th scope="col">Type werkzaamheid</th><th scope="col">Indicatie kosten</th><th scope="col">Reactietijd</th></tr></thead>
+                    <tbody>
+                      {[
+                        { werk: 'Inspectie & diagnose', prijs: 'Gratis', tijd: '30 min' },
+                        { werk: 'Kleine reparatie', prijs: '€ 75 – € 250', tijd: '30 min' },
+                        { werk: 'Middelgrote reparatie', prijs: '€ 250 – € 750', tijd: '30 min' },
+                        { werk: 'Grote reparatie', prijs: '€ 750 – € 2.500', tijd: '30 min' },
+                        { werk: 'Volledige vervanging', prijs: 'Op aanvraag', tijd: '30 min' },
+                      ].map((r, i) => (
+                        <tr key={i} className={i === 0 ? 'highlight-row' : ''}>
+                          <td>{i === 0 ? <strong>{r.werk}</strong> : r.werk}</td>
+                          <td>{r.prijs}</td><td>{r.tijd}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="table-note">* Prijzen zijn indicatief. Definitieve prijs na inspectie.</p>
+                </div>
+                <h3>{type.naam} en je verzekering</h3>
+                <p>Plotselinge schade valt bij de meeste opstalverzekeringen onder de dekking. Wij zijn erkend door alle grote Nederlandse verzekeraars en stellen een gedetailleerd rapport op voor je claim.</p>
+              </>}
+            </div>
+
+            <div className="seo-sticky">
+              <div style={{background:'var(--green3)',border:'1.5px solid var(--green4)',borderRadius:'14px',padding:'1.5rem',marginBottom:'1rem'}}>
+                <div className="eyebrow" style={{marginBottom:'0.75rem'}}>Snel handelen?</div>
+                <p style={{fontSize:'0.85rem',color:'var(--muted)',marginBottom:'1rem',lineHeight:1.7}}>Bel direct voor spoedservice. Onze monteurs zijn gemiddeld binnen 30 minuten ter plaatse.</p>
+                <a href={`tel:${PHONE}`} className="btn-call" style={{width:'100%',justifyContent:'center',fontSize:'0.95rem'}}>📞 {PHONE_DISPLAY}</a>
+              </div>
+              <div style={{background:'white',border:'1.5px solid var(--border)',borderRadius:'14px',padding:'1.5rem'}}>
+                <div style={{fontSize:'0.8rem',fontWeight:700,color:'var(--text)',marginBottom:'1rem'}}>✓ Andere diensten</div>
+                <div style={{display:'flex',flexDirection:'column',gap:'0.5rem',fontSize:'0.82rem',color:'var(--muted)'}}>
+                  {lekkageTypes.filter(t => t.slug !== type.slug).map(t => (
+                    <a key={t.slug} href={`/lekkage/dienst/${t.slug}`} style={{display:'flex',alignItems:'center',gap:'0.5rem',color:'var(--muted)',textDecoration:'none',transition:'color 0.2s'}}
+                      onMouseEnter={e => e.currentTarget.style.color='var(--green)'}
+                      onMouseLeave={e => e.currentTarget.style.color='var(--muted)'}
+                    >
+                      <span>{t.icon}</span><span>{t.naam}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="section" style={{background:'var(--green3)'}}>
+        <div className="section-inner">
+          <div className="sec-head-center">
+            <div className="eyebrow">Veelgestelde vragen</div>
+            <h2><em>{type.naam}</em> — antwoorden op jouw vragen</h2>
+          </div>
+          <div className="faq-grid">
+            {faqs.map((f, i) => (
+              <div key={i} className="faq-item">
+                <div className="faq-q" onClick={e => e.currentTarget.parentElement.classList.toggle('open')}>
+                  {f.v} <span className="faq-arrow">▼</span>
+                </div>
+                <div className="faq-a">{f.a}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BOTTOM CTA */}
+      <div className="bottom-cta">
+        <div className="eyebrow" style={{color:'#a8e6c0'}}>{type.naam}</div>
+        <h2 style={{color:'white'}}>{type.naam}? Wacht niet te lang.</h2>
+        <p>Hoe eerder je belt, hoe kleiner de schade. Dag en nacht bereikbaar, door heel Nederland.</p>
+        <div className="cta-btns">
+          <a href={`tel:${PHONE}`} className="btn-call">📞 Bel nu: {PHONE_DISPLAY}</a>
+          <a href="#steden" className="btn-white-ghost">Kies jouw stad</a>
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <footer>
+        <div className="footer-top">
+          <div>
+            <div className="footer-logo">Lekkage<b>Fix</b></div>
+            <p className="footer-desc">Vakkundige {type.naam.toLowerCase()} reparaties door heel Nederland. Gecertificeerde vakmensen, transparante prijzen, garantie.</p>
+          </div>
+          <div className="footer-col">
+            <h4>Diensten</h4>
+            {lekkageTypes.map(t => <a key={t.slug} href={`/lekkage/dienst/${t.slug}`}>{t.naam}</a>)}
+          </div>
+          <div className="footer-col">
+            <h4>Steden</h4>
+            {topSteden.slice(0,5).map(s => <a key={s.slug} href={`/lekkage/${type.slug}/${s.slug}`}>{s.naam}</a>)}
+            <a href="#steden">Alle steden →</a>
+          </div>
+          <div className="footer-col">
+            <h4>Contact</h4>
+            <a href={`tel:${PHONE}`}>{PHONE_DISPLAY} (24/7)</a>
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            <a href="/lekkage">Gratis offerte</a>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <p>© 2025 LekkageFix · KvK 89586557 · <a href="#">Privacy</a> · <a href="#">Voorwaarden</a></p>
+          <div className="cert-badges"><span className="cert">VCA ✓</span><span className="cert">ISO 9001</span><span className="cert">Erkend verzekeraar</span></div>
+        </div>
+      </footer>
+    </>
+  )
 }
